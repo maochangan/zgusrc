@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.SimpleUserMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.SimpleUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="simple_name" jdbcType="VARCHAR" property="simpleName" />
+    <result column="simple_email" jdbcType="VARCHAR" property="simpleEmail" />
+    <result column="simple_password" jdbcType="VARCHAR" property="simplePassword" />
+    <result column="simple_resume" jdbcType="VARCHAR" property="simpleResume" />
+    <result column="sr_id" jdbcType="INTEGER" property="srId" />
+    <result column="collection" jdbcType="INTEGER" property="collection" />
+    <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+    <result column="resume_path" jdbcType="VARCHAR" property="resumePath" />
+    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="vip_type" jdbcType="VARCHAR" property="vipType" />
+    <result column="pay_price" jdbcType="VARCHAR" property="payPrice" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="vip_end_time" jdbcType="TIMESTAMP" property="vipEndTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, mobile, simple_name, simple_email, simple_password, simple_resume, sr_id, collection, 
+    img_path, resume_path, register_time, sex, age, vip_type, pay_price, pay_time, vip_end_time
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.SimpleUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from simple_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from simple_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from simple_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.SimpleUserExample">
+    delete from simple_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.SimpleUser">
+    insert into simple_user (id, mobile, simple_name, 
+      simple_email, simple_password, simple_resume, 
+      sr_id, collection, img_path, 
+      resume_path, register_time, sex, 
+      age, vip_type, pay_price, 
+      pay_time, vip_end_time)
+    values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{simpleName,jdbcType=VARCHAR}, 
+      #{simpleEmail,jdbcType=VARCHAR}, #{simplePassword,jdbcType=VARCHAR}, #{simpleResume,jdbcType=VARCHAR}, 
+      #{srId,jdbcType=INTEGER}, #{collection,jdbcType=INTEGER}, #{imgPath,jdbcType=VARCHAR}, 
+      #{resumePath,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=VARCHAR}, 
+      #{age,jdbcType=VARCHAR}, #{vipType,jdbcType=VARCHAR}, #{payPrice,jdbcType=VARCHAR}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.SimpleUser">
+    insert into simple_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="simpleName != null">
+        simple_name,
+      </if>
+      <if test="simpleEmail != null">
+        simple_email,
+      </if>
+      <if test="simplePassword != null">
+        simple_password,
+      </if>
+      <if test="simpleResume != null">
+        simple_resume,
+      </if>
+      <if test="srId != null">
+        sr_id,
+      </if>
+      <if test="collection != null">
+        collection,
+      </if>
+      <if test="imgPath != null">
+        img_path,
+      </if>
+      <if test="resumePath != null">
+        resume_path,
+      </if>
+      <if test="registerTime != null">
+        register_time,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="vipType != null">
+        vip_type,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="vipEndTime != null">
+        vip_end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleName != null">
+        #{simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleEmail != null">
+        #{simpleEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="simplePassword != null">
+        #{simplePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleResume != null">
+        #{simpleResume,jdbcType=VARCHAR},
+      </if>
+      <if test="srId != null">
+        #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="collection != null">
+        #{collection,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null">
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="resumePath != null">
+        #{resumePath,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="vipType != null">
+        #{vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipEndTime != null">
+        #{vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.SimpleUserExample" resultType="java.lang.Long">
+    select count(*) from simple_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update simple_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleName != null">
+        simple_name = #{record.simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleEmail != null">
+        simple_email = #{record.simpleEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simplePassword != null">
+        simple_password = #{record.simplePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleResume != null">
+        simple_resume = #{record.simpleResume,jdbcType=VARCHAR},
+      </if>
+      <if test="record.srId != null">
+        sr_id = #{record.srId,jdbcType=INTEGER},
+      </if>
+      <if test="record.collection != null">
+        collection = #{record.collection,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgPath != null">
+        img_path = #{record.imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumePath != null">
+        resume_path = #{record.resumePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerTime != null">
+        register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vipType != null">
+        vip_type = #{record.vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPrice != null">
+        pay_price = #{record.payPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null">
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.vipEndTime != null">
+        vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update simple_user
+    set id = #{record.id,jdbcType=INTEGER},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      simple_name = #{record.simpleName,jdbcType=VARCHAR},
+      simple_email = #{record.simpleEmail,jdbcType=VARCHAR},
+      simple_password = #{record.simplePassword,jdbcType=VARCHAR},
+      simple_resume = #{record.simpleResume,jdbcType=VARCHAR},
+      sr_id = #{record.srId,jdbcType=INTEGER},
+      collection = #{record.collection,jdbcType=INTEGER},
+      img_path = #{record.imgPath,jdbcType=VARCHAR},
+      resume_path = #{record.resumePath,jdbcType=VARCHAR},
+      register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=VARCHAR},
+      vip_type = #{record.vipType,jdbcType=VARCHAR},
+      pay_price = #{record.payPrice,jdbcType=VARCHAR},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.SimpleUser">
+    update simple_user
+    <set>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleName != null">
+        simple_name = #{simpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleEmail != null">
+        simple_email = #{simpleEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="simplePassword != null">
+        simple_password = #{simplePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleResume != null">
+        simple_resume = #{simpleResume,jdbcType=VARCHAR},
+      </if>
+      <if test="srId != null">
+        sr_id = #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="collection != null">
+        collection = #{collection,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null">
+        img_path = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="resumePath != null">
+        resume_path = #{resumePath,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null">
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="vipType != null">
+        vip_type = #{vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vipEndTime != null">
+        vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.SimpleUser">
+    update simple_user
+    set mobile = #{mobile,jdbcType=VARCHAR},
+      simple_name = #{simpleName,jdbcType=VARCHAR},
+      simple_email = #{simpleEmail,jdbcType=VARCHAR},
+      simple_password = #{simplePassword,jdbcType=VARCHAR},
+      simple_resume = #{simpleResume,jdbcType=VARCHAR},
+      sr_id = #{srId,jdbcType=INTEGER},
+      collection = #{collection,jdbcType=INTEGER},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      resume_path = #{resumePath,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=VARCHAR},
+      age = #{age,jdbcType=VARCHAR},
+      vip_type = #{vipType,jdbcType=VARCHAR},
+      pay_price = #{payPrice,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.CompanyUserMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.CompanyUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_vip_name" jdbcType="VARCHAR" property="cVipName" />
+    <result column="c_user_name" jdbcType="VARCHAR" property="cUserName" />
+    <result column="c_password" jdbcType="VARCHAR" property="cPassword" />
+    <result column="c_image" jdbcType="VARCHAR" property="cImage" />
+    <result column="c_nick_name" jdbcType="VARCHAR" property="cNickName" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="c_position_name" jdbcType="VARCHAR" property="cPositionName" />
+    <result column="c_sex" jdbcType="VARCHAR" property="cSex" />
+    <result column="c_telephone_number" jdbcType="VARCHAR" property="cTelephoneNumber" />
+    <result column="c_email" jdbcType="VARCHAR" property="cEmail" />
+    <result column="c_qq" jdbcType="VARCHAR" property="cQq" />
+    <result column="email_code" jdbcType="VARCHAR" property="emailCode" />
+    <result column="authentication" jdbcType="VARCHAR" property="authentication" />
+    <result column="email_key" jdbcType="VARCHAR" property="emailKey" />
+    <result column="email_ac" jdbcType="VARCHAR" property="emailAc" />
+    <result column="ac_time" jdbcType="DATE" property="acTime" />
+    <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="emain_ac_time" jdbcType="BIGINT" property="emainAcTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, c_vip_name, c_user_name, c_password, c_image, c_nick_name, c_name, c_position_name, 
+    c_sex, c_telephone_number, c_email, c_qq, email_code, authentication, email_key, 
+    email_ac, ac_time, token, create_date, emain_ac_time
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.CompanyUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.CompanyUserExample">
+    delete from company_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.CompanyUser">
+    insert into company_user (id, c_vip_name, c_user_name, 
+      c_password, c_image, c_nick_name, 
+      c_name, c_position_name, c_sex, 
+      c_telephone_number, c_email, c_qq, 
+      email_code, authentication, email_key, 
+      email_ac, ac_time, token, 
+      create_date, emain_ac_time)
+    values (#{id,jdbcType=INTEGER}, #{cVipName,jdbcType=VARCHAR}, #{cUserName,jdbcType=VARCHAR}, 
+      #{cPassword,jdbcType=VARCHAR}, #{cImage,jdbcType=VARCHAR}, #{cNickName,jdbcType=VARCHAR}, 
+      #{cName,jdbcType=VARCHAR}, #{cPositionName,jdbcType=VARCHAR}, #{cSex,jdbcType=VARCHAR}, 
+      #{cTelephoneNumber,jdbcType=VARCHAR}, #{cEmail,jdbcType=VARCHAR}, #{cQq,jdbcType=VARCHAR}, 
+      #{emailCode,jdbcType=VARCHAR}, #{authentication,jdbcType=VARCHAR}, #{emailKey,jdbcType=VARCHAR}, 
+      #{emailAc,jdbcType=VARCHAR}, #{acTime,jdbcType=DATE}, #{token,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=DATE}, #{emainAcTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.CompanyUser">
+    insert into company_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cVipName != null">
+        c_vip_name,
+      </if>
+      <if test="cUserName != null">
+        c_user_name,
+      </if>
+      <if test="cPassword != null">
+        c_password,
+      </if>
+      <if test="cImage != null">
+        c_image,
+      </if>
+      <if test="cNickName != null">
+        c_nick_name,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="cPositionName != null">
+        c_position_name,
+      </if>
+      <if test="cSex != null">
+        c_sex,
+      </if>
+      <if test="cTelephoneNumber != null">
+        c_telephone_number,
+      </if>
+      <if test="cEmail != null">
+        c_email,
+      </if>
+      <if test="cQq != null">
+        c_qq,
+      </if>
+      <if test="emailCode != null">
+        email_code,
+      </if>
+      <if test="authentication != null">
+        authentication,
+      </if>
+      <if test="emailKey != null">
+        email_key,
+      </if>
+      <if test="emailAc != null">
+        email_ac,
+      </if>
+      <if test="acTime != null">
+        ac_time,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="emainAcTime != null">
+        emain_ac_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cVipName != null">
+        #{cVipName,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserName != null">
+        #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPassword != null">
+        #{cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cImage != null">
+        #{cImage,jdbcType=VARCHAR},
+      </if>
+      <if test="cNickName != null">
+        #{cNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPositionName != null">
+        #{cPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="cSex != null">
+        #{cSex,jdbcType=VARCHAR},
+      </if>
+      <if test="cTelephoneNumber != null">
+        #{cTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cEmail != null">
+        #{cEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cQq != null">
+        #{cQq,jdbcType=VARCHAR},
+      </if>
+      <if test="emailCode != null">
+        #{emailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null">
+        #{authentication,jdbcType=VARCHAR},
+      </if>
+      <if test="emailKey != null">
+        #{emailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAc != null">
+        #{emailAc,jdbcType=VARCHAR},
+      </if>
+      <if test="acTime != null">
+        #{acTime,jdbcType=DATE},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="emainAcTime != null">
+        #{emainAcTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.CompanyUserExample" resultType="java.lang.Long">
+    select count(*) from company_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cVipName != null">
+        c_vip_name = #{record.cVipName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cUserName != null">
+        c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cPassword != null">
+        c_password = #{record.cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cImage != null">
+        c_image = #{record.cImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cNickName != null">
+        c_nick_name = #{record.cNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cName != null">
+        c_name = #{record.cName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cPositionName != null">
+        c_position_name = #{record.cPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSex != null">
+        c_sex = #{record.cSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cTelephoneNumber != null">
+        c_telephone_number = #{record.cTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cEmail != null">
+        c_email = #{record.cEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cQq != null">
+        c_qq = #{record.cQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailCode != null">
+        email_code = #{record.emailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authentication != null">
+        authentication = #{record.authentication,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailKey != null">
+        email_key = #{record.emailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailAc != null">
+        email_ac = #{record.emailAc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acTime != null">
+        ac_time = #{record.acTime,jdbcType=DATE},
+      </if>
+      <if test="record.token != null">
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.emainAcTime != null">
+        emain_ac_time = #{record.emainAcTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company_user
+    set id = #{record.id,jdbcType=INTEGER},
+      c_vip_name = #{record.cVipName,jdbcType=VARCHAR},
+      c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      c_password = #{record.cPassword,jdbcType=VARCHAR},
+      c_image = #{record.cImage,jdbcType=VARCHAR},
+      c_nick_name = #{record.cNickName,jdbcType=VARCHAR},
+      c_name = #{record.cName,jdbcType=VARCHAR},
+      c_position_name = #{record.cPositionName,jdbcType=VARCHAR},
+      c_sex = #{record.cSex,jdbcType=VARCHAR},
+      c_telephone_number = #{record.cTelephoneNumber,jdbcType=VARCHAR},
+      c_email = #{record.cEmail,jdbcType=VARCHAR},
+      c_qq = #{record.cQq,jdbcType=VARCHAR},
+      email_code = #{record.emailCode,jdbcType=VARCHAR},
+      authentication = #{record.authentication,jdbcType=VARCHAR},
+      email_key = #{record.emailKey,jdbcType=VARCHAR},
+      email_ac = #{record.emailAc,jdbcType=VARCHAR},
+      ac_time = #{record.acTime,jdbcType=DATE},
+      token = #{record.token,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=DATE},
+      emain_ac_time = #{record.emainAcTime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.CompanyUser">
+    update company_user
+    <set>
+      <if test="cVipName != null">
+        c_vip_name = #{cVipName,jdbcType=VARCHAR},
+      </if>
+      <if test="cUserName != null">
+        c_user_name = #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPassword != null">
+        c_password = #{cPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cImage != null">
+        c_image = #{cImage,jdbcType=VARCHAR},
+      </if>
+      <if test="cNickName != null">
+        c_nick_name = #{cNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cPositionName != null">
+        c_position_name = #{cPositionName,jdbcType=VARCHAR},
+      </if>
+      <if test="cSex != null">
+        c_sex = #{cSex,jdbcType=VARCHAR},
+      </if>
+      <if test="cTelephoneNumber != null">
+        c_telephone_number = #{cTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cEmail != null">
+        c_email = #{cEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cQq != null">
+        c_qq = #{cQq,jdbcType=VARCHAR},
+      </if>
+      <if test="emailCode != null">
+        email_code = #{emailCode,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null">
+        authentication = #{authentication,jdbcType=VARCHAR},
+      </if>
+      <if test="emailKey != null">
+        email_key = #{emailKey,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAc != null">
+        email_ac = #{emailAc,jdbcType=VARCHAR},
+      </if>
+      <if test="acTime != null">
+        ac_time = #{acTime,jdbcType=DATE},
+      </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="emainAcTime != null">
+        emain_ac_time = #{emainAcTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.CompanyUser">
+    update company_user
+    set c_vip_name = #{cVipName,jdbcType=VARCHAR},
+      c_user_name = #{cUserName,jdbcType=VARCHAR},
+      c_password = #{cPassword,jdbcType=VARCHAR},
+      c_image = #{cImage,jdbcType=VARCHAR},
+      c_nick_name = #{cNickName,jdbcType=VARCHAR},
+      c_name = #{cName,jdbcType=VARCHAR},
+      c_position_name = #{cPositionName,jdbcType=VARCHAR},
+      c_sex = #{cSex,jdbcType=VARCHAR},
+      c_telephone_number = #{cTelephoneNumber,jdbcType=VARCHAR},
+      c_email = #{cEmail,jdbcType=VARCHAR},
+      c_qq = #{cQq,jdbcType=VARCHAR},
+      email_code = #{emailCode,jdbcType=VARCHAR},
+      authentication = #{authentication,jdbcType=VARCHAR},
+      email_key = #{emailKey,jdbcType=VARCHAR},
+      email_ac = #{emailAc,jdbcType=VARCHAR},
+      ac_time = #{acTime,jdbcType=DATE},
+      token = #{token,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      emain_ac_time = #{emainAcTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

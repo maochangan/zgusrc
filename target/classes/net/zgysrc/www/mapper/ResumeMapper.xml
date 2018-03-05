@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.ResumeMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.Resume">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="birth_year" jdbcType="VARCHAR" property="birthYear" />
+    <result column="marital_status" jdbcType="VARCHAR" property="maritalStatus" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="hukou" jdbcType="VARCHAR" property="hukou" />
+    <result column="user_state" jdbcType="VARCHAR" property="userState" />
+    <result column="want_industry" jdbcType="VARCHAR" property="wantIndustry" />
+    <result column="want_post" jdbcType="VARCHAR" property="wantPost" />
+    <result column="want_address" jdbcType="VARCHAR" property="wantAddress" />
+    <result column="want_salary" jdbcType="VARCHAR" property="wantSalary" />
+    <result column="now_salary" jdbcType="VARCHAR" property="nowSalary" />
+    <result column="old_company_name" jdbcType="VARCHAR" property="oldCompanyName" />
+    <result column="old_industry" jdbcType="VARCHAR" property="oldIndustry" />
+    <result column="old_post" jdbcType="VARCHAR" property="oldPost" />
+    <result column="old_address" jdbcType="VARCHAR" property="oldAddress" />
+    <result column="old_start_time" jdbcType="VARCHAR" property="oldStartTime" />
+    <result column="old_end_time" jdbcType="VARCHAR" property="oldEndTime" />
+    <result column="achievement" jdbcType="VARCHAR" property="achievement" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="major_name" jdbcType="VARCHAR" property="majorName" />
+    <result column="edu_start_time" jdbcType="VARCHAR" property="eduStartTime" />
+    <result column="edu_end_time" jdbcType="VARCHAR" property="eduEndTime" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="lauguage" jdbcType="VARCHAR" property="lauguage" />
+    <result column="evaluation" jdbcType="VARCHAR" property="evaluation" />
+    <result column="view_number" jdbcType="INTEGER" property="viewNumber" />
+    <result column="experience" jdbcType="VARCHAR" property="experience" />
+    <result column="self_evaluation" jdbcType="VARCHAR" property="selfEvaluation" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="undergraduate" jdbcType="VARCHAR" property="undergraduate" />
+    <result column="project_post" jdbcType="VARCHAR" property="projectPost" />
+    <result column="project_company" jdbcType="VARCHAR" property="projectCompany" />
+    <result column="project_info" jdbcType="VARCHAR" property="projectInfo" />
+    <result column="project_duty" jdbcType="VARCHAR" property="projectDuty" />
+    <result column="project_performance" jdbcType="VARCHAR" property="projectPerformance" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_start_time" jdbcType="VARCHAR" property="projectStartTime" />
+    <result column="project_end_time" jdbcType="VARCHAR" property="projectEndTime" />
+    <result column="we_company_name" jdbcType="VARCHAR" property="weCompanyName" />
+    <result column="we_company_industry" jdbcType="VARCHAR" property="weCompanyIndustry" />
+    <result column="we_post_name" jdbcType="VARCHAR" property="wePostName" />
+    <result column="we_address" jdbcType="VARCHAR" property="weAddress" />
+    <result column="we_start_time" jdbcType="VARCHAR" property="weStartTime" />
+    <result column="we_end_time" jdbcType="VARCHAR" property="weEndTime" />
+    <result column="we_duty_performance" jdbcType="VARCHAR" property="weDutyPerformance" />
+    <result column="user_style" jdbcType="VARCHAR" property="userStyle" />
+    <result column="image_path" jdbcType="VARCHAR" property="imagePath" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_name, sex, post_name, start_time, city, birth_year, marital_status, mobile, 
+    country, hukou, user_state, want_industry, want_post, want_address, want_salary, 
+    now_salary, old_company_name, old_industry, old_post, old_address, old_start_time, 
+    old_end_time, achievement, school_name, major_name, edu_start_time, edu_end_time, 
+    education, lauguage, evaluation, view_number, experience, self_evaluation, real_name, 
+    email, undergraduate, project_post, project_company, project_info, project_duty, 
+    project_performance, project_name, project_start_time, project_end_time, we_company_name, 
+    we_company_industry, we_post_name, we_address, we_start_time, we_end_time, we_duty_performance, 
+    user_style, image_path
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.ResumeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from resume
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from resume
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.ResumeExample">
+    delete from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.Resume">
+    insert into resume (id, user_name, sex, 
+      post_name, start_time, city, 
+      birth_year, marital_status, mobile, 
+      country, hukou, user_state, 
+      want_industry, want_post, want_address, 
+      want_salary, now_salary, old_company_name, 
+      old_industry, old_post, old_address, 
+      old_start_time, old_end_time, achievement, 
+      school_name, major_name, edu_start_time, 
+      edu_end_time, education, lauguage, 
+      evaluation, view_number, experience, 
+      self_evaluation, real_name, email, 
+      undergraduate, project_post, project_company, 
+      project_info, project_duty, project_performance, 
+      project_name, project_start_time, project_end_time, 
+      we_company_name, we_company_industry, we_post_name, 
+      we_address, we_start_time, we_end_time, 
+      we_duty_performance, user_style, image_path
+      )
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{postName,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{birthYear,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{hukou,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR}, 
+      #{wantIndustry,jdbcType=VARCHAR}, #{wantPost,jdbcType=VARCHAR}, #{wantAddress,jdbcType=VARCHAR}, 
+      #{wantSalary,jdbcType=VARCHAR}, #{nowSalary,jdbcType=VARCHAR}, #{oldCompanyName,jdbcType=VARCHAR}, 
+      #{oldIndustry,jdbcType=VARCHAR}, #{oldPost,jdbcType=VARCHAR}, #{oldAddress,jdbcType=VARCHAR}, 
+      #{oldStartTime,jdbcType=VARCHAR}, #{oldEndTime,jdbcType=VARCHAR}, #{achievement,jdbcType=VARCHAR}, 
+      #{schoolName,jdbcType=VARCHAR}, #{majorName,jdbcType=VARCHAR}, #{eduStartTime,jdbcType=VARCHAR}, 
+      #{eduEndTime,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{lauguage,jdbcType=VARCHAR}, 
+      #{evaluation,jdbcType=VARCHAR}, #{viewNumber,jdbcType=INTEGER}, #{experience,jdbcType=VARCHAR}, 
+      #{selfEvaluation,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{undergraduate,jdbcType=VARCHAR}, #{projectPost,jdbcType=VARCHAR}, #{projectCompany,jdbcType=VARCHAR}, 
+      #{projectInfo,jdbcType=VARCHAR}, #{projectDuty,jdbcType=VARCHAR}, #{projectPerformance,jdbcType=VARCHAR}, 
+      #{projectName,jdbcType=VARCHAR}, #{projectStartTime,jdbcType=VARCHAR}, #{projectEndTime,jdbcType=VARCHAR}, 
+      #{weCompanyName,jdbcType=VARCHAR}, #{weCompanyIndustry,jdbcType=VARCHAR}, #{wePostName,jdbcType=VARCHAR}, 
+      #{weAddress,jdbcType=VARCHAR}, #{weStartTime,jdbcType=VARCHAR}, #{weEndTime,jdbcType=VARCHAR}, 
+      #{weDutyPerformance,jdbcType=VARCHAR}, #{userStyle,jdbcType=VARCHAR}, #{imagePath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.Resume">
+    insert into resume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="postName != null">
+        post_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="birthYear != null">
+        birth_year,
+      </if>
+      <if test="maritalStatus != null">
+        marital_status,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="hukou != null">
+        hukou,
+      </if>
+      <if test="userState != null">
+        user_state,
+      </if>
+      <if test="wantIndustry != null">
+        want_industry,
+      </if>
+      <if test="wantPost != null">
+        want_post,
+      </if>
+      <if test="wantAddress != null">
+        want_address,
+      </if>
+      <if test="wantSalary != null">
+        want_salary,
+      </if>
+      <if test="nowSalary != null">
+        now_salary,
+      </if>
+      <if test="oldCompanyName != null">
+        old_company_name,
+      </if>
+      <if test="oldIndustry != null">
+        old_industry,
+      </if>
+      <if test="oldPost != null">
+        old_post,
+      </if>
+      <if test="oldAddress != null">
+        old_address,
+      </if>
+      <if test="oldStartTime != null">
+        old_start_time,
+      </if>
+      <if test="oldEndTime != null">
+        old_end_time,
+      </if>
+      <if test="achievement != null">
+        achievement,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="majorName != null">
+        major_name,
+      </if>
+      <if test="eduStartTime != null">
+        edu_start_time,
+      </if>
+      <if test="eduEndTime != null">
+        edu_end_time,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="lauguage != null">
+        lauguage,
+      </if>
+      <if test="evaluation != null">
+        evaluation,
+      </if>
+      <if test="viewNumber != null">
+        view_number,
+      </if>
+      <if test="experience != null">
+        experience,
+      </if>
+      <if test="selfEvaluation != null">
+        self_evaluation,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="undergraduate != null">
+        undergraduate,
+      </if>
+      <if test="projectPost != null">
+        project_post,
+      </if>
+      <if test="projectCompany != null">
+        project_company,
+      </if>
+      <if test="projectInfo != null">
+        project_info,
+      </if>
+      <if test="projectDuty != null">
+        project_duty,
+      </if>
+      <if test="projectPerformance != null">
+        project_performance,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectStartTime != null">
+        project_start_time,
+      </if>
+      <if test="projectEndTime != null">
+        project_end_time,
+      </if>
+      <if test="weCompanyName != null">
+        we_company_name,
+      </if>
+      <if test="weCompanyIndustry != null">
+        we_company_industry,
+      </if>
+      <if test="wePostName != null">
+        we_post_name,
+      </if>
+      <if test="weAddress != null">
+        we_address,
+      </if>
+      <if test="weStartTime != null">
+        we_start_time,
+      </if>
+      <if test="weEndTime != null">
+        we_end_time,
+      </if>
+      <if test="weDutyPerformance != null">
+        we_duty_performance,
+      </if>
+      <if test="userStyle != null">
+        user_style,
+      </if>
+      <if test="imagePath != null">
+        image_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="birthYear != null">
+        #{birthYear,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="hukou != null">
+        #{hukou,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null">
+        #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="wantIndustry != null">
+        #{wantIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="wantPost != null">
+        #{wantPost,jdbcType=VARCHAR},
+      </if>
+      <if test="wantAddress != null">
+        #{wantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="wantSalary != null">
+        #{wantSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="nowSalary != null">
+        #{nowSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCompanyName != null">
+        #{oldCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldIndustry != null">
+        #{oldIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPost != null">
+        #{oldPost,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAddress != null">
+        #{oldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStartTime != null">
+        #{oldStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="oldEndTime != null">
+        #{oldEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null">
+        #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null">
+        #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="eduStartTime != null">
+        #{eduStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="eduEndTime != null">
+        #{eduEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="lauguage != null">
+        #{lauguage,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null">
+        #{evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="viewNumber != null">
+        #{viewNumber,jdbcType=INTEGER},
+      </if>
+      <if test="experience != null">
+        #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluation != null">
+        #{selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduate != null">
+        #{undergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPost != null">
+        #{projectPost,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCompany != null">
+        #{projectCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="projectInfo != null">
+        #{projectInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDuty != null">
+        #{projectDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPerformance != null">
+        #{projectPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStartTime != null">
+        #{projectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="projectEndTime != null">
+        #{projectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weCompanyName != null">
+        #{weCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="weCompanyIndustry != null">
+        #{weCompanyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="wePostName != null">
+        #{wePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="weAddress != null">
+        #{weAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="weStartTime != null">
+        #{weStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weEndTime != null">
+        #{weEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weDutyPerformance != null">
+        #{weDutyPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="userStyle != null">
+        #{userStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        #{imagePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.ResumeExample" resultType="java.lang.Long">
+    select count(*) from resume
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update resume
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postName != null">
+        post_name = #{record.postName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthYear != null">
+        birth_year = #{record.birthYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maritalStatus != null">
+        marital_status = #{record.maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null">
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hukou != null">
+        hukou = #{record.hukou,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userState != null">
+        user_state = #{record.userState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wantIndustry != null">
+        want_industry = #{record.wantIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wantPost != null">
+        want_post = #{record.wantPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wantAddress != null">
+        want_address = #{record.wantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wantSalary != null">
+        want_salary = #{record.wantSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nowSalary != null">
+        now_salary = #{record.nowSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldCompanyName != null">
+        old_company_name = #{record.oldCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldIndustry != null">
+        old_industry = #{record.oldIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldPost != null">
+        old_post = #{record.oldPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldAddress != null">
+        old_address = #{record.oldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldStartTime != null">
+        old_start_time = #{record.oldStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldEndTime != null">
+        old_end_time = #{record.oldEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.achievement != null">
+        achievement = #{record.achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolName != null">
+        school_name = #{record.schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorName != null">
+        major_name = #{record.majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eduStartTime != null">
+        edu_start_time = #{record.eduStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eduEndTime != null">
+        edu_end_time = #{record.eduEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null">
+        education = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lauguage != null">
+        lauguage = #{record.lauguage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluation != null">
+        evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.viewNumber != null">
+        view_number = #{record.viewNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.experience != null">
+        experience = #{record.experience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.selfEvaluation != null">
+        self_evaluation = #{record.selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null">
+        real_name = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.undergraduate != null">
+        undergraduate = #{record.undergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectPost != null">
+        project_post = #{record.projectPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCompany != null">
+        project_company = #{record.projectCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectInfo != null">
+        project_info = #{record.projectInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectDuty != null">
+        project_duty = #{record.projectDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectPerformance != null">
+        project_performance = #{record.projectPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectName != null">
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStartTime != null">
+        project_start_time = #{record.projectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectEndTime != null">
+        project_end_time = #{record.projectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weCompanyName != null">
+        we_company_name = #{record.weCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weCompanyIndustry != null">
+        we_company_industry = #{record.weCompanyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wePostName != null">
+        we_post_name = #{record.wePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weAddress != null">
+        we_address = #{record.weAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weStartTime != null">
+        we_start_time = #{record.weStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weEndTime != null">
+        we_end_time = #{record.weEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weDutyPerformance != null">
+        we_duty_performance = #{record.weDutyPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStyle != null">
+        user_style = #{record.userStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagePath != null">
+        image_path = #{record.imagePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update resume
+    set id = #{record.id,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      post_name = #{record.postName,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      birth_year = #{record.birthYear,jdbcType=VARCHAR},
+      marital_status = #{record.maritalStatus,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      hukou = #{record.hukou,jdbcType=VARCHAR},
+      user_state = #{record.userState,jdbcType=VARCHAR},
+      want_industry = #{record.wantIndustry,jdbcType=VARCHAR},
+      want_post = #{record.wantPost,jdbcType=VARCHAR},
+      want_address = #{record.wantAddress,jdbcType=VARCHAR},
+      want_salary = #{record.wantSalary,jdbcType=VARCHAR},
+      now_salary = #{record.nowSalary,jdbcType=VARCHAR},
+      old_company_name = #{record.oldCompanyName,jdbcType=VARCHAR},
+      old_industry = #{record.oldIndustry,jdbcType=VARCHAR},
+      old_post = #{record.oldPost,jdbcType=VARCHAR},
+      old_address = #{record.oldAddress,jdbcType=VARCHAR},
+      old_start_time = #{record.oldStartTime,jdbcType=VARCHAR},
+      old_end_time = #{record.oldEndTime,jdbcType=VARCHAR},
+      achievement = #{record.achievement,jdbcType=VARCHAR},
+      school_name = #{record.schoolName,jdbcType=VARCHAR},
+      major_name = #{record.majorName,jdbcType=VARCHAR},
+      edu_start_time = #{record.eduStartTime,jdbcType=VARCHAR},
+      edu_end_time = #{record.eduEndTime,jdbcType=VARCHAR},
+      education = #{record.education,jdbcType=VARCHAR},
+      lauguage = #{record.lauguage,jdbcType=VARCHAR},
+      evaluation = #{record.evaluation,jdbcType=VARCHAR},
+      view_number = #{record.viewNumber,jdbcType=INTEGER},
+      experience = #{record.experience,jdbcType=VARCHAR},
+      self_evaluation = #{record.selfEvaluation,jdbcType=VARCHAR},
+      real_name = #{record.realName,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      undergraduate = #{record.undergraduate,jdbcType=VARCHAR},
+      project_post = #{record.projectPost,jdbcType=VARCHAR},
+      project_company = #{record.projectCompany,jdbcType=VARCHAR},
+      project_info = #{record.projectInfo,jdbcType=VARCHAR},
+      project_duty = #{record.projectDuty,jdbcType=VARCHAR},
+      project_performance = #{record.projectPerformance,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_start_time = #{record.projectStartTime,jdbcType=VARCHAR},
+      project_end_time = #{record.projectEndTime,jdbcType=VARCHAR},
+      we_company_name = #{record.weCompanyName,jdbcType=VARCHAR},
+      we_company_industry = #{record.weCompanyIndustry,jdbcType=VARCHAR},
+      we_post_name = #{record.wePostName,jdbcType=VARCHAR},
+      we_address = #{record.weAddress,jdbcType=VARCHAR},
+      we_start_time = #{record.weStartTime,jdbcType=VARCHAR},
+      we_end_time = #{record.weEndTime,jdbcType=VARCHAR},
+      we_duty_performance = #{record.weDutyPerformance,jdbcType=VARCHAR},
+      user_style = #{record.userStyle,jdbcType=VARCHAR},
+      image_path = #{record.imagePath,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.Resume">
+    update resume
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="postName != null">
+        post_name = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="birthYear != null">
+        birth_year = #{birthYear,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="hukou != null">
+        hukou = #{hukou,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null">
+        user_state = #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="wantIndustry != null">
+        want_industry = #{wantIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="wantPost != null">
+        want_post = #{wantPost,jdbcType=VARCHAR},
+      </if>
+      <if test="wantAddress != null">
+        want_address = #{wantAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="wantSalary != null">
+        want_salary = #{wantSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="nowSalary != null">
+        now_salary = #{nowSalary,jdbcType=VARCHAR},
+      </if>
+      <if test="oldCompanyName != null">
+        old_company_name = #{oldCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="oldIndustry != null">
+        old_industry = #{oldIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="oldPost != null">
+        old_post = #{oldPost,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAddress != null">
+        old_address = #{oldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="oldStartTime != null">
+        old_start_time = #{oldStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="oldEndTime != null">
+        old_end_time = #{oldEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null">
+        achievement = #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="majorName != null">
+        major_name = #{majorName,jdbcType=VARCHAR},
+      </if>
+      <if test="eduStartTime != null">
+        edu_start_time = #{eduStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="eduEndTime != null">
+        edu_end_time = #{eduEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="lauguage != null">
+        lauguage = #{lauguage,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluation != null">
+        evaluation = #{evaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="viewNumber != null">
+        view_number = #{viewNumber,jdbcType=INTEGER},
+      </if>
+      <if test="experience != null">
+        experience = #{experience,jdbcType=VARCHAR},
+      </if>
+      <if test="selfEvaluation != null">
+        self_evaluation = #{selfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduate != null">
+        undergraduate = #{undergraduate,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPost != null">
+        project_post = #{projectPost,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCompany != null">
+        project_company = #{projectCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="projectInfo != null">
+        project_info = #{projectInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDuty != null">
+        project_duty = #{projectDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPerformance != null">
+        project_performance = #{projectPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStartTime != null">
+        project_start_time = #{projectStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="projectEndTime != null">
+        project_end_time = #{projectEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weCompanyName != null">
+        we_company_name = #{weCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="weCompanyIndustry != null">
+        we_company_industry = #{weCompanyIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="wePostName != null">
+        we_post_name = #{wePostName,jdbcType=VARCHAR},
+      </if>
+      <if test="weAddress != null">
+        we_address = #{weAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="weStartTime != null">
+        we_start_time = #{weStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weEndTime != null">
+        we_end_time = #{weEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="weDutyPerformance != null">
+        we_duty_performance = #{weDutyPerformance,jdbcType=VARCHAR},
+      </if>
+      <if test="userStyle != null">
+        user_style = #{userStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="imagePath != null">
+        image_path = #{imagePath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.Resume">
+    update resume
+    set user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      post_name = #{postName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      birth_year = #{birthYear,jdbcType=VARCHAR},
+      marital_status = #{maritalStatus,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      hukou = #{hukou,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=VARCHAR},
+      want_industry = #{wantIndustry,jdbcType=VARCHAR},
+      want_post = #{wantPost,jdbcType=VARCHAR},
+      want_address = #{wantAddress,jdbcType=VARCHAR},
+      want_salary = #{wantSalary,jdbcType=VARCHAR},
+      now_salary = #{nowSalary,jdbcType=VARCHAR},
+      old_company_name = #{oldCompanyName,jdbcType=VARCHAR},
+      old_industry = #{oldIndustry,jdbcType=VARCHAR},
+      old_post = #{oldPost,jdbcType=VARCHAR},
+      old_address = #{oldAddress,jdbcType=VARCHAR},
+      old_start_time = #{oldStartTime,jdbcType=VARCHAR},
+      old_end_time = #{oldEndTime,jdbcType=VARCHAR},
+      achievement = #{achievement,jdbcType=VARCHAR},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      major_name = #{majorName,jdbcType=VARCHAR},
+      edu_start_time = #{eduStartTime,jdbcType=VARCHAR},
+      edu_end_time = #{eduEndTime,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      lauguage = #{lauguage,jdbcType=VARCHAR},
+      evaluation = #{evaluation,jdbcType=VARCHAR},
+      view_number = #{viewNumber,jdbcType=INTEGER},
+      experience = #{experience,jdbcType=VARCHAR},
+      self_evaluation = #{selfEvaluation,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      undergraduate = #{undergraduate,jdbcType=VARCHAR},
+      project_post = #{projectPost,jdbcType=VARCHAR},
+      project_company = #{projectCompany,jdbcType=VARCHAR},
+      project_info = #{projectInfo,jdbcType=VARCHAR},
+      project_duty = #{projectDuty,jdbcType=VARCHAR},
+      project_performance = #{projectPerformance,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_start_time = #{projectStartTime,jdbcType=VARCHAR},
+      project_end_time = #{projectEndTime,jdbcType=VARCHAR},
+      we_company_name = #{weCompanyName,jdbcType=VARCHAR},
+      we_company_industry = #{weCompanyIndustry,jdbcType=VARCHAR},
+      we_post_name = #{wePostName,jdbcType=VARCHAR},
+      we_address = #{weAddress,jdbcType=VARCHAR},
+      we_start_time = #{weStartTime,jdbcType=VARCHAR},
+      we_end_time = #{weEndTime,jdbcType=VARCHAR},
+      we_duty_performance = #{weDutyPerformance,jdbcType=VARCHAR},
+      user_style = #{userStyle,jdbcType=VARCHAR},
+      image_path = #{imagePath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

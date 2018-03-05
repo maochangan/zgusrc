@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.PostReleaseDynamicSQL">
+	<resultMap id="BaseResultMap" type="net.zgysrc.www.bean.PostRelease">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="c_user_name" jdbcType="VARCHAR" property="cUserName" />
+		<result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" />
+		<result column="p_name" jdbcType="VARCHAR" property="pName" />
+		<result column="p_number" jdbcType="VARCHAR" property="pNumber" />
+		<result column="p_size" jdbcType="VARCHAR" property="pSize" />
+		<result column="p_city" jdbcType="VARCHAR" property="pCity" />
+		<result column="p_address" jdbcType="VARCHAR" property="pAddress" />
+		<result column="p_type_one" jdbcType="VARCHAR" property="pTypeOne" />
+		<result column="p_tyoe_two" jdbcType="VARCHAR" property="pTyoeTwo" />
+		<result column="p_service_long" jdbcType="VARCHAR" property="pServiceLong" />
+		<result column="p_min_salary" jdbcType="VARCHAR" property="pMinSalary" />
+		<result column="p_education" jdbcType="VARCHAR" property="pEducation" />
+		<result column="p_age" jdbcType="VARCHAR" property="pAge" />
+		<result column="p_language_one" jdbcType="VARCHAR" property="pLanguageOne" />
+		<result column="p_language_two" jdbcType="VARCHAR" property="pLanguageTwo" />
+		<result column="p_major_one" jdbcType="VARCHAR" property="pMajorOne" />
+		<result column="p_major_two" jdbcType="VARCHAR" property="pMajorTwo" />
+		<result column="p_welfare" jdbcType="VARCHAR" property="pWelfare" />
+		<result column="p_keyworld" jdbcType="VARCHAR" property="pKeyworld" />
+		<result column="p_start_time" jdbcType="TIMESTAMP" property="pStartTime" />
+		<result column="p_refresh_time" jdbcType="TIMESTAMP" property="pRefreshTime" />
+		<result column="p_end_time" jdbcType="TIMESTAMP" property="pEndTime" />
+		<result column="clicks" jdbcType="INTEGER" property="clicks" />
+		<result column="p_max_salary" jdbcType="VARCHAR" property="pMaxSalary" />
+		<result column="dept" jdbcType="VARCHAR" property="dept" />
+		<result column="p_province" jdbcType="VARCHAR" property="pProvince" />
+		<result column="p_area" jdbcType="VARCHAR" property="pArea" />
+		<result column="p_responsibility" jdbcType="VARCHAR" property="pResponsibility" />
+		<result column="p_qualification" jdbcType="VARCHAR" property="pQualification" />
+		<result column="find_name" jdbcType="VARCHAR" property="findName" />
+		<result column="get_resume_id" jdbcType="INTEGER" property="getResumeId" />
+		<result column="company_type_one" jdbcType="VARCHAR" property="companyTypeOne" />
+		<result column="c_id" jdbcType="INTEGER" property="cId" />
+		<result column="special" jdbcType="VARCHAR" property="special" />
+		<result column="c_company_logo" jdbcType="VARCHAR" property="cCompanyLogo" />
+		<result column="campus_recruitment" jdbcType="VARCHAR"
+			property="campusRecruitment" />
+		<result column="post_type" jdbcType="VARCHAR" property="postType" />
+	</resultMap>
+	<select id="getPostReleaseByConditionIf" resultMap="BaseResultMap">
+		select * from post_release where 1=1
+		<if test="id != null">
+			id=#{id}
+		</if>
+		<if test="cCompanyName != null and cCompanyName != ''">
+			and c_company_name=#{cCompanyName,jdbcType=VARCHAR}
+		</if>
+		<if test="pName != null and pName != ''">
+			and p_name=#{pName , jdbcType=VARCHAR}
+		</if>
+		<if test="pMinSalary != null and pMinSalary != ''">
+			and p_min_salary=#{pMinSalary , jdbcType=VARCHAR}
+		</if>
+		<if test="pCity != null and pCity != ''">
+			and p_city=#{pCity , jdbcType=VARCHAR}
+		</if>
+		<if test="pMaxSalary != null and pMaxSalary != ''">
+			and p_max_salary=#{pMaxSalary , jdbcType=VARCHAR}
+		</if>
+		<if test="pProvince != null and pProvince != ''">
+			and p_province=#{pProvince , jdbcType=VARCHAR}
+		</if>
+		<if test="pTypeOne != null and pTypeOne!= ''">
+			and p_type_one=#{pTypeOne , jdbcType=VARCHAR}
+		</if>
+		<if test="cId != null and cId != ''">
+			and c_id=#{cId , jdbcType=INTEGER}
+		</if>
+		<if test="findName != null and findName != ''">
+			and (p_tyoe_two like #{findName , jdbcType=VARCHAR}
+			or
+			c_company_name like
+			#{findName,jdbcType=VARCHAR}
+			or p_name like
+			#{findName,jdbcType=VARCHAR}
+			or p_number like
+			#{findName,jdbcType=VARCHAR}
+			or p_size like
+			#{findName,jdbcType=VARCHAR}
+			or p_city like
+			#{findName,jdbcType=VARCHAR}
+			or p_address like
+			#{findName,jdbcType=VARCHAR}
+			or p_type_one like
+			#{findName,jdbcType=VARCHAR}
+			or
+			p_tyoe_two like
+			#{findName,jdbcType=VARCHAR}
+			or p_service_long like
+			#{findName,jdbcType=VARCHAR}
+			or p_min_salary like
+			#{findName,jdbcType=VARCHAR}
+			or p_education like
+			#{findName,jdbcType=VARCHAR}
+			or p_age like
+			#{findName,jdbcType=VARCHAR}
+			or p_language_one like
+			#{findName,jdbcType=VARCHAR}
+			or p_language_two
+			like
+			#{findName,jdbcType=VARCHAR}
+			or
+			p_major_one like
+			#{findName,jdbcType=VARCHAR}
+			or p_major_two like
+			#{findName,jdbcType=VARCHAR}
+			or p_welfare like
+			#{findName,jdbcType=VARCHAR}
+			or p_keyworld like
+			#{findName,jdbcType=VARCHAR}
+			or p_max_salary like
+			#{findName,jdbcType=VARCHAR}
+			or dept like
+			#{findName,jdbcType=VARCHAR}
+			or p_province like
+			#{findName,jdbcType=VARCHAR}
+			or p_area like
+			#{findName,jdbcType=VARCHAR}
+			or p_responsibility like
+			#{findName,jdbcType=VARCHAR}
+			or p_qualification like
+			#{findName,jdbcType=VARCHAR}
+			or company_type_one like
+			#{findName,jdbcType=VARCHAR}
+			or special like
+			#{findName,jdbcType=VARCHAR}
+			or campus_recruitment like
+			#{findName,jdbcType=VARCHAR}
+			or
+			post_type like
+			#{findName,jdbcType=VARCHAR})
+
+		</if>
+		<if test="pEducation != null and pEducation != '' ">
+			and p_education=#{pEducation , jdbcType=VARCHAR}
+		</if>
+		<if test="pServiceLong != null and pServiceLong != ''">
+			and p_service_long=#{pServiceLong , jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="getPostReleaseByConditionOr" resultMap="BaseResultMap">
+		select * from
+		post_release where
+		c_user_name like #{findName,jdbcType=VARCHAR}
+		or
+		c_company_name like
+		#{findName,jdbcType=VARCHAR}
+		or p_name like
+		#{findName,jdbcType=VARCHAR}
+		or p_number like
+		#{findName,jdbcType=VARCHAR}
+		or p_size like
+		#{findName,jdbcType=VARCHAR}
+		or p_city like
+		#{findName,jdbcType=VARCHAR}
+		or p_address like
+		#{findName,jdbcType=VARCHAR}
+		or p_type_one like
+		#{findName,jdbcType=VARCHAR}
+		or
+		p_tyoe_two like
+		#{findName,jdbcType=VARCHAR}
+		or p_service_long like
+		#{findName,jdbcType=VARCHAR}
+		or p_min_salary like
+		#{findName,jdbcType=VARCHAR}
+		or p_education like
+		#{findName,jdbcType=VARCHAR}
+		or p_age like
+		#{findName,jdbcType=VARCHAR}
+		or p_language_one like
+		#{findName,jdbcType=VARCHAR}
+		or p_language_two
+		like
+		#{findName,jdbcType=VARCHAR}
+		or
+		p_major_one like
+		#{findName,jdbcType=VARCHAR}
+		or p_major_two like
+		#{findName,jdbcType=VARCHAR}
+		or p_welfare like
+		#{findName,jdbcType=VARCHAR}
+		or p_keyworld like
+		#{findName,jdbcType=VARCHAR}
+		or p_max_salary like
+		#{findName,jdbcType=VARCHAR}
+		or dept like
+		#{findName,jdbcType=VARCHAR}
+		or p_province like
+		#{findName,jdbcType=VARCHAR}
+		or p_area like
+		#{findName,jdbcType=VARCHAR}
+		or p_responsibility like
+		#{findName,jdbcType=VARCHAR}
+		or p_qualification like
+		#{findName,jdbcType=VARCHAR}
+		or company_type_one like
+		#{findName,jdbcType=VARCHAR}
+		or special like
+		#{findName,jdbcType=VARCHAR}
+		or campus_recruitment like
+		#{findName,jdbcType=VARCHAR}
+		or
+		post_type like
+		#{findName,jdbcType=VARCHAR}
+	</select>
+
+	<resultMap id="ParyResultMap" type="java.util.Map">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<!-- <result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" 
+			/> <result column="p_name" jdbcType="VARCHAR" property="pName" /> <result 
+			column="p_tyoe_two" jdbcType="VARCHAR" property="pTyoeTwo" /> <result column="p_city" 
+			jdbcType="VARCHAR" property="pCity" /> <result column="p_max_salary" jdbcType="VARCHAR" 
+			property="pMaxSalary" /> <result column="p_min_salary" jdbcType="VARCHAR" 
+			property="pMinSalary" /> <result column="c_company_logo" jdbcType="VARCHAR" 
+			property="cCompanyLogo" /> <result column="c_id" jdbcType="INTEGER" property="cId" 
+			/> <result column="post_type" jdbcType="VARCHAR" property="postType" /> -->
+		<result column="c_user_name" jdbcType="VARCHAR" property="cUserName" />
+		<result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" />
+		<result column="p_name" jdbcType="VARCHAR" property="pName" />
+		<result column="p_number" jdbcType="VARCHAR" property="pNumber" />
+		<result column="p_size" jdbcType="VARCHAR" property="pSize" />
+		<result column="p_city" jdbcType="VARCHAR" property="pCity" />
+		<result column="p_address" jdbcType="VARCHAR" property="pAddress" />
+		<result column="p_type_one" jdbcType="VARCHAR" property="pTypeOne" />
+		<result column="p_tyoe_two" jdbcType="VARCHAR" property="pTyoeTwo" />
+		<result column="p_service_long" jdbcType="VARCHAR" property="pServiceLong" />
+		<result column="p_min_salary" jdbcType="VARCHAR" property="pMinSalary" />
+		<result column="p_education" jdbcType="VARCHAR" property="pEducation" />
+		<result column="p_age" jdbcType="VARCHAR" property="pAge" />
+		<result column="p_language_one" jdbcType="VARCHAR" property="pLanguageOne" />
+		<result column="p_language_two" jdbcType="VARCHAR" property="pLanguageTwo" />
+		<result column="p_major_one" jdbcType="VARCHAR" property="pMajorOne" />
+		<result column="p_major_two" jdbcType="VARCHAR" property="pMajorTwo" />
+		<result column="p_welfare" jdbcType="VARCHAR" property="pWelfare" />
+		<result column="p_keyworld" jdbcType="VARCHAR" property="pKeyworld" />
+		<result column="p_start_time" jdbcType="TIMESTAMP" property="pStartTime" />
+		<result column="p_refresh_time" jdbcType="TIMESTAMP" property="pRefreshTime" />
+		<result column="p_end_time" jdbcType="TIMESTAMP" property="pEndTime" />
+		<result column="clicks" jdbcType="INTEGER" property="clicks" />
+		<result column="p_max_salary" jdbcType="VARCHAR" property="pMaxSalary" />
+		<result column="dept" jdbcType="VARCHAR" property="dept" />
+		<result column="p_province" jdbcType="VARCHAR" property="pProvince" />
+		<result column="p_area" jdbcType="VARCHAR" property="pArea" />
+		<result column="p_responsibility" jdbcType="VARCHAR" property="pResponsibility" />
+		<result column="p_qualification" jdbcType="VARCHAR" property="pQualification" />
+		<result column="find_name" jdbcType="VARCHAR" property="findName" />
+		<result column="get_resume_id" jdbcType="INTEGER" property="getResumeId" />
+		<result column="company_type_one" jdbcType="VARCHAR" property="companyTypeOne" />
+		<result column="c_id" jdbcType="INTEGER" property="cId" />
+		<result column="special" jdbcType="VARCHAR" property="special" />
+		<result column="c_company_logo" jdbcType="VARCHAR" property="cCompanyLogo" />
+		<result column="campus_recruitment" jdbcType="VARCHAR"
+			property="campusRecruitment" />
+		<result column="post_type" jdbcType="VARCHAR" property="postType" />
+	</resultMap>
+	<select id="selectInfo" resultMap="ParyResultMap">
+		select
+		id,c_company_name,p_name,p_type_one,p_tyoe_two,p_size,c_company_logo,c_id,p_city,p_max_salary,p_min_salary,post_type,p_address,p_tyoe_two,p_start_time
+		from
+		post_release
+		<where>
+			<if test="id != null">
+				id = #{id , jdbcType=INTEGER}
+			</if>
+			<if test="cUserName != null">
+				c_user_name = #{cUserName,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyName != null">
+				c_company_name = #{cCompanyName,jdbcType=VARCHAR}
+			</if>
+			<if test="pName != null">
+				p_name = #{pName,jdbcType=VARCHAR}
+			</if>
+			<if test="pNumber != null">
+				p_number = #{pNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="pSize != null">
+				p_size = #{pSize,jdbcType=VARCHAR}
+			</if>
+			<if test="pCity != null">
+				p_city = #{pCity,jdbcType=VARCHAR}
+			</if>
+			<if test="pAddress != null">
+				p_address = #{pAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="pTypeOne != null">
+				p_type_one = #{pTypeOne,jdbcType=VARCHAR}
+			</if>
+			<if test="pTyoeTwo != null">
+				p_tyoe_two = #{pTyoeTwo,jdbcType=VARCHAR}
+			</if>
+			<if test="pServiceLong != null">
+				p_service_long = #{pServiceLong,jdbcType=VARCHAR}
+			</if>
+			<if test="pMinSalary != null">
+				p_min_salary = #{pMinSalary,jdbcType=VARCHAR}
+			</if>
+			<if test="pEducation != null">
+				p_education = #{pEducation,jdbcType=VARCHAR}
+			</if>
+			<if test="pAge != null">
+				p_age = #{pAge,jdbcType=VARCHAR}
+			</if>
+			<if test="pLanguageOne != null">
+				p_language_one = #{pLanguageOne,jdbcType=VARCHAR}
+			</if>
+			<if test="pLanguageTwo != null">
+				p_language_two = #{pLanguageTwo,jdbcType=VARCHAR}
+			</if>
+			<if test="pMajorOne != null">
+				p_major_one = #{pMajorOne,jdbcType=VARCHAR}
+			</if>
+			<if test="pMajorTwo != null">
+				p_major_two = #{pMajorTwo,jdbcType=VARCHAR}
+			</if>
+			<if test="pWelfare != null">
+				p_welfare = #{pWelfare,jdbcType=VARCHAR}
+			</if>
+			<if test="pKeyworld != null">
+				p_keyworld = #{pKeyworld,jdbcType=VARCHAR}
+			</if>
+			<if test="pStartTime != null">
+				p_start_time = #{pStartTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="pRefreshTime != null">
+				p_refresh_time = #{pRefreshTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="pEndTime != null">
+				p_end_time = #{pEndTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="clicks != null">
+				clicks = #{clicks,jdbcType=INTEGER}
+			</if>
+			<if test="pMaxSalary != null">
+				p_max_salary = #{pMaxSalary,jdbcType=VARCHAR}
+			</if>
+			<if test="dept != null">
+				dept = #{dept,jdbcType=VARCHAR}
+			</if>
+			<if test="pProvince != null">
+				p_province = #{pProvince,jdbcType=VARCHAR}
+			</if>
+			<if test="pArea != null">
+				p_area = #{pArea,jdbcType=VARCHAR}
+			</if>
+			<if test="pResponsibility != null">
+				p_responsibility = #{pResponsibility,jdbcType=VARCHAR}
+			</if>
+			<if test="pQualification != null">
+				p_qualification = #{pQualification,jdbcType=VARCHAR}
+			</if>
+			<if test="findName != null">
+				find_name = #{findName,jdbcType=VARCHAR}
+			</if>
+			<if test="getResumeId != null">
+				get_resume_id = #{getResumeId,jdbcType=INTEGER}
+			</if>
+			<if test="companyTypeOne != null">
+				company_type_one = #{companyTypeOne,jdbcType=VARCHAR}
+			</if>
+			<if test="cId != null">
+				c_id = #{cId,jdbcType=INTEGER}
+			</if>
+			<if test="special != null">
+				special = #{special,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyLogo != null">
+				c_company_logo = #{cCompanyLogo,jdbcType=VARCHAR}
+			</if>
+			<if test="campusRecruitment != null">
+				campus_recruitment =
+				#{campusRecruitment,jdbcType=VARCHAR}
+			</if>
+			<if test="postType != null">
+				post_type = #{postYype , jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.ResumeDynamicSQLMapper">
+	<resultMap id="BaseResultMap" type="net.zgysrc.www.bean.Resume">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="post_name" jdbcType="VARCHAR" property="postName" />
+		<result column="start_time" jdbcType="VARCHAR" property="startTime" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="birth_year" jdbcType="VARCHAR" property="birthYear" />
+		<result column="marital_status" jdbcType="VARCHAR" property="maritalStatus" />
+		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
+		<result column="country" jdbcType="VARCHAR" property="country" />
+		<result column="hukou" jdbcType="VARCHAR" property="hukou" />
+		<result column="user_state" jdbcType="VARCHAR" property="userState" />
+		<result column="want_industry" jdbcType="VARCHAR" property="wantIndustry" />
+		<result column="want_post" jdbcType="VARCHAR" property="wantPost" />
+		<result column="want_address" jdbcType="VARCHAR" property="wantAddress" />
+		<result column="want_salary" jdbcType="VARCHAR" property="wantSalary" />
+		<result column="now_salary" jdbcType="VARCHAR" property="nowSalary" />
+		<result column="old_company_name" jdbcType="VARCHAR" property="oldCompanyName" />
+		<result column="old_industry" jdbcType="VARCHAR" property="oldIndustry" />
+		<result column="old_post" jdbcType="VARCHAR" property="oldPost" />
+		<result column="old_address" jdbcType="VARCHAR" property="oldAddress" />
+		<result column="old_start_time" jdbcType="VARCHAR" property="oldStartTime" />
+		<result column="old_end_time" jdbcType="VARCHAR" property="oldEndTime" />
+		<result column="achievement" jdbcType="VARCHAR" property="achievement" />
+		<result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+		<result column="major_name" jdbcType="VARCHAR" property="majorName" />
+		<result column="edu_start_time" jdbcType="VARCHAR" property="eduStartTime" />
+		<result column="edu_end_time" jdbcType="VARCHAR" property="eduEndTime" />
+		<result column="education" jdbcType="VARCHAR" property="education" />
+		<result column="lauguage" jdbcType="VARCHAR" property="lauguage" />
+		<result column="evaluation" jdbcType="VARCHAR" property="evaluation" />
+		<result column="view_number" jdbcType="INTEGER" property="viewNumber" />
+		<result column="experience" jdbcType="VARCHAR" property="experience" />
+		<result column="self_evaluation" jdbcType="VARCHAR" property="selfEvaluation" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="undergraduate" jdbcType="VARCHAR" property="undergraduate" />
+		<result column="project_post" jdbcType="VARCHAR" property="projectPost" />
+		<result column="project_company" jdbcType="VARCHAR" property="projectCompany" />
+		<result column="project_info" jdbcType="VARCHAR" property="projectInfo" />
+		<result column="project_duty" jdbcType="VARCHAR" property="projectDuty" />
+		<result column="project_performance" jdbcType="VARCHAR"
+			property="projectPerformance" />
+		<result column="project_name" jdbcType="VARCHAR" property="projectName" />
+		<result column="project_start_time" jdbcType="VARCHAR"
+			property="projectStartTime" />
+		<result column="project_end_time" jdbcType="VARCHAR" property="projectEndTime" />
+		<result column="we_company_name" jdbcType="VARCHAR" property="weCompanyName" />
+		<result column="we_company_industry" jdbcType="VARCHAR"
+			property="weCompanyIndustry" />
+		<result column="we_post_name" jdbcType="VARCHAR" property="wePostName" />
+		<result column="we_address" jdbcType="VARCHAR" property="weAddress" />
+		<result column="we_start_time" jdbcType="VARCHAR" property="weStartTime" />
+		<result column="we_end_time" jdbcType="VARCHAR" property="weEndTime" />
+		<result column="we_duty_performance" jdbcType="VARCHAR"
+			property="weDutyPerformance" />
+		<result column="user_style" jdbcType="VARCHAR" property="userStyle" />
+	</resultMap>
+
+
+	<resultMap id="DynamicResultMap" type="java.util.Map">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="sex" jdbcType="VARCHAR" property="sex" />
+		<result column="post_name" jdbcType="VARCHAR" property="postName" />
+		<result column="start_time" jdbcType="VARCHAR" property="startTime" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
+		<result column="birth_year" jdbcType="VARCHAR" property="birthYear" />
+		<result column="marital_status" jdbcType="VARCHAR" property="maritalStatus" />
+		<result column="mobile" jdbcType="VARCHAR" property="mobile" />
+		<result column="country" jdbcType="VARCHAR" property="country" />
+		<result column="hukou" jdbcType="VARCHAR" property="hukou" />
+		<result column="user_state" jdbcType="VARCHAR" property="userState" />
+		<result column="want_industry" jdbcType="VARCHAR" property="wantIndustry" />
+		<result column="want_post" jdbcType="VARCHAR" property="wantPost" />
+		<result column="want_address" jdbcType="VARCHAR" property="wantAddress" />
+		<result column="want_salary" jdbcType="VARCHAR" property="wantSalary" />
+		<result column="now_salary" jdbcType="VARCHAR" property="nowSalary" />
+		<result column="old_company_name" jdbcType="VARCHAR" property="oldCompanyName" />
+		<result column="old_industry" jdbcType="VARCHAR" property="oldIndustry" />
+		<result column="old_post" jdbcType="VARCHAR" property="oldPost" />
+		<result column="old_address" jdbcType="VARCHAR" property="oldAddress" />
+		<result column="old_start_time" jdbcType="VARCHAR" property="oldStartTime" />
+		<result column="old_end_time" jdbcType="VARCHAR" property="oldEndTime" />
+		<result column="achievement" jdbcType="VARCHAR" property="achievement" />
+		<result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+		<result column="major_name" jdbcType="VARCHAR" property="majorName" />
+		<result column="edu_start_time" jdbcType="VARCHAR" property="eduStartTime" />
+		<result column="edu_end_time" jdbcType="VARCHAR" property="eduEndTime" />
+		<result column="education" jdbcType="VARCHAR" property="education" />
+		<result column="lauguage" jdbcType="VARCHAR" property="lauguage" />
+		<result column="evaluation" jdbcType="VARCHAR" property="evaluation" />
+		<result column="view_number" jdbcType="INTEGER" property="viewNumber" />
+		<result column="experience" jdbcType="VARCHAR" property="experience" />
+		<result column="self_evaluation" jdbcType="VARCHAR" property="selfEvaluation" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="undergraduate" jdbcType="VARCHAR" property="undergraduate" />
+		<result column="project_post" jdbcType="VARCHAR" property="projectPost" />
+		<result column="project_company" jdbcType="VARCHAR" property="projectCompany" />
+		<result column="project_info" jdbcType="VARCHAR" property="projectInfo" />
+		<result column="project_duty" jdbcType="VARCHAR" property="projectDuty" />
+		<result column="project_performance" jdbcType="VARCHAR"
+			property="projectPerformance" />
+		<result column="project_name" jdbcType="VARCHAR" property="projectName" />
+		<result column="project_start_time" jdbcType="VARCHAR"
+			property="projectStartTime" />
+		<result column="project_end_time" jdbcType="VARCHAR" property="projectEndTime" />
+		<result column="we_company_name" jdbcType="VARCHAR" property="weCompanyName" />
+		<result column="we_company_industry" jdbcType="VARCHAR"
+			property="weCompanyIndustry" />
+		<result column="we_post_name" jdbcType="VARCHAR" property="wePostName" />
+		<result column="we_address" jdbcType="VARCHAR" property="weAddress" />
+		<result column="we_start_time" jdbcType="VARCHAR" property="weStartTime" />
+		<result column="we_end_time" jdbcType="VARCHAR" property="weEndTime" />
+		<result column="we_duty_performance" jdbcType="VARCHAR"
+			property="weDutyPerformance" />
+		<result column="user_style" jdbcType="VARCHAR" property="userStyle" />
+	</resultMap>
+
+	<select id="selectByLessInfo" resultMap="DynamicResultMap">
+		select
+		id,school_name,major_name,edu_start_time,education,city
+		from
+		resume
+		<where>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR}
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR}
+			</if>
+			<if test="postName != null">
+				post_name = #{postName,jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=VARCHAR}
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="birthYear != null">
+				birth_year = #{birthYear,jdbcType=VARCHAR}
+			</if>
+			<if test="maritalStatus != null">
+				marital_status = #{maritalStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR}
+			</if>
+			<if test="hukou != null">
+				hukou = #{hukou,jdbcType=VARCHAR}
+			</if>
+			<if test="userState != null">
+				user_state = #{userState,jdbcType=VARCHAR}
+			</if>
+			<if test="wantIndustry != null">
+				want_industry = #{wantIndustry,jdbcType=VARCHAR}
+			</if>
+			<if test="wantPost != null">
+				want_post = #{wantPost,jdbcType=VARCHAR}
+			</if>
+			<if test="wantAddress != null">
+				want_address = #{wantAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="wantSalary != null">
+				want_salary = #{wantSalary,jdbcType=VARCHAR}
+			</if>
+			<if test="nowSalary != null">
+				now_salary = #{nowSalary,jdbcType=VARCHAR}
+			</if>
+			<if test="oldCompanyName != null">
+				old_company_name = #{oldCompanyName,jdbcType=VARCHAR}
+			</if>
+			<if test="oldIndustry != null">
+				old_industry = #{oldIndustry,jdbcType=VARCHAR}
+			</if>
+			<if test="oldPost != null">
+				old_post = #{oldPost,jdbcType=VARCHAR}
+			</if>
+			<if test="oldAddress != null">
+				old_address = #{oldAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="oldStartTime != null">
+				old_start_time = #{oldStartTime,jdbcType=VARCHAR}
+			</if>
+			<if test="oldEndTime != null">
+				old_end_time = #{oldEndTime,jdbcType=VARCHAR}
+			</if>
+			<if test="achievement != null">
+				achievement = #{achievement,jdbcType=VARCHAR}
+			</if>
+			<if test="schoolName != null">
+				school_name = #{schoolName,jdbcType=VARCHAR}
+			</if>
+			<if test="majorName != null">
+				major_name = #{majorName,jdbcType=VARCHAR}
+			</if>
+			<if test="eduStartTime != null">
+				edu_start_time = #{eduStartTime,jdbcType=VARCHAR}
+			</if>
+			<if test="eduEndTime != null">
+				edu_end_time = #{eduEndTime,jdbcType=VARCHAR}
+			</if>
+			<if test="education != null">
+				education = #{education,jdbcType=VARCHAR}
+			</if>
+			<if test="lauguage != null">
+				lauguage = #{lauguage,jdbcType=VARCHAR}
+			</if>
+			<if test="evaluation != null">
+				evaluation = #{evaluation,jdbcType=VARCHAR}
+			</if>
+			<if test="viewNumber != null">
+				view_number = #{viewNumber,jdbcType=INTEGER}
+			</if>
+			<if test="experience != null">
+				experience = #{experience,jdbcType=VARCHAR}
+			</if>
+			<if test="selfEvaluation != null">
+				self_evaluation = #{selfEvaluation,jdbcType=VARCHAR}
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR}
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="undergraduate != null">
+				undergraduate = #{undergraduate,jdbcType=VARCHAR}
+			</if>
+			<if test="projectPost != null">
+				project_post = #{projectPost,jdbcType=VARCHAR}
+			</if>
+			<if test="projectCompany != null">
+				project_company = #{projectCompany,jdbcType=VARCHAR}
+			</if>
+			<if test="projectInfo != null">
+				project_info = #{projectInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="projectDuty != null">
+				project_duty = #{projectDuty,jdbcType=VARCHAR}
+			</if>
+			<if test="projectPerformance != null">
+				project_performance =
+				#{projectPerformance,jdbcType=VARCHAR}
+			</if>
+			<if test="projectName != null">
+				project_name = #{projectName,jdbcType=VARCHAR}
+			</if>
+			<if test="projectStartTime != null">
+				project_start_time = #{projectStartTime,jdbcType=VARCHAR}
+			</if>
+			<if test="projectEndTime != null">
+				project_end_time = #{projectEndTime,jdbcType=VARCHAR}
+			</if>
+			<if test="weCompanyName != null">
+				we_company_name = #{weCompanyName,jdbcType=VARCHAR}
+			</if>
+			<if test="weCompanyIndustry != null">
+				we_company_industry =
+				#{weCompanyIndustry,jdbcType=VARCHAR}
+			</if>
+			<if test="wePostName != null">
+				we_post_name = #{wePostName,jdbcType=VARCHAR}
+			</if>
+			<if test="weAddress != null">
+				we_address = #{weAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="weStartTime != null">
+				we_start_time = #{weStartTime,jdbcType=VARCHAR}
+			</if>
+			<if test="weEndTime != null">
+				we_end_time = #{weEndTime,jdbcType=VARCHAR}
+			</if>
+			<if test="weDutyPerformance != null">
+				we_duty_performance =
+				#{weDutyPerformance,jdbcType=VARCHAR}
+			</if>
+			<if test="userStyle != null">
+				user_style = #{userStyle,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

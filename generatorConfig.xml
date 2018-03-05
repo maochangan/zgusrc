@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="DB2Tables" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/zgysrc" userId="root"
+			password="root">
+		</jdbcConnection>
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="net.zgysrc.www.bean"
+			targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="net.zgysrc.www.mapper"
+			targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="net.zgysrc.www.dao" targetProject=".\src\main\java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table tableName="company_info" domainObjectName="CompanyInfo"></table>
+		<table tableName="company_type" domainObjectName="CompanyType"></table>
+		<table tableName="company_user" domainObjectName="CompanyUser"></table>
+		<table tableName="industry_category" domainObjectName="IndustryCategory"></table>
+		<table tableName="position_name" domainObjectName="PositionName"></table>
+		<table tableName="post_release" domainObjectName="PostRelease"></table>
+		<table tableName="postiton_type" domainObjectName="PostitonType"></table>
+		<table tableName="mobile_code" domainObjectName="MobileCode"></table>
+		<table tableName="simple_user" domainObjectName="SimpleUser"></table>
+		<table tableName="image_info" domainObjectName="ImageInfo"></table>
+		<table tableName="resume" domainObjectName="Resume"></table>
+		<table tableName="hat_area" domainObjectName="HatArea"></table>
+		<table tableName="hat_city" domainObjectName="HatCity"></table>
+		<table tableName="hat_province" domainObjectName="HatProvince"></table>
+		<table tableName="get_resume" domainObjectName="GetResume"></table>
+		<table tableName="follow_list" domainObjectName="FollowList"></table>
+		<table tableName="carousel_pic" domainObjectName="CarouselPic"></table>
+		<table tableName="art_gallery" domainObjectName="ArtGallery"></table>
+		<table tableName="art_comment" domainObjectName="ArtComment"></table>
+		<table tableName="book_list" domainObjectName="BookList"></table>
+		<table tableName="book_info" domainObjectName="BookInfo"></table>
+		<table tableName="book_comment" domainObjectName="BookComment"></table>
+		<table tableName="article" domainObjectName="Article"></table>
+		<table tableName="article_list" domainObjectName="ArticleList"></table>
+		<table tableName="collection_post" domainObjectName="CollectionPost"></table>
+		<table tableName="art_pic_info" domainObjectName="ArtPicInfo"></table>
+		<table tableName="admin_user" domainObjectName="AdminUser"></table>
+		<table tableName="qualification_certification" domainObjectName="AualificationCertification"></table>
+		<table tableName="dean_info" domainObjectName="DeanInfo"></table>
+		<table tableName="book_types" domainObjectName="BookTypes"></table>
+		<table tableName="company_types" domainObjectName="CompanyTypes"></table>
+		
+		<table tableName="book_price" domainObjectName="BookPrice"></table>
+		<table tableName="company_vip" domainObjectName="CompanyVip"></table>
+		<table tableName="simple_price" domainObjectName="SimplePrice"></table>
+		
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.CompanyInfoMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.CompanyInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_user_name" jdbcType="VARCHAR" property="cUserName" />
+    <result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" />
+    <result column="c_company_type_one" jdbcType="VARCHAR" property="cCompanyTypeOne" />
+    <result column="c_industry_category" jdbcType="VARCHAR" property="cIndustryCategory" />
+    <result column="c_province" jdbcType="VARCHAR" property="cProvince" />
+    <result column="c_company_address" jdbcType="VARCHAR" property="cCompanyAddress" />
+    <result column="c_postal_code" jdbcType="VARCHAR" property="cPostalCode" />
+    <result column="c_company_abbreviation" jdbcType="VARCHAR" property="cCompanyAbbreviation" />
+    <result column="c_company_size" jdbcType="VARCHAR" property="cCompanySize" />
+    <result column="c_company_type_two" jdbcType="VARCHAR" property="cCompanyTypeTwo" />
+    <result column="c_company_index" jdbcType="VARCHAR" property="cCompanyIndex" />
+    <result column="c_company_email" jdbcType="VARCHAR" property="cCompanyEmail" />
+    <result column="c_company_info" jdbcType="VARCHAR" property="cCompanyInfo" />
+    <result column="c_company_logo" jdbcType="VARCHAR" property="cCompanyLogo" />
+    <result column="c_company_pic" jdbcType="VARCHAR" property="cCompanyPic" />
+    <result column="c_sitting" jdbcType="VARCHAR" property="cSitting" />
+    <result column="c_ac" jdbcType="VARCHAR" property="cAc" />
+    <result column="top" jdbcType="VARCHAR" property="top" />
+    <result column="c_company_phone" jdbcType="VARCHAR" property="cCompanyPhone" />
+    <result column="clicks" jdbcType="INTEGER" property="clicks" />
+    <result column="hot_or_not" jdbcType="VARCHAR" property="hotOrNot" />
+    <result column="c_city" jdbcType="VARCHAR" property="cCity" />
+    <result column="c_area" jdbcType="VARCHAR" property="cArea" />
+    <result column="c_chaoping" jdbcType="VARCHAR" property="cChaoping" />
+    <result column="c_school" jdbcType="VARCHAR" property="cSchool" />
+    <result column="business_license" jdbcType="CHAR" property="businessLicense" />
+    <result column="registe_time" jdbcType="VARCHAR" property="registeTime" />
+    <result column="vip_type" jdbcType="VARCHAR" property="vipType" />
+    <result column="coll_num" jdbcType="INTEGER" property="collNum" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, c_user_name, c_company_name, c_company_type_one, c_industry_category, c_province, 
+    c_company_address, c_postal_code, c_company_abbreviation, c_company_size, c_company_type_two, 
+    c_company_index, c_company_email, c_company_info, c_company_logo, c_company_pic, 
+    c_sitting, c_ac, top, c_company_phone, clicks, hot_or_not, c_city, c_area, c_chaoping, 
+    c_school, business_license, registe_time, vip_type, coll_num
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.CompanyInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from company_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from company_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from company_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.CompanyInfoExample">
+    delete from company_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.CompanyInfo">
+    insert into company_info (id, c_user_name, c_company_name, 
+      c_company_type_one, c_industry_category, c_province, 
+      c_company_address, c_postal_code, c_company_abbreviation, 
+      c_company_size, c_company_type_two, c_company_index, 
+      c_company_email, c_company_info, c_company_logo, 
+      c_company_pic, c_sitting, c_ac, 
+      top, c_company_phone, clicks, 
+      hot_or_not, c_city, c_area, 
+      c_chaoping, c_school, business_license, 
+      registe_time, vip_type, coll_num
+      )
+    values (#{id,jdbcType=INTEGER}, #{cUserName,jdbcType=VARCHAR}, #{cCompanyName,jdbcType=VARCHAR}, 
+      #{cCompanyTypeOne,jdbcType=VARCHAR}, #{cIndustryCategory,jdbcType=VARCHAR}, #{cProvince,jdbcType=VARCHAR}, 
+      #{cCompanyAddress,jdbcType=VARCHAR}, #{cPostalCode,jdbcType=VARCHAR}, #{cCompanyAbbreviation,jdbcType=VARCHAR}, 
+      #{cCompanySize,jdbcType=VARCHAR}, #{cCompanyTypeTwo,jdbcType=VARCHAR}, #{cCompanyIndex,jdbcType=VARCHAR}, 
+      #{cCompanyEmail,jdbcType=VARCHAR}, #{cCompanyInfo,jdbcType=VARCHAR}, #{cCompanyLogo,jdbcType=VARCHAR}, 
+      #{cCompanyPic,jdbcType=VARCHAR}, #{cSitting,jdbcType=VARCHAR}, #{cAc,jdbcType=VARCHAR}, 
+      #{top,jdbcType=VARCHAR}, #{cCompanyPhone,jdbcType=VARCHAR}, #{clicks,jdbcType=INTEGER}, 
+      #{hotOrNot,jdbcType=VARCHAR}, #{cCity,jdbcType=VARCHAR}, #{cArea,jdbcType=VARCHAR}, 
+      #{cChaoping,jdbcType=VARCHAR}, #{cSchool,jdbcType=VARCHAR}, #{businessLicense,jdbcType=CHAR}, 
+      #{registeTime,jdbcType=VARCHAR}, #{vipType,jdbcType=VARCHAR}, #{collNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.CompanyInfo">
+    insert into company_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cUserName != null">
+        c_user_name,
+      </if>
+      <if test="cCompanyName != null">
+        c_company_name,
+      </if>
+      <if test="cCompanyTypeOne != null">
+        c_company_type_one,
+      </if>
+      <if test="cIndustryCategory != null">
+        c_industry_category,
+      </if>
+      <if test="cProvince != null">
+        c_province,
+      </if>
+      <if test="cCompanyAddress != null">
+        c_company_address,
+      </if>
+      <if test="cPostalCode != null">
+        c_postal_code,
+      </if>
+      <if test="cCompanyAbbreviation != null">
+        c_company_abbreviation,
+      </if>
+      <if test="cCompanySize != null">
+        c_company_size,
+      </if>
+      <if test="cCompanyTypeTwo != null">
+        c_company_type_two,
+      </if>
+      <if test="cCompanyIndex != null">
+        c_company_index,
+      </if>
+      <if test="cCompanyEmail != null">
+        c_company_email,
+      </if>
+      <if test="cCompanyInfo != null">
+        c_company_info,
+      </if>
+      <if test="cCompanyLogo != null">
+        c_company_logo,
+      </if>
+      <if test="cCompanyPic != null">
+        c_company_pic,
+      </if>
+      <if test="cSitting != null">
+        c_sitting,
+      </if>
+      <if test="cAc != null">
+        c_ac,
+      </if>
+      <if test="top != null">
+        top,
+      </if>
+      <if test="cCompanyPhone != null">
+        c_company_phone,
+      </if>
+      <if test="clicks != null">
+        clicks,
+      </if>
+      <if test="hotOrNot != null">
+        hot_or_not,
+      </if>
+      <if test="cCity != null">
+        c_city,
+      </if>
+      <if test="cArea != null">
+        c_area,
+      </if>
+      <if test="cChaoping != null">
+        c_chaoping,
+      </if>
+      <if test="cSchool != null">
+        c_school,
+      </if>
+      <if test="businessLicense != null">
+        business_license,
+      </if>
+      <if test="registeTime != null">
+        registe_time,
+      </if>
+      <if test="vipType != null">
+        vip_type,
+      </if>
+      <if test="collNum != null">
+        coll_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cUserName != null">
+        #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyName != null">
+        #{cCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyTypeOne != null">
+        #{cCompanyTypeOne,jdbcType=VARCHAR},
+      </if>
+      <if test="cIndustryCategory != null">
+        #{cIndustryCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="cProvince != null">
+        #{cProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyAddress != null">
+        #{cCompanyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cPostalCode != null">
+        #{cPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyAbbreviation != null">
+        #{cCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanySize != null">
+        #{cCompanySize,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyTypeTwo != null">
+        #{cCompanyTypeTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyIndex != null">
+        #{cCompanyIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyEmail != null">
+        #{cCompanyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyInfo != null">
+        #{cCompanyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyLogo != null">
+        #{cCompanyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyPic != null">
+        #{cCompanyPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cSitting != null">
+        #{cSitting,jdbcType=VARCHAR},
+      </if>
+      <if test="cAc != null">
+        #{cAc,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null">
+        #{top,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyPhone != null">
+        #{cCompanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="clicks != null">
+        #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="hotOrNot != null">
+        #{hotOrNot,jdbcType=VARCHAR},
+      </if>
+      <if test="cCity != null">
+        #{cCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cArea != null">
+        #{cArea,jdbcType=VARCHAR},
+      </if>
+      <if test="cChaoping != null">
+        #{cChaoping,jdbcType=VARCHAR},
+      </if>
+      <if test="cSchool != null">
+        #{cSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        #{businessLicense,jdbcType=CHAR},
+      </if>
+      <if test="registeTime != null">
+        #{registeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="vipType != null">
+        #{vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="collNum != null">
+        #{collNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.CompanyInfoExample" resultType="java.lang.Long">
+    select count(*) from company_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update company_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.cUserName != null">
+        c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyName != null">
+        c_company_name = #{record.cCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyTypeOne != null">
+        c_company_type_one = #{record.cCompanyTypeOne,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cIndustryCategory != null">
+        c_industry_category = #{record.cIndustryCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cProvince != null">
+        c_province = #{record.cProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyAddress != null">
+        c_company_address = #{record.cCompanyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cPostalCode != null">
+        c_postal_code = #{record.cPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyAbbreviation != null">
+        c_company_abbreviation = #{record.cCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanySize != null">
+        c_company_size = #{record.cCompanySize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyTypeTwo != null">
+        c_company_type_two = #{record.cCompanyTypeTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyIndex != null">
+        c_company_index = #{record.cCompanyIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyEmail != null">
+        c_company_email = #{record.cCompanyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyInfo != null">
+        c_company_info = #{record.cCompanyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyLogo != null">
+        c_company_logo = #{record.cCompanyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyPic != null">
+        c_company_pic = #{record.cCompanyPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSitting != null">
+        c_sitting = #{record.cSitting,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cAc != null">
+        c_ac = #{record.cAc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.top != null">
+        top = #{record.top,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCompanyPhone != null">
+        c_company_phone = #{record.cCompanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clicks != null">
+        clicks = #{record.clicks,jdbcType=INTEGER},
+      </if>
+      <if test="record.hotOrNot != null">
+        hot_or_not = #{record.hotOrNot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cCity != null">
+        c_city = #{record.cCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cArea != null">
+        c_area = #{record.cArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cChaoping != null">
+        c_chaoping = #{record.cChaoping,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cSchool != null">
+        c_school = #{record.cSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicense != null">
+        business_license = #{record.businessLicense,jdbcType=CHAR},
+      </if>
+      <if test="record.registeTime != null">
+        registe_time = #{record.registeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vipType != null">
+        vip_type = #{record.vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collNum != null">
+        coll_num = #{record.collNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update company_info
+    set id = #{record.id,jdbcType=INTEGER},
+      c_user_name = #{record.cUserName,jdbcType=VARCHAR},
+      c_company_name = #{record.cCompanyName,jdbcType=VARCHAR},
+      c_company_type_one = #{record.cCompanyTypeOne,jdbcType=VARCHAR},
+      c_industry_category = #{record.cIndustryCategory,jdbcType=VARCHAR},
+      c_province = #{record.cProvince,jdbcType=VARCHAR},
+      c_company_address = #{record.cCompanyAddress,jdbcType=VARCHAR},
+      c_postal_code = #{record.cPostalCode,jdbcType=VARCHAR},
+      c_company_abbreviation = #{record.cCompanyAbbreviation,jdbcType=VARCHAR},
+      c_company_size = #{record.cCompanySize,jdbcType=VARCHAR},
+      c_company_type_two = #{record.cCompanyTypeTwo,jdbcType=VARCHAR},
+      c_company_index = #{record.cCompanyIndex,jdbcType=VARCHAR},
+      c_company_email = #{record.cCompanyEmail,jdbcType=VARCHAR},
+      c_company_info = #{record.cCompanyInfo,jdbcType=VARCHAR},
+      c_company_logo = #{record.cCompanyLogo,jdbcType=VARCHAR},
+      c_company_pic = #{record.cCompanyPic,jdbcType=VARCHAR},
+      c_sitting = #{record.cSitting,jdbcType=VARCHAR},
+      c_ac = #{record.cAc,jdbcType=VARCHAR},
+      top = #{record.top,jdbcType=VARCHAR},
+      c_company_phone = #{record.cCompanyPhone,jdbcType=VARCHAR},
+      clicks = #{record.clicks,jdbcType=INTEGER},
+      hot_or_not = #{record.hotOrNot,jdbcType=VARCHAR},
+      c_city = #{record.cCity,jdbcType=VARCHAR},
+      c_area = #{record.cArea,jdbcType=VARCHAR},
+      c_chaoping = #{record.cChaoping,jdbcType=VARCHAR},
+      c_school = #{record.cSchool,jdbcType=VARCHAR},
+      business_license = #{record.businessLicense,jdbcType=CHAR},
+      registe_time = #{record.registeTime,jdbcType=VARCHAR},
+      vip_type = #{record.vipType,jdbcType=VARCHAR},
+      coll_num = #{record.collNum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.CompanyInfo">
+    update company_info
+    <set>
+      <if test="cUserName != null">
+        c_user_name = #{cUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyName != null">
+        c_company_name = #{cCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyTypeOne != null">
+        c_company_type_one = #{cCompanyTypeOne,jdbcType=VARCHAR},
+      </if>
+      <if test="cIndustryCategory != null">
+        c_industry_category = #{cIndustryCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="cProvince != null">
+        c_province = #{cProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyAddress != null">
+        c_company_address = #{cCompanyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cPostalCode != null">
+        c_postal_code = #{cPostalCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyAbbreviation != null">
+        c_company_abbreviation = #{cCompanyAbbreviation,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanySize != null">
+        c_company_size = #{cCompanySize,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyTypeTwo != null">
+        c_company_type_two = #{cCompanyTypeTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyIndex != null">
+        c_company_index = #{cCompanyIndex,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyEmail != null">
+        c_company_email = #{cCompanyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyInfo != null">
+        c_company_info = #{cCompanyInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyLogo != null">
+        c_company_logo = #{cCompanyLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyPic != null">
+        c_company_pic = #{cCompanyPic,jdbcType=VARCHAR},
+      </if>
+      <if test="cSitting != null">
+        c_sitting = #{cSitting,jdbcType=VARCHAR},
+      </if>
+      <if test="cAc != null">
+        c_ac = #{cAc,jdbcType=VARCHAR},
+      </if>
+      <if test="top != null">
+        top = #{top,jdbcType=VARCHAR},
+      </if>
+      <if test="cCompanyPhone != null">
+        c_company_phone = #{cCompanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="clicks != null">
+        clicks = #{clicks,jdbcType=INTEGER},
+      </if>
+      <if test="hotOrNot != null">
+        hot_or_not = #{hotOrNot,jdbcType=VARCHAR},
+      </if>
+      <if test="cCity != null">
+        c_city = #{cCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cArea != null">
+        c_area = #{cArea,jdbcType=VARCHAR},
+      </if>
+      <if test="cChaoping != null">
+        c_chaoping = #{cChaoping,jdbcType=VARCHAR},
+      </if>
+      <if test="cSchool != null">
+        c_school = #{cSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        business_license = #{businessLicense,jdbcType=CHAR},
+      </if>
+      <if test="registeTime != null">
+        registe_time = #{registeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="vipType != null">
+        vip_type = #{vipType,jdbcType=VARCHAR},
+      </if>
+      <if test="collNum != null">
+        coll_num = #{collNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.CompanyInfo">
+    update company_info
+    set c_user_name = #{cUserName,jdbcType=VARCHAR},
+      c_company_name = #{cCompanyName,jdbcType=VARCHAR},
+      c_company_type_one = #{cCompanyTypeOne,jdbcType=VARCHAR},
+      c_industry_category = #{cIndustryCategory,jdbcType=VARCHAR},
+      c_province = #{cProvince,jdbcType=VARCHAR},
+      c_company_address = #{cCompanyAddress,jdbcType=VARCHAR},
+      c_postal_code = #{cPostalCode,jdbcType=VARCHAR},
+      c_company_abbreviation = #{cCompanyAbbreviation,jdbcType=VARCHAR},
+      c_company_size = #{cCompanySize,jdbcType=VARCHAR},
+      c_company_type_two = #{cCompanyTypeTwo,jdbcType=VARCHAR},
+      c_company_index = #{cCompanyIndex,jdbcType=VARCHAR},
+      c_company_email = #{cCompanyEmail,jdbcType=VARCHAR},
+      c_company_info = #{cCompanyInfo,jdbcType=VARCHAR},
+      c_company_logo = #{cCompanyLogo,jdbcType=VARCHAR},
+      c_company_pic = #{cCompanyPic,jdbcType=VARCHAR},
+      c_sitting = #{cSitting,jdbcType=VARCHAR},
+      c_ac = #{cAc,jdbcType=VARCHAR},
+      top = #{top,jdbcType=VARCHAR},
+      c_company_phone = #{cCompanyPhone,jdbcType=VARCHAR},
+      clicks = #{clicks,jdbcType=INTEGER},
+      hot_or_not = #{hotOrNot,jdbcType=VARCHAR},
+      c_city = #{cCity,jdbcType=VARCHAR},
+      c_area = #{cArea,jdbcType=VARCHAR},
+      c_chaoping = #{cChaoping,jdbcType=VARCHAR},
+      c_school = #{cSchool,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=CHAR},
+      registe_time = #{registeTime,jdbcType=VARCHAR},
+      vip_type = #{vipType,jdbcType=VARCHAR},
+      coll_num = #{collNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

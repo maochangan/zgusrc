@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.ArticleListMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.ArticleList">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="article_list_name" jdbcType="VARCHAR" property="articleListName" />
+    <result column="article_list_click_num" jdbcType="INTEGER" property="articleListClickNum" />
+    <result column="article_list_writer" jdbcType="VARCHAR" property="articleListWriter" />
+    <result column="article_list_create_time" jdbcType="VARCHAR" property="articleListCreateTime" />
+    <result column="article_list_father_id" jdbcType="INTEGER" property="articleListFatherId" />
+    <result column="article_Image_path" jdbcType="VARCHAR" property="articleImagePath" />
+    <result column="article_father_name" jdbcType="VARCHAR" property="articleFatherName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.zgysrc.www.bean.ArticleList">
+    <result column="article_info" jdbcType="LONGVARCHAR" property="articleInfo" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, article_list_name, article_list_click_num, article_list_writer, article_list_create_time, 
+    article_list_father_id, article_Image_path, article_father_name
+  </sql>
+  <sql id="Blob_Column_List">
+    article_info
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="net.zgysrc.www.bean.ArticleListExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.ArticleListExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article_list
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article_list
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.ArticleListExample">
+    delete from article_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.ArticleList">
+    insert into article_list (id, article_list_name, article_list_click_num, 
+      article_list_writer, article_list_create_time, 
+      article_list_father_id, article_Image_path, 
+      article_father_name, article_info)
+    values (#{id,jdbcType=INTEGER}, #{articleListName,jdbcType=VARCHAR}, #{articleListClickNum,jdbcType=INTEGER}, 
+      #{articleListWriter,jdbcType=VARCHAR}, #{articleListCreateTime,jdbcType=VARCHAR}, 
+      #{articleListFatherId,jdbcType=INTEGER}, #{articleImagePath,jdbcType=VARCHAR}, 
+      #{articleFatherName,jdbcType=VARCHAR}, #{articleInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.ArticleList">
+    insert into article_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="articleListName != null">
+        article_list_name,
+      </if>
+      <if test="articleListClickNum != null">
+        article_list_click_num,
+      </if>
+      <if test="articleListWriter != null">
+        article_list_writer,
+      </if>
+      <if test="articleListCreateTime != null">
+        article_list_create_time,
+      </if>
+      <if test="articleListFatherId != null">
+        article_list_father_id,
+      </if>
+      <if test="articleImagePath != null">
+        article_Image_path,
+      </if>
+      <if test="articleFatherName != null">
+        article_father_name,
+      </if>
+      <if test="articleInfo != null">
+        article_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="articleListName != null">
+        #{articleListName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListClickNum != null">
+        #{articleListClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="articleListWriter != null">
+        #{articleListWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListCreateTime != null">
+        #{articleListCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListFatherId != null">
+        #{articleListFatherId,jdbcType=INTEGER},
+      </if>
+      <if test="articleImagePath != null">
+        #{articleImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="articleFatherName != null">
+        #{articleFatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleInfo != null">
+        #{articleInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.ArticleListExample" resultType="java.lang.Long">
+    select count(*) from article_list
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update article_list
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleListName != null">
+        article_list_name = #{record.articleListName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleListClickNum != null">
+        article_list_click_num = #{record.articleListClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleListWriter != null">
+        article_list_writer = #{record.articleListWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleListCreateTime != null">
+        article_list_create_time = #{record.articleListCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleListFatherId != null">
+        article_list_father_id = #{record.articleListFatherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleImagePath != null">
+        article_Image_path = #{record.articleImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleFatherName != null">
+        article_father_name = #{record.articleFatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleInfo != null">
+        article_info = #{record.articleInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update article_list
+    set id = #{record.id,jdbcType=INTEGER},
+      article_list_name = #{record.articleListName,jdbcType=VARCHAR},
+      article_list_click_num = #{record.articleListClickNum,jdbcType=INTEGER},
+      article_list_writer = #{record.articleListWriter,jdbcType=VARCHAR},
+      article_list_create_time = #{record.articleListCreateTime,jdbcType=VARCHAR},
+      article_list_father_id = #{record.articleListFatherId,jdbcType=INTEGER},
+      article_Image_path = #{record.articleImagePath,jdbcType=VARCHAR},
+      article_father_name = #{record.articleFatherName,jdbcType=VARCHAR},
+      article_info = #{record.articleInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update article_list
+    set id = #{record.id,jdbcType=INTEGER},
+      article_list_name = #{record.articleListName,jdbcType=VARCHAR},
+      article_list_click_num = #{record.articleListClickNum,jdbcType=INTEGER},
+      article_list_writer = #{record.articleListWriter,jdbcType=VARCHAR},
+      article_list_create_time = #{record.articleListCreateTime,jdbcType=VARCHAR},
+      article_list_father_id = #{record.articleListFatherId,jdbcType=INTEGER},
+      article_Image_path = #{record.articleImagePath,jdbcType=VARCHAR},
+      article_father_name = #{record.articleFatherName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.ArticleList">
+    update article_list
+    <set>
+      <if test="articleListName != null">
+        article_list_name = #{articleListName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListClickNum != null">
+        article_list_click_num = #{articleListClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="articleListWriter != null">
+        article_list_writer = #{articleListWriter,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListCreateTime != null">
+        article_list_create_time = #{articleListCreateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="articleListFatherId != null">
+        article_list_father_id = #{articleListFatherId,jdbcType=INTEGER},
+      </if>
+      <if test="articleImagePath != null">
+        article_Image_path = #{articleImagePath,jdbcType=VARCHAR},
+      </if>
+      <if test="articleFatherName != null">
+        article_father_name = #{articleFatherName,jdbcType=VARCHAR},
+      </if>
+      <if test="articleInfo != null">
+        article_info = #{articleInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.zgysrc.www.bean.ArticleList">
+    update article_list
+    set article_list_name = #{articleListName,jdbcType=VARCHAR},
+      article_list_click_num = #{articleListClickNum,jdbcType=INTEGER},
+      article_list_writer = #{articleListWriter,jdbcType=VARCHAR},
+      article_list_create_time = #{articleListCreateTime,jdbcType=VARCHAR},
+      article_list_father_id = #{articleListFatherId,jdbcType=INTEGER},
+      article_Image_path = #{articleImagePath,jdbcType=VARCHAR},
+      article_father_name = #{articleFatherName,jdbcType=VARCHAR},
+      article_info = #{articleInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.ArticleList">
+    update article_list
+    set article_list_name = #{articleListName,jdbcType=VARCHAR},
+      article_list_click_num = #{articleListClickNum,jdbcType=INTEGER},
+      article_list_writer = #{articleListWriter,jdbcType=VARCHAR},
+      article_list_create_time = #{articleListCreateTime,jdbcType=VARCHAR},
+      article_list_father_id = #{articleListFatherId,jdbcType=INTEGER},
+      article_Image_path = #{articleImagePath,jdbcType=VARCHAR},
+      article_father_name = #{articleFatherName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

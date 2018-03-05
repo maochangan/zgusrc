@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.CompanyInfoDynamicSQLMapper">
+	<resultMap id="BaseResultMap" type="net.zgysrc.www.bean.CompanyInfo">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="c_user_name" jdbcType="VARCHAR" property="cUserName" />
+		<result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" />
+		<result column="c_company_type_one" jdbcType="VARCHAR"
+			property="cCompanyTypeOne" />
+		<result column="c_industry_category" jdbcType="VARCHAR"
+			property="cIndustryCategory" />
+		<result column="c_province" jdbcType="VARCHAR" property="cProvince" />
+		<result column="c_company_address" jdbcType="VARCHAR" property="cCompanyAddress" />
+		<result column="c_postal_code" jdbcType="VARCHAR" property="cPostalCode" />
+		<result column="c_company_abbreviation" jdbcType="VARCHAR"
+			property="cCompanyAbbreviation" />
+		<result column="c_company_size" jdbcType="VARCHAR" property="cCompanySize" />
+		<result column="c_company_type_two" jdbcType="VARCHAR"
+			property="cCompanyTypeTwo" />
+		<result column="c_company_index" jdbcType="VARCHAR" property="cCompanyIndex" />
+		<result column="c_company_email" jdbcType="VARCHAR" property="cCompanyEmail" />
+		<result column="c_company_info" jdbcType="VARCHAR" property="cCompanyInfo" />
+		<result column="c_company_logo" jdbcType="VARCHAR" property="cCompanyLogo" />
+		<result column="c_company_pic" jdbcType="VARCHAR" property="cCompanyPic" />
+		<result column="c_sitting" jdbcType="VARCHAR" property="cSitting" />
+		<result column="c_ac" jdbcType="VARCHAR" property="cAc" />
+		<result column="top" jdbcType="VARCHAR" property="top" />
+		<result column="c_company_phone" jdbcType="VARCHAR" property="cCompanyPhone" />
+		<result column="clicks" jdbcType="INTEGER" property="clicks" />
+		<result column="hot_or_not" jdbcType="VARCHAR" property="hotOrNot" />
+		<result column="c_city" jdbcType="VARCHAR" property="cCity" />
+		<result column="c_area" jdbcType="VARCHAR" property="cArea" />
+		<result column="c_chaoping" jdbcType="VARCHAR" property="cChaoping" />
+		<result column="c_school" jdbcType="VARCHAR" property="cSchool" />
+		<result column="business_license" jdbcType="CHAR" property="businessLicense" />
+		<result column="registe_time" jdbcType="VARCHAR" property="registeTime" />
+		<result column="vip_type" jdbcType="VARCHAR" property="vipType" />
+		<result column="like_num" jdbcType="INTEGER" property="likeNum" />
+	</resultMap>
+
+	<resultMap id="PartResultMap" type="java.util.HashMap">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="c_company_name" jdbcType="VARCHAR" property="cCompanyName" />
+		<result column="c_company_type_one" jdbcType="VARCHAR"
+			property="cCompanyTypeOne" />
+		<result column="c_industry_category" jdbcType="VARCHAR"
+			property="cIndustryCategory" />
+		<result column="c_province" jdbcType="VARCHAR" property="cProvince" />
+		<result column="c_company_address" jdbcType="VARCHAR" property="cCompanyAddress" />
+		<result column="c_company_size" jdbcType="VARCHAR" property="cCompanySize" />
+		<result column="c_company_index" jdbcType="VARCHAR" property="cCompanyIndex" />
+		<result column="c_company_logo" jdbcType="VARCHAR" property="cCompanyLogo" />
+		<result column="clicks" jdbcType="INTEGER" property="clicks" />
+		<result column="c_city" jdbcType="VARCHAR" property="cCity" />
+		<result column="c_sitting" jdbcType="VARCHAR" property="cSitting" />
+		<result column="c_area" jdbcType="VARCHAR" property="cArea" />
+	</resultMap>
+	<select id="selectInfo" resultMap="PartResultMap">
+		select id ,c_company_name ,c_company_type_one ,c_industry_category
+		,c_province ,c_company_address ,c_company_size
+		,c_company_index
+		,c_company_logo ,clicks ,c_city
+		,c_area,c_sitting
+		from company_info
+		<where>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="cUserName != null">
+				and c_user_name = #{cUserName,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyName != null">
+				and c_company_name = #{cCompanyName,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyTypeOne != null">
+				and c_company_type_one =
+				#{cCompanyTypeOne,jdbcType=VARCHAR}
+			</if>
+			<if test="cIndustryCategory != null">
+				and c_industry_category =
+				#{cIndustryCategory,jdbcType=VARCHAR}
+			</if>
+			<if test="cProvince != null">
+				and c_province = #{cProvince,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyAddress != null">
+				and c_company_address =
+				#{cCompanyAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="cPostalCode != null">
+				and c_postal_code = #{cPostalCode,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyAbbreviation != null">
+				and c_company_abbreviation =
+				#{cCompanyAbbreviation,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanySize != null">
+				and c_company_size = #{cCompanySize,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyTypeTwo != null">
+				and c_company_type_two =
+				#{cCompanyTypeTwo,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyIndex != null">
+				and c_company_index = #{cCompanyIndex,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyEmail != null">
+				and c_company_email = #{cCompanyEmail,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyInfo != null">
+				and c_company_info = #{cCompanyInfo,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyLogo != null">
+				and c_company_logo = #{cCompanyLogo,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyPic != null">
+				and c_company_pic = #{cCompanyPic,jdbcType=VARCHAR}
+			</if>
+			<if test="cSitting != null">
+				and c_sitting = #{cSitting,jdbcType=VARCHAR}
+			</if>
+			<if test="cAc != null">
+				and c_ac = #{cAc,jdbcType=VARCHAR}
+			</if>
+			<if test="top != null">
+				and top = #{top,jdbcType=VARCHAR}
+			</if>
+			<if test="cCompanyPhone != null">
+				and c_company_phone = #{cCompanyPhone,jdbcType=VARCHAR}
+			</if>
+			<if test="clicks != null">
+				and clicks = #{clicks,jdbcType=INTEGER}
+			</if>
+			<if test="hotOrNot != null">
+				and hot_or_not = #{hotOrNot,jdbcType=VARCHAR}
+			</if>
+			<if test="cCity != null">
+				and c_city = #{cCity,jdbcType=VARCHAR}
+			</if>
+			<if test="cArea != null">
+				and c_area = #{cArea,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<select id="selectInfoById" resultMap="PartResultMap">
+		select id ,c_company_name
+		,c_company_type_one ,c_industry_category
+		,c_province ,c_company_address
+		,c_company_size
+		,c_company_index
+		,c_company_info ,c_company_logo ,clicks
+		,c_city
+		,c_area
+		from company_info
+		where id = #{id , jdbcType=INTEGER}
+	</select>
+
+
+
+
+</mapper>

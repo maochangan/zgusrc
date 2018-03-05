@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.BookInfoDynamicSQLMapper">
+	<resultMap id="BaseResultMap" type="net.zgysrc.www.bean.BookInfo">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="book_name" jdbcType="VARCHAR" property="bookName" />
+		<result column="book_writer" jdbcType="VARCHAR" property="bookWriter" />
+		<result column="collection_num" jdbcType="INTEGER" property="collectionNum" />
+		<result column="click_num" jdbcType="INTEGER" property="clickNum" />
+		<result column="book_create_time" jdbcType="VARCHAR" property="bookCreateTime" />
+		<result column="book_info_image_path" jdbcType="VARCHAR"
+			property="bookInfoImagePath" />
+		<result column="index_info" jdbcType="VARCHAR" property="indexInfo" />
+	</resultMap>
+
+	<resultMap id="DynamicResultMap" type="java.util.HashMap">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="book_name" jdbcType="VARCHAR" property="bookName" />
+		<result column="book_info_image_path" jdbcType="VARCHAR"
+			property="bookInfoImagePath" />
+	</resultMap>
+
+	<select id="selectByBean" resultMap="DynamicResultMap">
+		select id,book_name,book_info_image_path
+		from book_info
+		<where>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="bookName != null">
+				book_name = #{bookName,jdbcType=VARCHAR}
+			</if>
+			<if test="bookWriter != null">
+				book_writer = #{bookWriter,jdbcType=VARCHAR}
+			</if>
+			<if test="collectionNum != null">
+				collection_num =
+				#{collectionNum,jdbcType=INTEGER}
+			</if>
+			<if test="clickNum != null">
+				click_num = #{clickNum,jdbcType=INTEGER}
+			</if>
+			<if test="bookCreateTime != null">
+				book_create_time =
+				#{bookCreateTime,jdbcType=VARCHAR}
+			</if>
+			<if test="bookInfoImagePath != null">
+				book_info_image_path =
+				#{bookInfoImagePath,jdbcType=VARCHAR}
+			</if>
+			<if test="indexInfo != null">
+				index_info = #{indexInfo,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+</mapper>
