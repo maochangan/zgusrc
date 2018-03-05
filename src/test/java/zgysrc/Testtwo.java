@@ -10,7 +10,6 @@ public class Testtwo {
 		String test = sbf.substring(sbf.indexOf("&") + 1, sbf.length());
 		System.out.println(uid);
 		System.out.println(test);
-		System.out.println("111122222");
 	}
 	
 }
