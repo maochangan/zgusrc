@@ -13,5 +13,4 @@ public class Testtwo {
 		System.out.println("111122222");
 	}
 	
-	
 }
