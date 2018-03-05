@@ -438,7 +438,7 @@ public class BookInfoController {
 		BookInfo bookInfo = bookInfoService.getBookInfoById(id);
 		PageHelper.startPage(pn, 1);
 		SimpleUser user = (SimpleUser) session.getAttribute("simpleUser");
-		if (bookInfo.getBookPrice().equals("0")) {
+		if ("0".equals(bookInfo.getBookPrice())) {
 			List<BookList> list = bookInfoService.getAllBookListByBook(id);
 			if (list == null) {
 				String msg = "无信息！";

@@ -47,11 +47,10 @@ public class AlipayController {
 	private AdminService adminService;
 	@Autowired
 	private CompanyUserService companyUserService;
-	
-	
+
 	/**
 	 * 
-	 * 支付请求  美术馆
+	 * 支付请求 美术馆
 	 * 
 	 * @param model
 	 * @param price
@@ -190,23 +189,24 @@ public class AlipayController {
 		String price = null;
 		String tName = null;
 		String picInfo = null;
-		if(list == null){
+		if (list == null) {
 			price = "30";
 			tName = "艺术人才网图书馆VIP会员";
 			picInfo = "艺术人才网图书馆VIP会员 ￥30/月";
-		}else{
+		} else {
 			price = list.get(0).getSimpleVipPrice();
 			tName = "艺术人才网图书馆VIP会员";
-			picInfo = "艺术人才网图书馆VIP会员 ￥"+ price +"/月";
+			picInfo = "艺术人才网图书馆VIP会员 ￥" + price + "/月";
 		}
-//		SimpleUser simpleUser = (SimpleUser) session.getAttribute("spriceimpleUser");
-		
+		// SimpleUser simpleUser = (SimpleUser)
+		// session.getAttribute("spriceimpleUser");
+
 		SimpleUser simpleUser = new SimpleUser();
 		simpleUser.setId(1);
-//		if (simpleUser == null) {
-//			String msg = "请登录！";
-//			return Msg.fail().add("msg", msg);
-//		}
+		// if (simpleUser == null) {
+		// String msg = "请登录！";
+		// return Msg.fail().add("msg", msg);
+		// }
 		AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
 				AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key,
 				AlipayConfig.sign_type);
@@ -216,7 +216,7 @@ public class AlipayController {
 		alipayRequest.setReturnUrl(AlipayConfig.vip_return_url);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		// 商户订单号，商户网站订单系统中唯一订单号，必填
-		String out_trade_no = sdf.format(new Date()) + "!" + simpleUser.getId() ;
+		String out_trade_no = sdf.format(new Date()) + "!" + simpleUser.getId();
 		// 付款金额，必填
 		String total_amount = price.replace(",", "");
 		alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\"" + total_amount
@@ -230,7 +230,7 @@ public class AlipayController {
 		out.print(result);
 		return null;
 	}
-	
+
 	/**
 	 * p2p后台返回的操作
 	 * 
@@ -247,9 +247,13 @@ public class AlipayController {
 		String uid = sb.substring(sb.indexOf("!") + 1, sb.length());
 		Integer userId = Integer.valueOf(uid);
 		// 付款金额
-//		String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "utf-8");
+		// String total_amount = new
+		// String(request.getParameter("total_amount").getBytes("ISO-8859-1"),
+		// "utf-8");
 		// 支付宝交易号
-//		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "utf-8");
+		// String trade_no = new
+		// String(request.getParameter("trade_no").getBytes("ISO-8859-1"),
+		// "utf-8");
 		// 交易说明
 		String cus = new String(request.getParameter("body").getBytes("ISO-8859-1"), "utf-8");
 		// 交易状态
@@ -262,7 +266,7 @@ public class AlipayController {
 			return Msg.fail().add("e", e.toString()).add("msg", msg);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param response
@@ -282,18 +286,19 @@ public class AlipayController {
 		String msg = "付款成功！请联系商家确定个人信息！";
 		return Msg.success().add("msg", msg).add("map", map);
 	}
-	
+
 	/**
 	 * 企业vip支付请求
 	 * 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "gotoPayCompanyVip", method = RequestMethod.POST)
-	public Msg gotoPayCompanyVip(Integer id, String companyVipType , HttpServletResponse response, HttpSession session) throws Exception {
+	public Msg gotoPayCompanyVip(Integer id, String companyVipType, HttpServletResponse response, HttpSession session)
+			throws Exception {
 		CompanyVip companyVip = adminService.getCompanyPriceType(companyVipType);
-		if(companyVip == null){
+		if (companyVip == null) {
 			return Msg.fail().add("msg", "系统异常！请稍后再试！");
-		}else{
+		} else {
 			CompanyUser companyUser = (CompanyUser) session.getAttribute("user");
 			if (companyUser == null) {
 				String msg = "请登录！";
@@ -301,8 +306,8 @@ public class AlipayController {
 			}
 			String price = companyVip.getCompanyVipPrice();
 			String tName = "艺术人才网企业VIP会员";
-			String picInfo = "艺术人才网企业VIP会员 ￥"+price+"/月";
-			
+			String picInfo = "艺术人才网企业VIP会员 ￥" + price + "/月";
+
 			AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
 					AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key,
 					AlipayConfig.sign_type);
@@ -312,11 +317,11 @@ public class AlipayController {
 			alipayRequest.setReturnUrl(AlipayConfig.vip_return_url_com);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			// 商户订单号，商户网站订单系统中唯一订单号，必填
-			String out_trade_no = sdf.format(new Date()) + "!" + companyUser.getId() + "&" + price ;
+			String out_trade_no = sdf.format(new Date()) + "!" + companyUser.getId() + "&" + price;
 			// 付款金额，必填
 			String total_amount = price.replace(",", "");
-			alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\"" + total_amount
-					+ "\"," + "\"subject\":\"" + tName + "\"," + "\"body\":\"" + picInfo + "\","
+			alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\""
+					+ total_amount + "\"," + "\"subject\":\"" + tName + "\"," + "\"body\":\"" + picInfo + "\","
 					+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
 			// 请求
 			String result = alipayClient.pageExecute(alipayRequest).getBody();
@@ -326,13 +331,12 @@ public class AlipayController {
 			out.print(result);
 			return null;
 		}
-		
+
 	}
 
-	
 	/**
-	 * p2p后台返回的操作
-	 * 企业vip
+	 * p2p后台返回的操作 企业vip
+	 * 
 	 * @param response，request
 	 * @throws Exception
 	 * @return void
@@ -348,22 +352,26 @@ public class AlipayController {
 		String vipPrice = sb.substring(sb.indexOf("&") + 1, sb.length());
 		CompanyVip companyVip = adminService.getCompanyPricePrice(vipPrice);
 		// 付款金额
-//		String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"), "utf-8");
+		// String total_amount = new
+		// String(request.getParameter("total_amount").getBytes("ISO-8859-1"),
+		// "utf-8");
 		// 支付宝交易号
-//		String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "utf-8");
+		// String trade_no = new
+		// String(request.getParameter("trade_no").getBytes("ISO-8859-1"),
+		// "utf-8");
 		// 交易说明
 		String cus = new String(request.getParameter("body").getBytes("ISO-8859-1"), "utf-8");
 		// 交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "utf-8");
 		if (trade_status.equals("TRADE_SUCCESS")) {// 支付成功商家操作
-			companyUserService.updateCompanyInfo(userId , companyVip);
+			companyUserService.updateCompanyInfo(userId, companyVip);
 			return Msg.success().add("msg", cus);
 		} else {
 			String msg = "失败！";
 			return Msg.fail().add("e", e.toString()).add("msg", msg);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param response
