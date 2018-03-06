@@ -776,7 +776,7 @@ public class SimpleUserService {
 		}
 	}
 
-	public boolean checkCode(String code, String mobile) {
+	public boolean checkCode( String mobile) {
 		MobileCodeExample example = new MobileCodeExample();
 		net.zgysrc.www.bean.MobileCodeExample.Criteria criteria = example.createCriteria();
 		criteria.andMobileEqualTo(mobile);
@@ -784,11 +784,7 @@ public class SimpleUserService {
 		if(list.size() == 0){
 			return false;
 		}else{
-			if(code.equals(list.get(0).getMobileCode())){
-				return true;
-			}else{
-				return false;
-			}
+			return true;
 		}
 	}
 

@@ -346,7 +346,7 @@ public class SimpleUserController {
 			String msg = "用户不存在！";
 			return Msg.fail().add("msg", msg);
 		} else {
-			simpleUser.setSimplePassword(UtilsMD5.md5(psd));
+			simpleUser.setSimplePassword(psd);
 			simpleUserService.updateSimpleUserInfo(simpleUser);
 			String msg = "修改成功！";
 			session.removeAttribute("modifyUser");
@@ -355,18 +355,35 @@ public class SimpleUserController {
 	}
 
 	/**
+	 * 测试
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getSessionTest", method = RequestMethod.GET)
+	public Msg getSessionTest(HttpSession session) throws Exception {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("modifyUser");
+		if (simpleUser == null) {
+			String msg = "用户不存在！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			String msg = "修改成功！";
+			session.removeAttribute("modifyUser");
+			return Msg.success().add("msg", msg);
+		}
+	}
+	
+	/**
 	 * 第一步
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/modifyPasswordByMobileOne", method = RequestMethod.POST)
-	public Msg modifyPasswordByMobileOne(String mobile, String code, HttpSession session) throws Exception {
+	@RequestMapping(value = "/modifyPasswordByMobileTry", method = RequestMethod.GET)
+	public Msg modifyPasswordByMobileOne(String mobile, HttpSession session) throws Exception {
 		SimpleUser simpleUser = simpleUserService.getSimpleUser(mobile);
 		if (simpleUser == null) {
 			String msg = "用户不存在！或手机号错误！";
 			return Msg.fail().add("msg", msg);
 		} else {
-			boolean state = simpleUserService.checkCode(code, mobile);
+			boolean state = simpleUserService.checkCode(mobile);
 			if (state) {
 				String msg = "验证码正确！";
 				session.setAttribute("modifyUser", simpleUser);
@@ -1085,7 +1102,6 @@ public class SimpleUserController {
 			resumes.setMobile(simpleUser.getMobile());
 			resumes.setEmail(simpleUser.getSimpleEmail());
 			resumes.setId(resume.getId());
-			System.out.println(resumes.getRealName()+resumes.getSex()+"this!!!!!!!!!!!"+resumes.getId());
 			boolean state = simpleUserService.updateSimpleUserResume(resumes);
 			if (state) {
 				return Msg.success().add("resume", resume);

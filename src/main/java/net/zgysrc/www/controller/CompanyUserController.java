@@ -228,6 +228,45 @@ public class CompanyUserController {
 	}
 
 	/**
+	 * 忘记密码
+	 * @throws Exception 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/modifyCompanyUser", method = RequestMethod.POST)
+	public Msg modifyCompanyUser(String cUserName , String psd, String cTelephoneNumber) throws Exception{
+		CompanyUser companyUser = companyUserService.getCompanyUserByTelephoneNum(cTelephoneNumber);
+		if(companyUser == null){
+			return Msg.fail().add("msg", "用户不存在！");
+		}else{
+			companyUser.setcPassword(UtilsMD5.md5(psd));
+			boolean state = companyUserService.updateCompanyUserSelective(companyUser);
+			if(state){
+				return Msg.success().add("msg", "修改成功！");
+			}else{
+				return Msg.fail().add("msg", "修改失败！");
+			}
+		}
+	}
+	
+	/**
+	 * 验证验证码
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/checkUserName", method = RequestMethod.GET)
+	public Msg checkUserName(String cUserName , String cTelephoneNumber) {
+		boolean check = companyUserService.checkUserName(cUserName , cTelephoneNumber);
+		if (check) {
+			String msg = "用户名正确！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "用户名不正确！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+	
+	
+	
+	/**
 	 * 退出登录
 	 * 
 	 * @param session

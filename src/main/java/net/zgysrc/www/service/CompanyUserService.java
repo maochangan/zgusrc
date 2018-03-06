@@ -20,6 +20,8 @@ import net.zgysrc.www.bean.CompanyUserExample.Criteria;
 import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.GetResume;
 import net.zgysrc.www.bean.GetResumeExample;
+import net.zgysrc.www.bean.MobileCode;
+import net.zgysrc.www.bean.MobileCodeExample;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.Resume;
 import net.zgysrc.www.bean.ResumeExample;
@@ -27,6 +29,7 @@ import net.zgysrc.www.dao.CollectionPostMapper;
 import net.zgysrc.www.dao.CompanyInfoMapper;
 import net.zgysrc.www.dao.CompanyUserMapper;
 import net.zgysrc.www.dao.GetResumeMapper;
+import net.zgysrc.www.dao.MobileCodeMapper;
 import net.zgysrc.www.dao.PostReleaseDynamicSQL;
 import net.zgysrc.www.dao.PostReleaseMapper;
 import net.zgysrc.www.dao.ResumeMapper;
@@ -49,6 +52,8 @@ public class CompanyUserService {
 	private CollectionPostMapper collectionPostMapper;
 	@Autowired
 	private PostReleaseMapper postReleaseMapper;
+	@Autowired
+	private MobileCodeMapper mobileCodeMapper;
 
 	/**
 	 * 
@@ -407,6 +412,41 @@ public class CompanyUserService {
 		CompanyInfo companyInfo = getCompany(companyUser.getcName());
 		companyInfo.setVipType(companyVip.getCompanyVipType());
 		companyInfoMapper.updateByPrimaryKey(companyInfo);
+	}
+
+	public boolean updateCompanyUserSelective(CompanyUser companyUser) {
+		int state = companyUserMapper.updateByPrimaryKeySelective(companyUser);
+		if(state == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public boolean getMobileCodeByMobile(String cTelephoneNumber, String code) {
+		MobileCodeExample example = new MobileCodeExample();
+		net.zgysrc.www.bean.MobileCodeExample.Criteria criteria = example.createCriteria();
+		criteria.andMobileEqualTo(cTelephoneNumber);
+		criteria.andMobileCodeEqualTo(code);
+		List<MobileCode> list = mobileCodeMapper.selectByExample(example);
+		if(list.size() != 1){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public boolean checkUserName(String cUserName, String cTelephoneNumber) {
+		CompanyUserExample example = new CompanyUserExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCUserNameEqualTo(cUserName);
+		criteria.andCTelephoneNumberEqualTo(cTelephoneNumber);
+		List<CompanyUser> list = companyUserMapper.selectByExample(example);
+		if(list.size() != 1){
+			return false;
+		}else{
+			return true;
+		}
 	}
 
 }
