@@ -1036,7 +1036,7 @@ public class CompanyUserController {
 			return Msg.fail().add("msg", msg);
 		}
 	}
-
+	
 	/**
 	 * 根据简历id查看求职者简历信息
 	 * 
@@ -1052,6 +1052,8 @@ public class CompanyUserController {
 			String msg = "请登入！";
 			return Msg.fail().add("msg", msg);
 		}
+//		GetResume getResume = companyUserService.getGetResume(id,);
+		//TODO
 		Resume resume = companyUserService.getResumeById(id);
 		if (resume == null) {
 			String msg = "无简历信息！";

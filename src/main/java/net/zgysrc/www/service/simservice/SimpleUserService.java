@@ -48,6 +48,7 @@ import net.zgysrc.www.dao.PostReleaseDynamicSQL;
 import net.zgysrc.www.dao.PostReleaseMapper;
 import net.zgysrc.www.dao.ResumeMapper;
 import net.zgysrc.www.dao.SimpleUserMapper;
+import net.zgysrc.www.utils.UtilStringBufferToString;
 import net.zgysrc.www.utils.UtilsMD5;
 
 @Service
@@ -84,7 +85,6 @@ public class SimpleUserService {
 	private CompanyUserMapper companyUserMapper;
 	@Autowired
 	private MobileCodeMapper mobileCodeMapper;
-	
 
 	public boolean checkMobile(String mobile) {
 		SimpleUserExample example = new SimpleUserExample();
@@ -593,18 +593,17 @@ public class SimpleUserService {
 		}
 	}
 
-	
 	public List<Map<String, Object>> theHotCompanyInfoZhaoping() {
 		CompanyInfoExample example = new CompanyInfoExample();
 		net.zgysrc.www.bean.CompanyInfoExample.Criteria criteria = example.createCriteria();
 		criteria.andCChaopingEqualTo("test");
 		List<CompanyInfo> lists = companyInfoMapper.selectByExample(example);
-		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		if (lists.size() == 0) {
 			return null;
 		} else {
-			for (int i = 0 ; i < lists.size() ; i ++) {
-				Map<String , Object> map = new HashMap<String, Object>();
+			for (int i = 0; i < lists.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("cCompanyName", lists.get(i).getcCompanyName());
 				map.put("id", lists.get(i).getId());
 				map.put("cCompanyLogo", lists.get(i).getcCompanyLogo());
@@ -619,12 +618,12 @@ public class SimpleUserService {
 		net.zgysrc.www.bean.CompanyInfoExample.Criteria criteria = example.createCriteria();
 		criteria.andCSchoolEqualTo("校园招聘");
 		List<CompanyInfo> lists = companyInfoMapper.selectByExample(example);
-		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		if (lists.size() == 0) {
 			return null;
 		} else {
 			for (CompanyInfo companyInfo : lists) {
-				Map<String , Object> map = new HashMap<String, Object>();
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("cCompanyName", companyInfo.getcCompanyName());
 				map.put("id", companyInfo.getId());
 				map.put("cCompanyLogo", companyInfo.getcCompanyLogo());
@@ -633,31 +632,30 @@ public class SimpleUserService {
 			return list;
 		}
 	}
-	
-	
-	
-	
-//	public List<Map<String, Object>> theHotCompanyInfoZhaoping() {
-//		CompanyInfo record = new CompanyInfo();
-//		record.setcChaoping("招聘专场");
-//		List<Map<String, Object>> list = companyInfoDynamicSQLMapper.selectInfo(record);
-//		if (list.size() == 0) {
-//			return null;
-//		} else {
-//			return list;
-//		}
-//	}
-//
-//	public List<Map<String, Object>> theHotCompanyInfoSchool() {
-//		CompanyInfo record = new CompanyInfo();
-//		record.setcSchool("校园招聘");
-//		List<Map<String, Object>> list = companyInfoDynamicSQLMapper.selectInfo(record);
-//		if (list.size() == 0) {
-//			return null;
-//		} else {
-//			return list;
-//		}
-//	}
+
+	// public List<Map<String, Object>> theHotCompanyInfoZhaoping() {
+	// CompanyInfo record = new CompanyInfo();
+	// record.setcChaoping("招聘专场");
+	// List<Map<String, Object>> list =
+	// companyInfoDynamicSQLMapper.selectInfo(record);
+	// if (list.size() == 0) {
+	// return null;
+	// } else {
+	// return list;
+	// }
+	// }
+	//
+	// public List<Map<String, Object>> theHotCompanyInfoSchool() {
+	// CompanyInfo record = new CompanyInfo();
+	// record.setcSchool("校园招聘");
+	// List<Map<String, Object>> list =
+	// companyInfoDynamicSQLMapper.selectInfo(record);
+	// if (list.size() == 0) {
+	// return null;
+	// } else {
+	// return list;
+	// }
+	// }
 
 	public List<Map<String, Object>> indexArticle() {
 		List<Map<String, Object>> list = articleDynamicSQLMapper.selectBy(null);
@@ -769,22 +767,106 @@ public class SimpleUserService {
 		Criteria criteria = example.createCriteria();
 		criteria.andMobileEqualTo(mobile);
 		List<SimpleUser> list = simpleUserMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list.get(0);
 		}
 	}
 
-	public boolean checkCode( String mobile) {
+	public boolean checkCode(String mobile) {
 		MobileCodeExample example = new MobileCodeExample();
 		net.zgysrc.www.bean.MobileCodeExample.Criteria criteria = example.createCriteria();
 		criteria.andMobileEqualTo(mobile);
 		List<MobileCode> list = mobileCodeMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return false;
-		}else{
+		} else {
 			return true;
+		}
+	}
+
+	public Resume getResume(SimpleUser simpleUser) {
+		ResumeExample example = new ResumeExample();
+		net.zgysrc.www.bean.ResumeExample.Criteria criteria = example.createCriteria();
+		criteria.andRealNameEqualTo(simpleUser.getMobile());
+		List<Resume> list = resumeMapper.selectByExample(example);
+		if (list.size() == 0) {
+			return null;
+		} else {
+			return list.get(0);
+		}
+	}
+
+	public List<PostRelease> getCandidatePositionsList(String postName) {
+		PostReleaseExample example = new PostReleaseExample();
+		net.zgysrc.www.bean.PostReleaseExample.Criteria criteria = example.createCriteria();
+		if (postName == null) {
+			List<PostRelease> list = postReleaseMapper.selectByExample(null);
+			List<PostRelease> lists = new ArrayList<PostRelease>();
+			for (int i = 0; i < 5; i++) {
+				lists.add(list.get(i));
+			}
+			return lists;
+		}
+		criteria.andPTyoeTwoEqualTo(UtilStringBufferToString.stringBufferToString(postName));
+		List<PostRelease> list = postReleaseMapper.selectByExample(example);
+		List<PostRelease> lists = new ArrayList<PostRelease>();
+		for (int i = 0; i < 5; i++) {
+			lists.add(list.get(i));
+		}
+		return lists;
+	}
+
+	public List<ArticleList> getArticleList() {
+		ArticleListExample example = new ArticleListExample();
+		example.setOrderByClause("article_list_click_num desc");
+		net.zgysrc.www.bean.ArticleListExample.Criteria criteria = example.createCriteria();
+		criteria.andArticleListFatherIdEqualTo(2);
+		List<ArticleList> list = articleListMapper.selectByExample(example);
+		if(list.size() == 0){
+			return null;
+		}else{
+			List<ArticleList> lists = new ArrayList<ArticleList>();
+			for(int i = 0 ; i < 5 ; i ++){
+				lists.add(list.get(i));
+			}
+			return lists;
+		}
+	}
+
+	public List<ArticleList> getArticleDynamicList() {
+		ArticleListExample example = new ArticleListExample();
+		example.setOrderByClause("article_list_click_num desc");
+		net.zgysrc.www.bean.ArticleListExample.Criteria criteria = example.createCriteria();
+		criteria.andArticleListFatherIdEqualTo(4);
+		List<ArticleList> list = articleListMapper.selectByExample(example);
+		if(list.size() == 0){
+			return null;
+		}else{
+			List<ArticleList> lists = new ArrayList<ArticleList>();
+			for(int i = 0 ; i < 5 ; i ++){
+				lists.add(list.get(i));
+			}
+			return lists;
+		}
+	}
+
+	public List<PostRelease> getSendCompanyList(Integer id) {
+		GetResumeExample example = new GetResumeExample();
+		net.zgysrc.www.bean.GetResumeExample.Criteria criteria = example.createCriteria();
+		example.setOrderByClause("id desc");
+		criteria.andSimpleUserIdEqualTo(id);
+		List<GetResume> list = getResumeMapper.selectByExample(example);
+		if(list.size() == 0){
+			return null;
+		}else{
+			List<PostRelease> lists = new ArrayList<PostRelease>();
+			for(int i = 0 ; i < list.size() ; i ++){
+				PostRelease postRelease = postReleaseMapper.selectByPrimaryKey(list.get(i).getPostId());
+				lists.add(postRelease);
+			}
+			return lists;
 		}
 	}
 

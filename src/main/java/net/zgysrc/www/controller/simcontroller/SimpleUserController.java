@@ -122,11 +122,11 @@ public class SimpleUserController {
 				String dates = sdf.format(date);
 				simpleUser.setRegisterTime(dates);
 				boolean info = simpleUserService.reviseByMobile(simpleUser);
-				Resume resume = new Resume();
-				resume.setRealName(mobile);
-				resume.setMobile(mobile);
-				resume.setEmail(simpleUser.getSimpleEmail());
-				simpleUserService.setResume(resume);
+//				Resume resume = new Resume();
+//				resume.setRealName(mobile);
+//				resume.setMobile(mobile);
+//				resume.setEmail(simpleUser.getSimpleEmail());
+//				simpleUserService.setResume(resume);
 				SimpleUser user = simpleUserService.getUser(simpleUser);
 				if (info && user != null) {
 					String msg = "注册成功！";
@@ -370,7 +370,7 @@ public class SimpleUserController {
 			return Msg.success().add("msg", msg);
 		}
 	}
-	
+
 	/**
 	 * 第一步
 	 * 
@@ -936,6 +936,11 @@ public class SimpleUserController {
 			String msg = "请登入";
 			return Msg.fail().add("msg", msg);
 		}
+//		Resume resume = new Resume();
+//		simpleUserService.setResume(resume);
+		
+		resume.setRealName(simpleUser.getMobile());
+		resume.setEmail(simpleUser.getSimpleEmail());
 		resume.setUserName(simpleUser.getSimpleName());
 		if (resume.getMobile() != null && resume.getMobile() != "") {
 			boolean state = simpleUserService.setResume(resume);
@@ -1086,6 +1091,7 @@ public class SimpleUserController {
 	@RequestMapping(value = "/updateSimpleUserResume", method = RequestMethod.POST)
 	@ResponseBody
 	public Msg updateSimpleUserResume(Resume resumes, HttpSession session) {
+		System.out.println(resumes.getUserName()+resumes.getCountry() + resumes.getOldCompanyName());
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (simpleUser == null) {
 			String msg = "请登入";
@@ -1174,6 +1180,27 @@ public class SimpleUserController {
 			} else {
 				String msg = "已投递！";
 				return Msg.fail().add("msg", msg);
+			}
+		}
+	}
+
+	/**
+	 * 投递列表
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getSendCompanyList", method = RequestMethod.GET)
+	public Msg getSendCompanyList(HttpSession session , Integer pn , Integer pSize) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (simpleUser == null) {
+			return Msg.fail().add("msg", "请登入！");
+		} else {
+			PageHelper.startPage(pn, pSize);
+			List<PostRelease> list = simpleUserService.getSendCompanyList(simpleUser.getId());
+			if(list == null){
+				return Msg.fail().add("msg", "无投递信息！");
+			}else{
+				PageInfo<PostRelease> pageInfo = new PageInfo<PostRelease>(list);
+				return Msg.success().add("pageInfo", pageInfo);
 			}
 		}
 	}
@@ -1347,8 +1374,8 @@ public class SimpleUserController {
 		} else {
 			for (int i = 0; i < list.size(); i++) {
 				List<Map<String, Object>> lists = simpleUserService.getallArticleListByFatherId(list.get(i).get("id"));
-				List<Map<String , Object>> listfinall = new ArrayList<Map<String,Object>>();
-				for(int j = 0 ; j < 5 ; j ++){
+				List<Map<String, Object>> listfinall = new ArrayList<Map<String, Object>>();
+				for (int j = 0; j < 5; j++) {
 					listfinall.add(lists.get(j));
 				}
 				list.get(i).put("ArticleList", listfinall);
@@ -1505,4 +1532,54 @@ public class SimpleUserController {
 			return Msg.success().add("state", state);
 		}
 	}
+
+	/**
+	 * 推荐职位
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getCandidatePositionsList", method = RequestMethod.GET)
+	public Msg getCandidatePositionsList(HttpSession session) {
+//		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		SimpleUser simpleUser = simpleUserService.getSimpleUser("15968174667");
+		if (simpleUser == null) {
+			return Msg.fail().add("msg", "请登入！");
+		}
+		Resume resume = simpleUserService.getResume(simpleUser);
+		if (resume == null) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			List<PostRelease> list = simpleUserService.getCandidatePositionsList(resume.getPostName());
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 文章推荐简历指导
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
+	public Msg getArticleList(HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (simpleUser == null) {
+			return Msg.fail().add("msg", "请登入！");
+		}
+		List<ArticleList> list = simpleUserService.getArticleList();
+		return Msg.success().add("list", list);
+	}
+
+	/**
+	 * 市场动态
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArticleDynamicList", method = RequestMethod.GET)
+	public Msg getArticleDynamicList(HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+//		SimpleUser simpleUser = simpleUserService.getSimpleUser("15968174667");
+		if (simpleUser == null) {
+			return Msg.fail().add("msg", "请登入！");
+		}
+		List<ArticleList> list = simpleUserService.getArticleDynamicList();
+		return Msg.success().add("list", list);
+	}
+	
 }
