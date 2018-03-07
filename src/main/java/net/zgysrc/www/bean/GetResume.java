@@ -17,6 +17,10 @@ public class GetResume {
 
     private String sendTime;
 
+    private String viewState;
+
+    private String resumeMatching;
+
     public Integer getId() {
         return id;
     }
@@ -79,5 +83,21 @@ public class GetResume {
 
     public void setSendTime(String sendTime) {
         this.sendTime = sendTime == null ? null : sendTime.trim();
+    }
+
+    public String getViewState() {
+        return viewState;
+    }
+
+    public void setViewState(String viewState) {
+        this.viewState = viewState == null ? null : viewState.trim();
+    }
+
+    public String getResumeMatching() {
+        return resumeMatching;
+    }
+
+    public void setResumeMatching(String resumeMatching) {
+        this.resumeMatching = resumeMatching == null ? null : resumeMatching.trim();
     }
 }

@@ -824,11 +824,11 @@ public class SimpleUserService {
 		net.zgysrc.www.bean.ArticleListExample.Criteria criteria = example.createCriteria();
 		criteria.andArticleListFatherIdEqualTo(2);
 		List<ArticleList> list = articleListMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			List<ArticleList> lists = new ArrayList<ArticleList>();
-			for(int i = 0 ; i < 5 ; i ++){
+			for (int i = 0; i < 5; i++) {
 				lists.add(list.get(i));
 			}
 			return lists;
@@ -841,33 +841,47 @@ public class SimpleUserService {
 		net.zgysrc.www.bean.ArticleListExample.Criteria criteria = example.createCriteria();
 		criteria.andArticleListFatherIdEqualTo(4);
 		List<ArticleList> list = articleListMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			List<ArticleList> lists = new ArrayList<ArticleList>();
-			for(int i = 0 ; i < 5 ; i ++){
+			for (int i = 0; i < 5; i++) {
 				lists.add(list.get(i));
 			}
 			return lists;
 		}
 	}
 
-	public List<PostRelease> getSendCompanyList(Integer id) {
+	public List<Map<String, Object>> getSendCompanyList(Integer id) {
 		GetResumeExample example = new GetResumeExample();
 		net.zgysrc.www.bean.GetResumeExample.Criteria criteria = example.createCriteria();
 		example.setOrderByClause("id desc");
 		criteria.andSimpleUserIdEqualTo(id);
 		List<GetResume> list = getResumeMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
-			List<PostRelease> lists = new ArrayList<PostRelease>();
-			for(int i = 0 ; i < list.size() ; i ++){
+		} else {
+			List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
 				PostRelease postRelease = postReleaseMapper.selectByPrimaryKey(list.get(i).getPostId());
-				lists.add(postRelease);
+				criteria.andPostIdEqualTo(list.get(i).getPostId());
+				Date date = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String nowDate = sdf.format(date);
+				Calendar calendar = Calendar.getInstance();
+				calendar.add(Calendar.MONTH, -2);
+				Date alDate = calendar.getTime();
+				String alDateStr = sdf.format(alDate);
+				criteria.andSendTimeBetween(alDateStr, nowDate);
+				long num = getResumeMapper.countByExample(example) + 1;
+				postRelease.setDept(list.get(i).getSendTime());
+				map.put("postRelease", postRelease);
+				map.put("viewState", list.get(i).getViewState());
+				map.put("num", num);
+				lists.add(map);
 			}
 			return lists;
 		}
 	}
-
 }

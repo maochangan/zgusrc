@@ -10,6 +10,8 @@
     <result column="post_company_id" jdbcType="INTEGER" property="postCompanyId" />
     <result column="post_user_ids" jdbcType="INTEGER" property="postUserIds" />
     <result column="send_time" jdbcType="VARCHAR" property="sendTime" />
+    <result column="view_state" jdbcType="VARCHAR" property="viewState" />
+    <result column="resume_matching" jdbcType="VARCHAR" property="resumeMatching" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, post_user_name, simple_user_id, post_id, post_simple_resume_id, post_company_id, 
-    post_user_ids, send_time
+    post_user_ids, send_time, view_state, resume_matching
   </sql>
   <select id="selectByExample" parameterType="net.zgysrc.www.bean.GetResumeExample" resultMap="BaseResultMap">
     select
@@ -106,10 +108,12 @@
   <insert id="insert" parameterType="net.zgysrc.www.bean.GetResume">
     insert into get_resume (id, post_user_name, simple_user_id, 
       post_id, post_simple_resume_id, post_company_id, 
-      post_user_ids, send_time)
+      post_user_ids, send_time, view_state, 
+      resume_matching)
     values (#{id,jdbcType=INTEGER}, #{postUserName,jdbcType=VARCHAR}, #{simpleUserId,jdbcType=INTEGER}, 
       #{postId,jdbcType=INTEGER}, #{postSimpleResumeId,jdbcType=INTEGER}, #{postCompanyId,jdbcType=INTEGER}, 
-      #{postUserIds,jdbcType=INTEGER}, #{sendTime,jdbcType=VARCHAR})
+      #{postUserIds,jdbcType=INTEGER}, #{sendTime,jdbcType=VARCHAR}, #{viewState,jdbcType=VARCHAR}, 
+      #{resumeMatching,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.GetResume">
     insert into get_resume
@@ -138,6 +142,12 @@
       <if test="sendTime != null">
         send_time,
       </if>
+      <if test="viewState != null">
+        view_state,
+      </if>
+      <if test="resumeMatching != null">
+        resume_matching,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -163,6 +173,12 @@
       </if>
       <if test="sendTime != null">
         #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="viewState != null">
+        #{viewState,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeMatching != null">
+        #{resumeMatching,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -199,6 +215,12 @@
       <if test="record.sendTime != null">
         send_time = #{record.sendTime,jdbcType=VARCHAR},
       </if>
+      <if test="record.viewState != null">
+        view_state = #{record.viewState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resumeMatching != null">
+        resume_matching = #{record.resumeMatching,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,7 +235,9 @@
       post_simple_resume_id = #{record.postSimpleResumeId,jdbcType=INTEGER},
       post_company_id = #{record.postCompanyId,jdbcType=INTEGER},
       post_user_ids = #{record.postUserIds,jdbcType=INTEGER},
-      send_time = #{record.sendTime,jdbcType=VARCHAR}
+      send_time = #{record.sendTime,jdbcType=VARCHAR},
+      view_state = #{record.viewState,jdbcType=VARCHAR},
+      resume_matching = #{record.resumeMatching,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +266,12 @@
       <if test="sendTime != null">
         send_time = #{sendTime,jdbcType=VARCHAR},
       </if>
+      <if test="viewState != null">
+        view_state = #{viewState,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeMatching != null">
+        resume_matching = #{resumeMatching,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -253,7 +283,9 @@
       post_simple_resume_id = #{postSimpleResumeId,jdbcType=INTEGER},
       post_company_id = #{postCompanyId,jdbcType=INTEGER},
       post_user_ids = #{postUserIds,jdbcType=INTEGER},
-      send_time = #{sendTime,jdbcType=VARCHAR}
+      send_time = #{sendTime,jdbcType=VARCHAR},
+      view_state = #{viewState,jdbcType=VARCHAR},
+      resume_matching = #{resumeMatching,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

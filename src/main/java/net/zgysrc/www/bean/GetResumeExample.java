@@ -603,6 +603,146 @@ public class GetResumeExample {
             addCriterion("send_time not between", value1, value2, "sendTime");
             return (Criteria) this;
         }
+
+        public Criteria andViewStateIsNull() {
+            addCriterion("view_state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateIsNotNull() {
+            addCriterion("view_state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateEqualTo(String value) {
+            addCriterion("view_state =", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateNotEqualTo(String value) {
+            addCriterion("view_state <>", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateGreaterThan(String value) {
+            addCriterion("view_state >", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateGreaterThanOrEqualTo(String value) {
+            addCriterion("view_state >=", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateLessThan(String value) {
+            addCriterion("view_state <", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateLessThanOrEqualTo(String value) {
+            addCriterion("view_state <=", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateLike(String value) {
+            addCriterion("view_state like", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateNotLike(String value) {
+            addCriterion("view_state not like", value, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateIn(List<String> values) {
+            addCriterion("view_state in", values, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateNotIn(List<String> values) {
+            addCriterion("view_state not in", values, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateBetween(String value1, String value2) {
+            addCriterion("view_state between", value1, value2, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andViewStateNotBetween(String value1, String value2) {
+            addCriterion("view_state not between", value1, value2, "viewState");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingIsNull() {
+            addCriterion("resume_matching is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingIsNotNull() {
+            addCriterion("resume_matching is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingEqualTo(String value) {
+            addCriterion("resume_matching =", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingNotEqualTo(String value) {
+            addCriterion("resume_matching <>", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingGreaterThan(String value) {
+            addCriterion("resume_matching >", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingGreaterThanOrEqualTo(String value) {
+            addCriterion("resume_matching >=", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingLessThan(String value) {
+            addCriterion("resume_matching <", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingLessThanOrEqualTo(String value) {
+            addCriterion("resume_matching <=", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingLike(String value) {
+            addCriterion("resume_matching like", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingNotLike(String value) {
+            addCriterion("resume_matching not like", value, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingIn(List<String> values) {
+            addCriterion("resume_matching in", values, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingNotIn(List<String> values) {
+            addCriterion("resume_matching not in", values, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingBetween(String value1, String value2) {
+            addCriterion("resume_matching between", value1, value2, "resumeMatching");
+            return (Criteria) this;
+        }
+
+        public Criteria andResumeMatchingNotBetween(String value1, String value2) {
+            addCriterion("resume_matching not between", value1, value2, "resumeMatching");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

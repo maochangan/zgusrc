@@ -1189,17 +1189,17 @@ public class SimpleUserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getSendCompanyList", method = RequestMethod.GET)
-	public Msg getSendCompanyList(HttpSession session , Integer pn , Integer pSize) {
+	public Msg getSendCompanyList(HttpSession session , Integer pn) {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (simpleUser == null) {
 			return Msg.fail().add("msg", "请登入！");
 		} else {
-			PageHelper.startPage(pn, pSize);
-			List<PostRelease> list = simpleUserService.getSendCompanyList(simpleUser.getId());
+			PageHelper.startPage(pn, 7);
+			List<Map<String , Object>> list = simpleUserService.getSendCompanyList(simpleUser.getId());
 			if(list == null){
 				return Msg.fail().add("msg", "无投递信息！");
 			}else{
-				PageInfo<PostRelease> pageInfo = new PageInfo<PostRelease>(list);
+				PageInfo<Map<String , Object>> pageInfo = new PageInfo<Map<String , Object>>(list);
 				return Msg.success().add("pageInfo", pageInfo);
 			}
 		}
