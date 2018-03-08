@@ -50,6 +50,13 @@ public class Msg {
 		return result;
 	}
 	
+	public static Msg send(){
+		Msg result = new Msg();
+		result.setCode(300);
+		result.setMessage("send");
+		return result;
+	}
+	
 	public Msg add(String key,Object value){
 		this.extend.put(key, value);
 		return this;

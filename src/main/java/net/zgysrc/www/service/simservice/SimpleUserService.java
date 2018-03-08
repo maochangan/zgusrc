@@ -12,9 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import net.zgysrc.www.bean.Article;
 import net.zgysrc.www.bean.ArticleList;
 import net.zgysrc.www.bean.ArticleListExample;
+import net.zgysrc.www.bean.CollectionPost;
+import net.zgysrc.www.bean.CollectionPostExample;
 import net.zgysrc.www.bean.CompanyInfo;
 import net.zgysrc.www.bean.CompanyInfoExample;
 import net.zgysrc.www.bean.CompanyUser;
@@ -37,6 +42,7 @@ import net.zgysrc.www.dao.ArticleDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListMapper;
 import net.zgysrc.www.dao.ArticleMapper;
+import net.zgysrc.www.dao.CollectionPostMapper;
 import net.zgysrc.www.dao.CompanyInfoDynamicSQLMapper;
 import net.zgysrc.www.dao.CompanyInfoMapper;
 import net.zgysrc.www.dao.CompanyUserMapper;
@@ -85,6 +91,8 @@ public class SimpleUserService {
 	private CompanyUserMapper companyUserMapper;
 	@Autowired
 	private MobileCodeMapper mobileCodeMapper;
+	@Autowired
+	private CollectionPostMapper collectionPostMapper;
 
 	public boolean checkMobile(String mobile) {
 		SimpleUserExample example = new SimpleUserExample();
@@ -852,12 +860,13 @@ public class SimpleUserService {
 		}
 	}
 
-	public List<Map<String, Object>> getSendCompanyList(Integer id) {
+	public PageInfo<Map<String, Object>> getSendCompanyList(Integer id, Integer pn) {
 		GetResumeExample example = new GetResumeExample();
 		net.zgysrc.www.bean.GetResumeExample.Criteria criteria = example.createCriteria();
 		example.setOrderByClause("id desc");
 		criteria.andSimpleUserIdEqualTo(id);
 		List<GetResume> list = getResumeMapper.selectByExample(example);
+		PageHelper.startPage(pn, 7);
 		if (list.size() == 0) {
 			return null;
 		} else {
@@ -878,10 +887,82 @@ public class SimpleUserService {
 				postRelease.setDept(list.get(i).getSendTime());
 				map.put("postRelease", postRelease);
 				map.put("viewState", list.get(i).getViewState());
+				map.put("viewState", list.get(i).getViewState());
+				map.put("ResumeMatching", list.get(i).getResumeMatching());
 				map.put("num", num);
 				lists.add(map);
 			}
+			PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(lists);
+			return pageInfo;
+		}
+	}
+
+	public List<Map<String, Object>> gerAllCollectionPostList(Integer id) {
+		CollectionPostExample example = new CollectionPostExample();
+		example.setOrderByClause("id desc");
+		net.zgysrc.www.bean.CollectionPostExample.Criteria criteria = example.createCriteria();
+		criteria.andUerIdEqualTo(id);
+		List<CollectionPost> list = collectionPostMapper.selectByExample(example);
+		if (list.size() == 0) {
+			return null;
+		} else {
+			List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				PostRelease postRelease = postReleaseMapper.selectByPrimaryKey(list.get(i).getPostId());
+				map.put("postRelease", postRelease);
+				map.put("collectId", list.get(i).getId());
+				lists.add(map);
+			}
 			return lists;
+		}
+	}
+
+	public boolean deleteCollectionPost(List<Integer> ida) {
+		CollectionPostExample example = new CollectionPostExample();
+		net.zgysrc.www.bean.CollectionPostExample.Criteria criteria = example.createCriteria();
+		criteria.andIdIn(ida);
+		int state = collectionPostMapper.deleteByExample(example);
+		if (state == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean sendResumeToCollectionPost(List<Integer> ids, SimpleUser simpleUser) {
+		CollectionPostExample example = new CollectionPostExample();
+		net.zgysrc.www.bean.CollectionPostExample.Criteria criteria = example.createCriteria();
+		criteria.andIdIn(ids);
+		List<CollectionPost> list = collectionPostMapper.selectByExample(example);
+		int a = 0;
+		for (int i = 0; i < list.size(); i++) {
+			PostRelease postRelease = postReleaseMapper.selectByPrimaryKey(list.get(i).getPostId());
+			GetResume getResume = new GetResume();
+			Resume resume = getAllSimpleUserInfo(simpleUser.getMobile());
+			getResume.setPostSimpleResumeId(resume.getId());
+			getResume.setPostId(postRelease.getId());
+			getResume.setPostCompanyId(postRelease.getcId());
+			getResume.setSimpleUserId(simpleUser.getId());
+			getResume.setPostUserName(postRelease.getcUserName());
+			getResume.setViewState("未查看");
+			getResume.setResumeMatching("未审批");
+			CompanyUser companyUser = findPsotNameId(postRelease.getcUserName());
+			if (companyUser == null) {
+				a++;
+				continue;
+			}
+			getResume.setPostUserIds(companyUser.getId());
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String time = sdf.format(date);
+			getResume.setSendTime(time.toString());
+			sendResume(getResume);
+		}
+		if (a != 0) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 }

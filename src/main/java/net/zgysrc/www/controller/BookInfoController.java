@@ -39,31 +39,87 @@ public class BookInfoController {
 	private BookInfoService bookInfoService;
 
 	/**
-	 * 首页图书列表
-	 * 
-	 * 不用
+	 * 删除书 TODO
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/indexBookInfo", method = RequestMethod.GET)
-	public Msg indexBookInfo() {
-		List<Map<String, Object>> list = bookInfoService.indexBookInfo();
+	@RequestMapping(value = "/deleteBookInfo", method = RequestMethod.GET)
+	public Msg deleteBookInfo(Integer id) {
+		boolean state = bookInfoService.deleteBookInfo(id);
+		if (state) {
+			String msg = "删除成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "删除失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 删除章节 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteBookList", method = RequestMethod.GET)
+	public Msg deleteBookList(Integer id) {
+		boolean state = bookInfoService.deleteBookList(id);
+		if (state) {
+			String msg = "删除成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "删除失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 图书馆分类 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getBookType", method = RequestMethod.GET)
+	public Msg getBookType() {
+		List<BookTypes> list = bookInfoService.getBookType();
 		if (list == null) {
 			String msg = "无信息！";
 			return Msg.fail().add("msg", msg);
 		} else {
-			for (int i = 0; i < list.size(); i++) {
-				List<Map<String, Object>> lists = bookInfoService.getallBookListByFatherId(list.get(i).get("id"));
-				for (int j = 0; j < lists.size(); j++) {
-					list.get(i).put("listName" + j, lists.get(j).get("bookListName"));
-					list.get(i).put("listId" + j, lists.get(j).get("id"));
-				}
-			}
 			return Msg.success().add("list", list);
 		}
 	}
 
 	/**
-	 * 热门书籍
+	 * 分类书籍 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getClassificationBook", method = RequestMethod.GET)
+	public Msg getClassificationBook(BookTypes bookTypes, Integer pn) {
+		PageHelper.startPage(pn, 8);
+		List<BookInfo> list = bookInfoService.getClassificationBook(bookTypes);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 书籍付费设置 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/bookPriceSet", method = RequestMethod.GET)
+	public Msg bookPriceSet(BookInfo bookInfo) {
+		boolean state = bookInfoService.updateBookInfo(bookInfo);
+		if (state) {
+			String msg = "设置成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "设置失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 热门书籍 TODO
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/hotBookInfo", method = RequestMethod.GET)
@@ -78,7 +134,7 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 最新书籍
+	 * 最新书籍 TODO
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/newBookInfo", method = RequestMethod.GET)
@@ -93,7 +149,7 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 创建书
+	 * 创建书 TODO
 	 * 
 	 * @param bookInfo
 	 * @return
@@ -195,46 +251,7 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 修改书
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateBookInfo", method = RequestMethod.GET)
-	public Msg updateBookInfo(BookInfo bookInfo, MultipartFile files, HttpServletRequest request)
-			throws IllegalStateException, Exception {
-		if (files.getOriginalFilename() == null) {
-			boolean state = bookInfoService.updateBookInfo(bookInfo);
-			if (state) {
-				String msg = "修改成功！";
-				return Msg.success().add("msg", msg);
-			} else {
-				String msg = "修改失败！";
-				return Msg.fail().add("msg", msg);
-			}
-		} else {
-			String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/books/"
-					+ bookInfo.getBookName() + "/" + files.getOriginalFilename();
-			File dir = new File(path);
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
-			files.transferTo(dir);
-			String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
-					+ request.getServletContext().getContextPath() + "/files/pic/books/" + bookInfo.getBookName() + "/"
-					+ files.getOriginalFilename();
-			bookInfo.setBookInfoImagePath(dataPath);
-			boolean state = bookInfoService.updateBookInfo(bookInfo);
-			if (state) {
-				String msg = "修改成功！";
-				return Msg.success().add("msg", msg);
-			} else {
-				String msg = "修改失败！";
-				return Msg.fail().add("msg", msg);
-			}
-		}
-	}
-
-	/**
-	 * 创建目录文章
+	 * 创建目录文章 TODO
 	 * 
 	 * @throws Exception
 	 * @throws IllegalStateException
@@ -275,6 +292,239 @@ public class BookInfoController {
 	}
 
 	/**
+	 * 获取全部图书 TODO
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllBookInfo", method = RequestMethod.GET)
+	public Msg getAllBookInfo(Integer pn) {
+		PageHelper.startPage(pn, 9);
+		List<BookInfo> list = bookInfoService.getAllBookInfo();
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 获取全部图书管理员 TODO
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllBookInfoAdmin", method = RequestMethod.GET)
+	public Msg getAllBookInfoAdmin(Integer pn, Integer pSize, String bookName) {
+		PageHelper.startPage(pn, pSize);
+		List<BookInfo> list = bookInfoService.getAllBookInfoAdmin(bookName);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 获取全部目录 书id TODO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllBookListByBookAll", method = RequestMethod.GET)
+	public Msg getAllBookListByBookAll(Integer id, Integer pn, Integer pSize) {
+		BookInfo bookInfo = bookInfoService.getBookInfoById(id);
+		PageHelper.startPage(pn, pSize);
+		List<BookList> list = bookInfoService.getAllBookListByBook(id);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg).add("bookInfo", bookInfo);
+		} else {
+			PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
+			return Msg.success().add("pageInfo", pageInfo).add("bookInfo", bookInfo);
+		}
+	}
+
+	/**
+	 * 获取全部目录 书id TODO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllBookListByBook", method = RequestMethod.GET)
+	public Msg getAllBookListByBook(Integer id, Integer pn, HttpSession session) {
+		BookInfo bookInfo = bookInfoService.getBookInfoById(id);
+		PageHelper.startPage(pn, 1);
+		SimpleUser user = (SimpleUser) session.getAttribute("simpleUser");
+		if ("0".equals(bookInfo.getBookPrice())) {
+			List<BookList> list = bookInfoService.getAllBookListByBook(id);
+			if (list == null) {
+				String msg = "无信息！";
+				return Msg.fail().add("msg", msg);
+			} else {
+				PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
+				return Msg.success().add("pageInfo", pageInfo);
+			}
+		} else {
+			if (pn > 3) {
+				if (user != null) {
+					if (user.getVipType() != null) {
+						List<BookList> list = bookInfoService.getAllBookListByBook(id);
+						if (list == null) {
+							String msg = "无信息！";
+							return Msg.fail().add("msg", msg);
+						} else {
+							PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
+							return Msg.success().add("pageInfo", pageInfo);
+						}
+					} else {
+						String msg = "需要付费！";
+						return Msg.fail().add("msg", msg);
+					}
+				} else {
+					String msg = "请登录！";
+					return Msg.fail().add("msg", msg);
+				}
+			} else {
+				List<BookList> list = bookInfoService.getAllBookListByBook(id);
+				if (list == null) {
+					String msg = "无信息！";
+					return Msg.fail().add("msg", msg);
+				} else {
+					PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
+					return Msg.success().add("pageInfo", pageInfo);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 书下内容 根据目录id TODO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getBookList", method = RequestMethod.GET)
+	public Msg getBookList(Integer id) {
+		BookList bookList = bookInfoService.getBookList(id);
+		if (bookList == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			Integer click = bookList.getBookClickNum();
+			click++;
+			bookList.setBookClickNum(click);
+			bookInfoService.updateBookList(bookList);
+			return Msg.success().add("bookList", bookList);
+		}
+	}
+
+	/**
+	 * 添加评论 TODO
+	 * 
+	 * @param id
+	 * @param bookComment
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addBookComment", method = RequestMethod.GET)
+	public Msg addBookComment(Integer id, BookComment bookComment, HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (simpleUser == null) {
+			String msg = "请登入！";
+			return Msg.fail().add("msg", msg);
+		}
+		bookComment.setSimpleUserId(simpleUser.getId());
+		bookComment.setUserName(simpleUser.getSimpleName());
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String time = sdf.format(date);
+		bookComment.setId(null);
+		bookComment.setFatherId(id);
+		bookComment.setLikeNum(0);
+		bookComment.setCreateTime(time);
+		boolean state = bookInfoService.addBookComment(bookComment);
+		if (state) {
+			String msg = "发表成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "发表失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 评论 TODO
+	 * 
+	 * @param pn
+	 *            页数
+	 * @param id
+	 *            文章id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getBookComment", method = RequestMethod.GET)
+	public Msg getBookComment(Integer id) {
+		List<BookComment> list = bookInfoService.getBookComment(id);
+		if (list == null) {
+			String msg = "无评论信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	// TODO
+	// 不使用///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/**
+	 * 修改书
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateBookInfo", method = RequestMethod.GET)
+	public Msg updateBookInfo(BookInfo bookInfo, MultipartFile files, HttpServletRequest request)
+			throws IllegalStateException, Exception {
+		if (files.getOriginalFilename() == null) {
+			boolean state = bookInfoService.updateBookInfo(bookInfo);
+			if (state) {
+				String msg = "修改成功！";
+				return Msg.success().add("msg", msg);
+			} else {
+				String msg = "修改失败！";
+				return Msg.fail().add("msg", msg);
+			}
+		} else {
+			String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/books/"
+					+ bookInfo.getBookName() + "/" + files.getOriginalFilename();
+			File dir = new File(path);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			files.transferTo(dir);
+			String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
+					+ request.getServletContext().getContextPath() + "/files/pic/books/" + bookInfo.getBookName() + "/"
+					+ files.getOriginalFilename();
+			bookInfo.setBookInfoImagePath(dataPath);
+			boolean state = bookInfoService.updateBookInfo(bookInfo);
+			if (state) {
+				String msg = "修改成功！";
+				return Msg.success().add("msg", msg);
+			} else {
+				String msg = "修改失败！";
+				return Msg.fail().add("msg", msg);
+			}
+		}
+	}
+
+	/**
 	 * 修改目录文章
 	 * 
 	 * @throws Exception
@@ -308,44 +558,6 @@ public class BookInfoController {
 		} else {
 			String msg = "无发现图片！";
 			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 获取全部图书
-	 * 
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllBookInfo", method = RequestMethod.GET)
-	public Msg getAllBookInfo(Integer pn) {
-		PageHelper.startPage(pn, 9);
-		List<BookInfo> list = bookInfoService.getAllBookInfo();
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
-	 * 获取全部图书管理员
-	 * 
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllBookInfoAdmin", method = RequestMethod.GET)
-	public Msg getAllBookInfoAdmin(Integer pn, Integer pSize, String bookName) {
-		PageHelper.startPage(pn, pSize);
-		List<BookInfo> list = bookInfoService.getAllBookInfoAdmin(bookName);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
-			return Msg.success().add("pageInfo", pageInfo);
 		}
 	}
 
@@ -406,81 +618,6 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 获取全部目录 书id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllBookListByBookAll", method = RequestMethod.GET)
-	public Msg getAllBookListByBookAll(Integer id, Integer pn, Integer pSize) {
-		BookInfo bookInfo = bookInfoService.getBookInfoById(id);
-		PageHelper.startPage(pn, pSize);
-		List<BookList> list = bookInfoService.getAllBookListByBook(id);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg).add("bookInfo", bookInfo);
-		} else {
-			PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
-			return Msg.success().add("pageInfo", pageInfo).add("bookInfo", bookInfo);
-		}
-	}
-
-	/**
-	 * 获取全部目录 书id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllBookListByBook", method = RequestMethod.GET)
-	public Msg getAllBookListByBook(Integer id, Integer pn, HttpSession session) {
-		BookInfo bookInfo = bookInfoService.getBookInfoById(id);
-		PageHelper.startPage(pn, 1);
-		SimpleUser user = (SimpleUser) session.getAttribute("simpleUser");
-		if ("0".equals(bookInfo.getBookPrice())) {
-			List<BookList> list = bookInfoService.getAllBookListByBook(id);
-			if (list == null) {
-				String msg = "无信息！";
-				return Msg.fail().add("msg", msg);
-			} else {
-				PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
-				return Msg.success().add("pageInfo", pageInfo);
-			}
-		} else {
-			if (pn > 3) {
-				if (user != null) {
-					if (user.getVipType() != null) {
-						List<BookList> list = bookInfoService.getAllBookListByBook(id);
-						if (list == null) {
-							String msg = "无信息！";
-							return Msg.fail().add("msg", msg);
-						} else {
-							PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
-							return Msg.success().add("pageInfo", pageInfo);
-						}
-					} else {
-						String msg = "需要付费！";
-						return Msg.fail().add("msg", msg);
-					}
-				} else {
-					String msg = "请登录！";
-					return Msg.fail().add("msg", msg);
-				}
-			} else {
-				List<BookList> list = bookInfoService.getAllBookListByBook(id);
-				if (list == null) {
-					String msg = "无信息！";
-					return Msg.fail().add("msg", msg);
-				} else {
-					PageInfo<BookList> pageInfo = new PageInfo<BookList>(list);
-					return Msg.success().add("pageInfo", pageInfo);
-				}
-			}
-		}
-	}
-
-	/**
 	 * 章节列表
 	 * 
 	 */
@@ -522,28 +659,6 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 书下内容 根据目录id
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getBookList", method = RequestMethod.GET)
-	public Msg getBookList(Integer id) {
-		BookList bookList = bookInfoService.getBookList(id);
-		if (bookList == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			Integer click = bookList.getBookClickNum();
-			click++;
-			bookList.setBookClickNum(click);
-			bookInfoService.updateBookList(bookList);
-			return Msg.success().add("bookList", bookList);
-		}
-	}
-
-	/**
 	 * 收藏书
 	 */
 	@ResponseBody
@@ -560,62 +675,6 @@ public class BookInfoController {
 		} else {
 			String msg = "失败！";
 			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 添加评论
-	 * 
-	 * @param id
-	 * @param bookComment
-	 * @param session
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/addBookComment", method = RequestMethod.GET)
-	public Msg addBookComment(Integer id, BookComment bookComment, HttpSession session) {
-		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
-		if (simpleUser == null) {
-			String msg = "请登入！";
-			return Msg.fail().add("msg", msg);
-		}
-		bookComment.setSimpleUserId(simpleUser.getId());
-		bookComment.setUserName(simpleUser.getSimpleName());
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String time = sdf.format(date);
-		bookComment.setId(null);
-		bookComment.setFatherId(id);
-		bookComment.setLikeNum(0);
-		bookComment.setCreateTime(time);
-		boolean state = bookInfoService.addBookComment(bookComment);
-		if (state) {
-			String msg = "发表成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "发表失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 评论
-	 * 
-	 * @param pn
-	 *            页数
-	 * @param id
-	 *            文章id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getBookComment", method = RequestMethod.GET)
-	public Msg getBookComment(Integer id) {
-		List<BookComment> list = bookInfoService.getBookComment(id);
-		if (list == null) {
-			String msg = "无评论信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			return Msg.success().add("list", list);
 		}
 	}
 
@@ -637,82 +696,26 @@ public class BookInfoController {
 	}
 
 	/**
-	 * 删除书
+	 * 首页图书列表
+	 * 
+	 * 不用
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/deleteBookInfo", method = RequestMethod.GET)
-	public Msg deleteBookInfo(Integer id) {
-		boolean state = bookInfoService.deleteBookInfo(id);
-		if (state) {
-			String msg = "删除成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "删除失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 删除章节
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/deleteBookList", method = RequestMethod.GET)
-	public Msg deleteBookList(Integer id) {
-		boolean state = bookInfoService.deleteBookList(id);
-		if (state) {
-			String msg = "删除成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "删除失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 图书馆分类
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getBookType", method = RequestMethod.GET)
-	public Msg getBookType() {
-		List<BookTypes> list = bookInfoService.getBookType();
+	@RequestMapping(value = "/indexBookInfo", method = RequestMethod.GET)
+	public Msg indexBookInfo() {
+		List<Map<String, Object>> list = bookInfoService.indexBookInfo();
 		if (list == null) {
 			String msg = "无信息！";
 			return Msg.fail().add("msg", msg);
 		} else {
+			for (int i = 0; i < list.size(); i++) {
+				List<Map<String, Object>> lists = bookInfoService.getallBookListByFatherId(list.get(i).get("id"));
+				for (int j = 0; j < lists.size(); j++) {
+					list.get(i).put("listName" + j, lists.get(j).get("bookListName"));
+					list.get(i).put("listId" + j, lists.get(j).get("id"));
+				}
+			}
 			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 分类书籍
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getClassificationBook", method = RequestMethod.GET)
-	public Msg getClassificationBook(BookTypes bookTypes, Integer pn) {
-		PageHelper.startPage(pn, 8);
-		List<BookInfo> list = bookInfoService.getClassificationBook(bookTypes);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<BookInfo> pageInfo = new PageInfo<BookInfo>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
-	 * 书籍付费设置
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/bookPriceSet", method = RequestMethod.GET)
-	public Msg bookPriceSet(BookInfo bookInfo) {
-		boolean state = bookInfoService.updateBookInfo(bookInfo);
-		if (state) {
-			String msg = "设置成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "设置失败！";
-			return Msg.fail().add("msg", msg);
 		}
 	}
 

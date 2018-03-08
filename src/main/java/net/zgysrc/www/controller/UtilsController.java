@@ -90,7 +90,7 @@ public class UtilsController {
 	}
 
 	/**
-	 * 公司类型列表
+	 * 公司类型列表 TODO 在用
 	 * 
 	 * @return
 	 */
@@ -103,9 +103,8 @@ public class UtilsController {
 	}
 
 	/**
-	 * 行业类型
+	 * 行业类型 TODO
 	 */
-
 	@RequestMapping(value = "/industryCategory", method = RequestMethod.GET)
 	@ResponseBody
 	public Msg industryCategory() {
@@ -113,6 +112,109 @@ public class UtilsController {
 		return Msg.success().add("industryCategory", list);
 	}
 
+	/**
+	 * 获取中国省份 TODO 在用
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/getAllprovince", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getAllprovince() {
+		List<HatProvince> list = utilsControllerService.getAllprovince();
+		if (list == null) {
+			String msg = "无记录！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 获取市 TODO
+	 */
+	@RequestMapping(value = "/getCity", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getCity(String id) {
+		List<HatCity> list = utilsControllerService.getCity(id);
+		if (list == null) {
+			String msg = "无记录！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 热门信息 TODO
+	 */
+	@RequestMapping(value = "/hotMessage", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg hotMessage() {
+		List<CompanyInfo> hotCompany = utilsControllerService.getHotCompany();
+		List<PositionName> hotPost = utilsControllerService.getHotPostName();
+		if (hotCompany == null && hotPost == null) {
+			String msg = "无热门信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			List<String> list = new ArrayList<String>();
+			for (CompanyInfo companyInfo : hotCompany) {
+				list.add(companyInfo.getcCompanyName());
+			}
+			return Msg.success().add("hotPost", hotPost).add("hotCompany", list);
+		}
+	}
+
+	/**
+	 * 获得轮播图片招聘专场 TODO
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/carouselPic", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg carouselPic() {
+		List<CarouselPic> list = utilsControllerService.carouselPic();
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 获得轮播图片校园招聘 TODO
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/carouselPicScl", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg carouselPicScl() {
+		List<CarouselPic> list = utilsControllerService.carouselPicScl();
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * TODO 在用
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getCompanyTypes", method = RequestMethod.GET)
+	public Msg getCompanyTypes() {
+		List<CompanyTypes> list = utilsControllerService.getCompanyTypes();
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("industryCategory", list);
+		}
+	}
+
+	// TODO
+	// 不使用/////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * 删除行业类别
 	 * 
@@ -283,38 +385,6 @@ public class UtilsController {
 	}
 
 	/**
-	 * 获取中国省份
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/getAllprovince", method = RequestMethod.GET)
-	@ResponseBody
-	public Msg getAllprovince() {
-		List<HatProvince> list = utilsControllerService.getAllprovince();
-		if (list == null) {
-			String msg = "无记录！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 获取市
-	 */
-	@RequestMapping(value = "/getCity", method = RequestMethod.GET)
-	@ResponseBody
-	public Msg getCity(String id) {
-		List<HatCity> list = utilsControllerService.getCity(id);
-		if (list == null) {
-			String msg = "无记录！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
 	 * 获取区
 	 */
 	@RequestMapping(value = "/getArea", method = RequestMethod.GET)
@@ -330,82 +400,13 @@ public class UtilsController {
 	}
 
 	/**
-	 * 热门信息
-	 */
-	@RequestMapping(value = "/hotMessage", method = RequestMethod.GET)
-	@ResponseBody
-	public Msg hotMessage() {
-		List<CompanyInfo> hotCompany = utilsControllerService.getHotCompany();
-		List<PositionName> hotPost = utilsControllerService.getHotPostName();
-		if (hotCompany == null && hotPost == null) {
-			String msg = "无热门信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			List<String> list = new ArrayList<String>();
-			for (CompanyInfo companyInfo : hotCompany) {
-				list.add(companyInfo.getcCompanyName());
-			}
-			return Msg.success().add("hotPost", hotPost).add("hotCompany", list);
-		}
-	}
-	
-	
-	/**
-	 * 获得轮播图片招聘专场
-	 * @return
-	 */
-	@RequestMapping(value = "/carouselPic", method = RequestMethod.GET)
-	@ResponseBody
-	public Msg carouselPic(){
-		List<CarouselPic> list = utilsControllerService.carouselPic();
-		if(list == null){
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		}else{
-			return Msg.success().add("list", list);
-		}
-	}
-	
-	/**
-	 * 获得轮播图片校园招聘
-	 * @return
-	 */
-	@RequestMapping(value = "/carouselPicScl", method = RequestMethod.GET)
-	@ResponseBody
-	public Msg carouselPicScl(){
-		List<CarouselPic> list = utilsControllerService.carouselPicScl();
-		if(list == null){
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		}else{
-			return Msg.success().add("list", list);
-		}
-	}
-	
-	/**
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getCompanyTypes", method = RequestMethod.GET)
-	public Msg getCompanyTypes(){
-		List<CompanyTypes> list = utilsControllerService.getCompanyTypes();
-		if(list == null){
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		}else{
-			return Msg.success().add("industryCategory", list);
-		}
-	}
-	
-	
-	/**
 	 * 爬虫数据导入
 	 */
 	@RequestMapping(value = "/dataBasesTest", method = RequestMethod.GET)
 	@ResponseBody
-	public Msg dataBasesTest(String urls , String encodings){
+	public Msg dataBasesTest(String urls, String encodings) {
 		System.out.println("开始解析");
-		List<HashMap<String,String>> list = NetDownUtil.getInfo(urls, encodings);
+		List<HashMap<String, String>> list = NetDownUtil.getInfo(urls, encodings);
 		System.out.println(list.size());
 		PostRelease post = new PostRelease();
 		for (HashMap<String, String> hashMap : list) {
@@ -430,17 +431,13 @@ public class UtilsController {
 			post.setpStartTime(hashMap.get("time"));
 			System.out.println(hashMap.get("majorOne"));
 			post.setpResponsibility(hashMap.get("majorOne"));
-//			post.setcCompanyName(hashMap.get("company"));
-//			post.setpMaxSalary(hashMap.get("sally"));
-//			post.setpStartTime(hashMap.get("date"));
+			// post.setcCompanyName(hashMap.get("company"));
+			// post.setpMaxSalary(hashMap.get("sally"));
+			// post.setpStartTime(hashMap.get("date"));
 			utilsControllerService.addPost(post);
 		}
-		
+
 		return Msg.success().add("lisg", list);
 	}
-	
-	
-	
-	
 
 }

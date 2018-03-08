@@ -57,6 +57,286 @@ public class AdminController {
 	private SimpleUserService simpleUserService;
 
 	/**
+	 * 审核设置 private String cAc;字段 实体类封装 需要id TODO
+	 * 
+	 * @param companyInfo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/reviewCompany", method = RequestMethod.GET)
+	public Msg reviewCompany(CompanyInfo companyInfo) {
+		boolean state = adminService.reviewCompany(companyInfo);
+		if (state) {
+			String msg = "审核成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "审核失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 普通用户列表 TODO
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllSimpleUsrListAll", method = RequestMethod.GET)
+	public Msg getAllSimpleUsrListAll(Integer pn, Integer pSize, String mobile) {
+		PageHelper.startPage(pn, pSize);
+		List<SimpleUser> list = adminService.getAllSimpleUsrListAll(mobile);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<SimpleUser> pageInfo = new PageInfo<SimpleUser>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 普通用户删除 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteSimpleUserById", method = RequestMethod.GET)
+	public Msg deleteSimpleUserById(Integer id) {
+		boolean state = adminService.deleteSimpleUserById(id);
+		if (state) {
+			String msg = "删除成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "删除失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 查看普通用户信息加简历信息 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getSimpleUserInfo", method = RequestMethod.GET)
+	public Msg getSimpleUserInfo(Integer id) {
+		SimpleUser simpleUser = adminService.getSimpleUserInfo(id);
+		if (simpleUser == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			Resume resume = adminService.getResumeByUserMobile(simpleUser.getMobile());
+			return Msg.success().add("simpleUser", simpleUser).add("resume", resume);
+		}
+	}
+
+	/**
+	 * 添加文章 TODO
+	 * 
+	 * @param articleList
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addArticleList", method = RequestMethod.GET)
+	public Msg addArticleList(ArticleList articleList) {
+		Article article = adminService.getArticle(articleList.getArticleFatherName());
+		articleList.setArticleListClickNum(0);
+		articleList.setArticleListFatherId(article.getId());
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd : HH:mm:ss");
+		String time = sdf.format(date);
+		articleList.setArticleListCreateTime(time);
+		boolean state = adminService.addArticleList(articleList);
+		if (state) {
+			String msg = "添加成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "添加失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 获取全部文章 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArticleListAll", method = RequestMethod.GET)
+	public Msg getAllArticleList(Integer pn, Integer pSize, String articleListName, String articleFatherName) {
+		PageHelper.startPage(pn, pSize);
+		List<ArticleList> list = adminService.getAllArticleList(articleListName, articleFatherName);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<ArticleList> pageInfo = new PageInfo<ArticleList>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 得到文章 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArticleLists", method = RequestMethod.GET)
+	public Msg getArticleLists(Integer id) {
+		ArticleList articleList = adminService.getArticleLists(id);
+		return Msg.success().add("info", articleList);
+
+	}
+
+	/**
+	 * 删除文章 TODO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteArticleList", method = RequestMethod.GET)
+	public Msg deleteArticleList(Integer id) {
+		boolean state = adminService.deleteArticleList(id);
+		if (state) {
+			String msg = "删除成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "删除失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 资格列表 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAualificationCertificationList", method = RequestMethod.GET)
+	public Msg getAualificationCertificationList(Integer pn, Integer pSize, String name) {
+		PageHelper.startPage(pn, pSize);
+		List<AualificationCertification> list = adminService.getAualificationCertificationList(name);
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<AualificationCertification> pageInfo = new PageInfo<AualificationCertification>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 资格录入 addAualificationCertification TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addAualificationCertification", method = RequestMethod.POST)
+	public Msg addAualificationCertification(AualificationCertification aualificationCertification) {
+		boolean state = adminService.addAualificationCertification(aualificationCertification);
+		if (state) {
+			String msg = "添加成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "添加失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 资格删除 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteAcF", method = RequestMethod.GET)
+	public Msg deleteAcF(Integer id) {
+		boolean state = adminService.deleteAcF(id);
+		if (state) {
+			String msg = "删除成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "删除失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 企业列表 带筛选 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAllCompanyListWithExamine", method = RequestMethod.GET)
+	public Msg getAllCompanyList(Integer pn, Integer pSize, String examine, String companyName) {
+		PageHelper.startPage(pn, pSize);
+		List<CompanyInfo> list = adminService.getAllCompanyListWithExamine(examine, companyName);
+		if (list == null) {
+			String msg = "无需审核企业！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			PageInfo<CompanyInfo> pageInfo = new PageInfo<CompanyInfo>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+
+	/**
+	 * 轮播列表首页 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getIndexPicList", method = RequestMethod.GET)
+	public Msg getIndexPicList() {
+		List<ImageInfo> list = adminService.getIndexPicList();
+		if (list == null) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 其他列表首页 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getAnotherPicList", method = RequestMethod.GET)
+	public Msg getAnotherPicList() {
+		List<CarouselPic> list = adminService.getAnotherPicList();
+		if (list == null) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 轮播设置 首页三个 TODO
+	 * 
+	 * @throws Exception
+	 * @throws IllegalStateException
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateIndexPic", method = RequestMethod.POST)
+	public Msg updateIndexPic(MultipartFile files, ImageInfo imageInfo, HttpServletRequest request)
+			throws IllegalStateException, Exception {
+		String path = request.getSession().getServletContext().getRealPath("/") + "files/CarouselPic/pic2/"
+				+ files.getOriginalFilename();
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		files.transferTo(dir);
+		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
+				+ request.getServletContext().getContextPath() + "/files/CarouselPic/pic2/"
+				+ files.getOriginalFilename();
+		imageInfo.setImgPath(dataPath);
+		System.out.println(dataPath);
+		boolean state = adminService.updateImageInfo(imageInfo);
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+
+	/**
+	 * 返回一个公司 根据id TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
+	public Msg getCompanyInfo(Integer id) {
+		CompanyInfo companyInfo = adminService.checkCompanyInfo(id);
+		return Msg.success().add("companyInfo", companyInfo);
+	}
+
+	// TODO
+	// 不使用/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/**
 	 * 管理员用户登入
 	 */
 	@ResponseBody
@@ -103,17 +383,6 @@ public class AdminController {
 		List<CompanyInfo> list = adminService.companyFindAll();
 		PageInfo<CompanyInfo> pageInfo = new PageInfo<CompanyInfo>(list);
 		return Msg.success().add("pageInfo", pageInfo);
-	}
-
-	/**
-	 * 返回一个公司 根据id
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getCompanyInfo", method = RequestMethod.GET)
-	public Msg getCompanyInfo(Integer id) {
-		CompanyInfo companyInfo = adminService.checkCompanyInfo(id);
-		return Msg.success().add("companyInfo", companyInfo);
 	}
 
 	/**
@@ -477,25 +746,6 @@ public class AdminController {
 	}
 
 	/**
-	 * 审核设置 private String cAc;字段 实体类封装 需要id
-	 * 
-	 * @param companyInfo
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/reviewCompany", method = RequestMethod.GET)
-	public Msg reviewCompany(CompanyInfo companyInfo) {
-		boolean state = adminService.reviewCompany(companyInfo);
-		if (state) {
-			String msg = "审核成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "审核失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
 	 * private String top; companyInfo id; 置顶设置首页
 	 */
 	@ResponseBody
@@ -602,293 +852,6 @@ public class AdminController {
 	}
 
 	/**
-	 * 普通用户列表
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllSimpleUsrListAll", method = RequestMethod.GET)
-	public Msg getAllSimpleUsrListAll(Integer pn, Integer pSize, String mobile) {
-		PageHelper.startPage(pn, pSize);
-		List<SimpleUser> list = adminService.getAllSimpleUsrListAll(mobile);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<SimpleUser> pageInfo = new PageInfo<SimpleUser>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
-	 * 普通用户删除
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/deleteSimpleUserById", method = RequestMethod.GET)
-	public Msg deleteSimpleUserById(Integer id) {
-		boolean state = adminService.deleteSimpleUserById(id);
-		if (state) {
-			String msg = "删除成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "删除失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 查看普通用户信息加简历信息
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getSimpleUserInfo", method = RequestMethod.GET)
-	public Msg getSimpleUserInfo(Integer id) {
-		SimpleUser simpleUser = adminService.getSimpleUserInfo(id);
-		if (simpleUser == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			Resume resume = adminService.getResumeByUserMobile(simpleUser.getMobile());
-			return Msg.success().add("simpleUser", simpleUser).add("resume", resume);
-		}
-	}
-
-	/**
-	 * 数量统计
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/indexSize", method = RequestMethod.GET)
-	public Msg indexSize() {
-		int companyNum = adminService.getCompanySize();
-		int simpleUserNum = adminService.getAllSimpleUsrNum();
-		int postNum = adminService.getPostSize();
-		return Msg.success().add("companyNum", companyNum).add("simpleUserNum", simpleUserNum).add("postNum", postNum);
-	}
-
-	/**
-	 * 添加文章
-	 * 
-	 * @param articleList
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/addArticleList", method = RequestMethod.GET)
-	public Msg addArticleList(ArticleList articleList) {
-		Article article = adminService.getArticle(articleList.getArticleFatherName());
-		articleList.setArticleListClickNum(0);
-		articleList.setArticleListFatherId(article.getId());
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd : HH:mm:ss");
-		String time = sdf.format(date);
-		articleList.setArticleListCreateTime(time);
-		boolean state = adminService.addArticleList(articleList);
-		if (state) {
-			String msg = "添加成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "添加失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 获取文章类型id
-	 * 
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getArticle", method = RequestMethod.GET)
-	public Msg getArticle() {
-		List<Map<String, Object>> list = simpleUserService.indexArticle();
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 获取全部文章
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getArticleListAll", method = RequestMethod.GET)
-	public Msg getAllArticleList(Integer pn, Integer pSize, String articleListName, String articleFatherName) {
-		PageHelper.startPage(pn, pSize);
-		List<ArticleList> list = adminService.getAllArticleList(articleListName, articleFatherName);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<ArticleList> pageInfo = new PageInfo<ArticleList>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
-	 * 得到文章
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getArticleLists", method = RequestMethod.GET)
-	public Msg getArticleLists(Integer id) {
-		ArticleList articleList = adminService.getArticleLists(id);
-		return Msg.success().add("info", articleList);
-
-	}
-
-	/**
-	 * 修改文章
-	 * 
-	 * @param articleList
-	 *            文章id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateArticleList", method = RequestMethod.GET)
-	public Msg updateArticleList(ArticleList articleList) {
-		boolean state = adminService.updateArticleList(articleList);
-		if (state) {
-			String msg = "修改成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "修改失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 删除文章
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/deleteArticleList", method = RequestMethod.GET)
-	public Msg deleteArticleList(Integer id) {
-		boolean state = adminService.deleteArticleList(id);
-		if (state) {
-			String msg = "删除成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "删除失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 检查滚动条设置
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/checkScrollBar", method = RequestMethod.GET)
-	public Msg checkScrollBar(Integer id) {
-		boolean state = adminService.checkScrollBar();
-		if (state) {
-			boolean setting = adminService.setScrollBar(id);
-			if (setting) {
-				String msg = "设置成功！";
-				return Msg.success().add("msg", msg);
-			} else {
-				String msg = "设置失败！";
-				return Msg.fail().add("msg", msg);
-			}
-		} else {
-			String msg = "超出上限!";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 检查滚动条设置取消
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/removeScrollBar", method = RequestMethod.GET)
-	public Msg removeScrollBar(Integer id) {
-		boolean state = adminService.checkScrollBar(id);
-		if (state) {
-			boolean states = adminService.removeScrollBar(id);
-			if (states) {
-				String msg = "取消置顶成功！";
-				return Msg.success().add("msg", msg);
-			} else {
-				String msg = "设置失败！";
-				return Msg.fail().add("msg", msg);
-			}
-		} else {
-			String msg = "已设置！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 资格列表
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAualificationCertificationList", method = RequestMethod.GET)
-	public Msg getAualificationCertificationList(Integer pn, Integer pSize, String name) {
-		PageHelper.startPage(pn, pSize);
-		List<AualificationCertification> list = adminService.getAualificationCertificationList(name);
-		if (list == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<AualificationCertification> pageInfo = new PageInfo<AualificationCertification>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
-	 * 资格录入 addAualificationCertification
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/addAualificationCertification", method = RequestMethod.POST)
-	public Msg addAualificationCertification(AualificationCertification aualificationCertification) {
-		boolean state = adminService.addAualificationCertification(aualificationCertification);
-		if (state) {
-			String msg = "添加成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "添加失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 资格删除
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/deleteAcF", method = RequestMethod.GET)
-	public Msg deleteAcF(Integer id) {
-		boolean state = adminService.deleteAcF(id);
-		if (state) {
-			String msg = "删除成功！";
-			return Msg.success().add("msg", msg);
-		} else {
-			String msg = "删除失败！";
-			return Msg.fail().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 企业列表 带筛选
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAllCompanyListWithExamine", method = RequestMethod.GET)
-	public Msg getAllCompanyList(Integer pn, Integer pSize, String examine, String companyName) {
-		PageHelper.startPage(pn, pSize);
-		List<CompanyInfo> list = adminService.getAllCompanyListWithExamine(examine, companyName);
-		if (list == null) {
-			String msg = "无需审核企业！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			PageInfo<CompanyInfo> pageInfo = new PageInfo<CompanyInfo>(list);
-			return Msg.success().add("pageInfo", pageInfo);
-		}
-	}
-
-	/**
 	 * 
 	 * 需要审核的企业
 	 * 
@@ -990,65 +953,6 @@ public class AdminController {
 	}
 
 	/**
-	 * 轮播列表首页
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getIndexPicList", method = RequestMethod.GET)
-	public Msg getIndexPicList() {
-		List<ImageInfo> list = adminService.getIndexPicList();
-		if (list == null) {
-			return Msg.fail().add("msg", "无信息！");
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 其他列表首页
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getAnotherPicList", method = RequestMethod.GET)
-	public Msg getAnotherPicList() {
-		List<CarouselPic> list = adminService.getAnotherPicList();
-		if (list == null) {
-			return Msg.fail().add("msg", "无信息！");
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 轮播设置 首页三个
-	 * 
-	 * @throws Exception
-	 * @throws IllegalStateException
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateIndexPic", method = RequestMethod.POST)
-	public Msg updateIndexPic(MultipartFile files, ImageInfo imageInfo, HttpServletRequest request)
-			throws IllegalStateException, Exception {
-		String path = request.getSession().getServletContext().getRealPath("/") + "files/CarouselPic/pic2/"
-				+ files.getOriginalFilename();
-		File dir = new File(path);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		files.transferTo(dir);
-		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
-				+ request.getServletContext().getContextPath() + "/files/CarouselPic/pic2/"
-				+ files.getOriginalFilename();
-		imageInfo.setImgPath(dataPath);
-		System.out.println(dataPath);
-		boolean state = adminService.updateImageInfo(imageInfo);
-		if (state) {
-			return Msg.success().add("msg", "修改成功！");
-		} else {
-			return Msg.fail().add("msg", "修改失败！");
-		}
-	}
-
-	/**
 	 * 轮播设置 其他三个
 	 * 
 	 * @throws Exception
@@ -1133,6 +1037,101 @@ public class AdminController {
 			return Msg.success().add("msg", "修改成功！");
 		} else {
 			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+
+	/**
+	 * 数量统计
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/indexSize", method = RequestMethod.GET)
+	public Msg indexSize() {
+		int companyNum = adminService.getCompanySize();
+		int simpleUserNum = adminService.getAllSimpleUsrNum();
+		int postNum = adminService.getPostSize();
+		return Msg.success().add("companyNum", companyNum).add("simpleUserNum", simpleUserNum).add("postNum", postNum);
+	}
+
+	/**
+	 * 获取文章类型id
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArticle", method = RequestMethod.GET)
+	public Msg getArticle() {
+		List<Map<String, Object>> list = simpleUserService.indexArticle();
+		if (list == null) {
+			String msg = "无信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 修改文章
+	 * 
+	 * @param articleList
+	 *            文章id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateArticleList", method = RequestMethod.GET)
+	public Msg updateArticleList(ArticleList articleList) {
+		boolean state = adminService.updateArticleList(articleList);
+		if (state) {
+			String msg = "修改成功！";
+			return Msg.success().add("msg", msg);
+		} else {
+			String msg = "修改失败！";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 检查滚动条设置
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/checkScrollBar", method = RequestMethod.GET)
+	public Msg checkScrollBar(Integer id) {
+		boolean state = adminService.checkScrollBar();
+		if (state) {
+			boolean setting = adminService.setScrollBar(id);
+			if (setting) {
+				String msg = "设置成功！";
+				return Msg.success().add("msg", msg);
+			} else {
+				String msg = "设置失败！";
+				return Msg.fail().add("msg", msg);
+			}
+		} else {
+			String msg = "超出上限!";
+			return Msg.fail().add("msg", msg);
+		}
+	}
+
+	/**
+	 * 检查滚动条设置取消
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/removeScrollBar", method = RequestMethod.GET)
+	public Msg removeScrollBar(Integer id) {
+		boolean state = adminService.checkScrollBar(id);
+		if (state) {
+			boolean states = adminService.removeScrollBar(id);
+			if (states) {
+				String msg = "取消置顶成功！";
+				return Msg.success().add("msg", msg);
+			} else {
+				String msg = "设置失败！";
+				return Msg.fail().add("msg", msg);
+			}
+		} else {
+			String msg = "已设置！";
+			return Msg.fail().add("msg", msg);
 		}
 	}
 

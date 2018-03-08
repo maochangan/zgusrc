@@ -409,7 +409,7 @@ public class AdminService {
 		CollectionPostExample example = new CollectionPostExample();
 		net.zgysrc.www.bean.CollectionPostExample.Criteria criteria = example.createCriteria();
 		criteria.andPostIdEqualTo(id);
-		criteria.andPostIdEqualTo(id2);
+		criteria.andUerIdEqualTo(id2);
 		List<CollectionPost> list = collectionPostMapper.selectByExample(example);
 		if (list.size() == 0) {
 			return false;
