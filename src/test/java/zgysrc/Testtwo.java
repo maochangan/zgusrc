@@ -1,21 +1,15 @@
 package zgysrc;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.zgysrc.www.utils.UtilsMD5;
 
 public class Testtwo {
 
 	public static void main(String[] args) throws Exception {
-		List<Integer> ida = new ArrayList<Integer>();
-		StringBuffer sbf = new StringBuffer("4");
-		String a = sbf.toString();
-		String[] b = a.split(",");
-		for (int i = 0; i < b.length; i++) {
-			Integer id = Integer.valueOf(b[i]);
-			System.out.println(id);
-			ida.add(id);
-		}
-		System.out.println(ida.get(0)+":"+ida.get(1));
+		System.out.println(UtilsMD5.md5("123456"));
+		String a = "25f9e794323b453885f5181f1b624d0b";
+		boolean state = a.equals(UtilsMD5.md5("123456789"));
+		System.out.println(state);
+		
 	}
 
 }

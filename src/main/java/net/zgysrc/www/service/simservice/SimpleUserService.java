@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import net.zgysrc.www.bean.Article;
 import net.zgysrc.www.bean.ArticleList;
 import net.zgysrc.www.bean.ArticleListExample;
@@ -641,30 +638,6 @@ public class SimpleUserService {
 		}
 	}
 
-	// public List<Map<String, Object>> theHotCompanyInfoZhaoping() {
-	// CompanyInfo record = new CompanyInfo();
-	// record.setcChaoping("招聘专场");
-	// List<Map<String, Object>> list =
-	// companyInfoDynamicSQLMapper.selectInfo(record);
-	// if (list.size() == 0) {
-	// return null;
-	// } else {
-	// return list;
-	// }
-	// }
-	//
-	// public List<Map<String, Object>> theHotCompanyInfoSchool() {
-	// CompanyInfo record = new CompanyInfo();
-	// record.setcSchool("校园招聘");
-	// List<Map<String, Object>> list =
-	// companyInfoDynamicSQLMapper.selectInfo(record);
-	// if (list.size() == 0) {
-	// return null;
-	// } else {
-	// return list;
-	// }
-	// }
-
 	public List<Map<String, Object>> indexArticle() {
 		List<Map<String, Object>> list = articleDynamicSQLMapper.selectBy(null);
 		if (list.size() == 0) {
@@ -860,13 +833,12 @@ public class SimpleUserService {
 		}
 	}
 
-	public PageInfo<Map<String, Object>> getSendCompanyList(Integer id, Integer pn) {
+	public List<Map<String, Object>> getSendCompanyList(Integer id, Integer pn) {
 		GetResumeExample example = new GetResumeExample();
 		net.zgysrc.www.bean.GetResumeExample.Criteria criteria = example.createCriteria();
 		example.setOrderByClause("id desc");
 		criteria.andSimpleUserIdEqualTo(id);
 		List<GetResume> list = getResumeMapper.selectByExample(example);
-		PageHelper.startPage(pn, 7);
 		if (list.size() == 0) {
 			return null;
 		} else {
@@ -887,13 +859,11 @@ public class SimpleUserService {
 				postRelease.setDept(list.get(i).getSendTime());
 				map.put("postRelease", postRelease);
 				map.put("viewState", list.get(i).getViewState());
-				map.put("viewState", list.get(i).getViewState());
 				map.put("ResumeMatching", list.get(i).getResumeMatching());
 				map.put("num", num);
 				lists.add(map);
 			}
-			PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(lists);
-			return pageInfo;
+			return lists;
 		}
 	}
 
@@ -965,4 +935,41 @@ public class SimpleUserService {
 			return true;
 		}
 	}
+
+	public boolean updateUserName(SimpleUser simpleUser) {
+		int state = simpleUserMapper.updateByPrimaryKey(simpleUser);
+		if (state == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean updateUserMobile(SimpleUser simpleUser, Resume resume) throws Exception {
+		int updateUserInfo = simpleUserMapper.updateByPrimaryKey(simpleUser);
+		int updateResume = resumeMapper.updateByPrimaryKey(resume);
+		if ((updateUserInfo != 0) || (updateResume != 0)) {
+			return true;
+		} else {
+			throw new Exception("强制回滚！");
+		}
+	}
+
+	public MobileCode getMobileCode(String mobile) {
+		MobileCodeExample example = new MobileCodeExample();
+		net.zgysrc.www.bean.MobileCodeExample.Criteria criteria = example.createCriteria();
+		criteria.andMobileEqualTo(mobile);
+		List<MobileCode> list = mobileCodeMapper.selectByExample(example);
+		if (list.size() == 0) {
+			return null;
+		} else {
+			return list.get(0);
+		}
+	}
+
+	public CollectionPost getCollectPostById(Integer id) {
+		CollectionPost collectionPost = collectionPostMapper.selectByPrimaryKey(id);
+		return collectionPost;
+	}
+
 }

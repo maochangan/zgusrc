@@ -25,10 +25,12 @@ import com.github.pagehelper.PageInfo;
 import net.zgysrc.www.bean.Article;
 import net.zgysrc.www.bean.ArticleList;
 import net.zgysrc.www.bean.AualificationCertification;
+import net.zgysrc.www.bean.CollectionPost;
 import net.zgysrc.www.bean.CompanyInfo;
 import net.zgysrc.www.bean.CompanyUser;
 import net.zgysrc.www.bean.GetResume;
 import net.zgysrc.www.bean.ImageInfo;
+import net.zgysrc.www.bean.MobileCode;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.Resume;
 import net.zgysrc.www.bean.SimpleUser;
@@ -122,11 +124,11 @@ public class SimpleUserController {
 				String dates = sdf.format(date);
 				simpleUser.setRegisterTime(dates);
 				boolean info = simpleUserService.reviseByMobile(simpleUser);
-				// Resume resume = new Resume();
-				// resume.setRealName(mobile);
-				// resume.setMobile(mobile);
-				// resume.setEmail(simpleUser.getSimpleEmail());
-				// simpleUserService.setResume(resume);
+				Resume resume = new Resume();
+				resume.setRealName(mobile);
+				resume.setMobile(mobile);
+				resume.setEmail(simpleUser.getSimpleEmail());
+				simpleUserService.setResume(resume);
 				SimpleUser user = simpleUserService.getUser(simpleUser);
 				if (info && user != null) {
 					String msg = "注册成功！";
@@ -154,15 +156,12 @@ public class SimpleUserController {
 	 */
 	@RequestMapping(value = "/sendMobileCode", method = RequestMethod.GET)
 	@ResponseBody
-	public Msg sendMobileCode(String mobile) {
+	public Msg sendMobileCode(String mobile, HttpSession session) {
 		StringBuffer code = GetMobileCode.getCode();
-
+		session.setAttribute("mobileCode", code);
 		mobileCodeService.insertInto(mobile, code);
-
 		IndustrySMS.execute(mobile, code.toString());
-
 		String msg = "验证码已发送！";
-
 		return Msg.success().add("msg", msg);
 	}
 
@@ -658,6 +657,40 @@ public class SimpleUserController {
 		}
 	}
 
+	@RequestMapping(value = "/getAllSimpleUserInfoByAnother", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getAllSimpleUserInfoByAnother(HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (simpleUser == null) {
+			String msg = "请登入";
+			return Msg.fail().add("msg", msg);
+		}
+		Resume resume = simpleUserService.getAllSimpleUserInfo(simpleUser.getMobile());
+		if (resume == null) {
+			String msg = "无简历信息！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			List<Map<String, Object>> listAll = simpleUserService.getSendCompanyList(simpleUser.getId(), 1);
+			List<Map<String, Object>> list = simpleUserService.gerAllCollectionPostList(simpleUser.getId());
+			if (list == null) {
+				return Msg.success().add("resume", resume).add("mySend", 0).add("myCollect", 0).add("seeNum", 0);
+			}
+			if (listAll == null) {
+				return Msg.success().add("resume", resume).add("mySend", 0).add("myCollect", list.size()).add("seeNum",
+						0);
+			} else {
+				int seeNum = 0;
+				for (int i = 0; i < listAll.size(); i++) {
+					if (listAll.get(i).get("viewState").equals("已查看")) {
+						seeNum++;
+					}
+				}
+				return Msg.success().add("resume", resume).add("mySend", listAll.size()).add("myCollect", list.size())
+						.add("seeNum", seeNum);
+			}
+		}
+	}
+
 	/**
 	 * 个人简历修改 TODO
 	 * 
@@ -771,10 +804,12 @@ public class SimpleUserController {
 		if (simpleUser == null) {
 			return Msg.fail().add("msg", "请登入！");
 		} else {
-			PageInfo<Map<String, Object>> pageInfo = simpleUserService.getSendCompanyList(simpleUser.getId(), pn);
-			if (pageInfo == null) {
-				return Msg.fail().add("msg", "无投递信息！");
+			PageHelper.startPage(pn, 10000);
+			List<Map<String, Object>> list = simpleUserService.getSendCompanyList(simpleUser.getId(), pn);
+			if (list == null) {
+				return Msg.success().add("msg", "无投递信息！");
 			} else {
+				PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
 				return Msg.success().add("pageInfo", pageInfo);
 			}
 		}
@@ -942,16 +977,16 @@ public class SimpleUserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getAllCollectionPostList", method = RequestMethod.GET)
-	public Msg getAllCollectionPostList(HttpSession session , Integer pn) {
+	public Msg getAllCollectionPostList(HttpSession session, Integer pn) {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (null == simpleUser) {
 			return Msg.fail().add("msg", "请登录！");
 		}
 		List<Map<String, Object>> list = simpleUserService.gerAllCollectionPostList(simpleUser.getId());
 		if (null == list) {
-			return Msg.fail().add("msg", "无信息！");
+			return Msg.success().add("msg", "无信息！");
 		} else {
-			PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String,Object>>(list);
+			PageInfo<Map<String, Object>> pageInfo = new PageInfo<Map<String, Object>>(list);
 			return Msg.success().add("pageInfo", pageInfo);
 		}
 	}
@@ -963,8 +998,8 @@ public class SimpleUserController {
 	@RequestMapping(value = "/deleteCollectionPost", method = RequestMethod.GET)
 	public Msg deleteCollectionPost(HttpSession session, String ids) {
 		List<Integer> ida = new ArrayList<Integer>();
-		String [] allid = ids.split(",");
-		for(int i = 0 ; i < allid.length ; i++){
+		String[] allid = ids.split(",");
+		for (int i = 0; i < allid.length; i++) {
 			Integer id = Integer.valueOf(allid[i]);
 			ida.add(id);
 		}
@@ -986,15 +1021,24 @@ public class SimpleUserController {
 	@ResponseBody
 	@RequestMapping(value = "/sendResumeToCollectionPost", method = RequestMethod.GET)
 	public Msg sendResumeToCollectionPost(HttpSession session, String ids) {
-		List<Integer> ida = new ArrayList<Integer>();
-		String [] allid = ids.split(",");
-		for(int i = 0 ; i < allid.length ; i++){
-			Integer id = Integer.valueOf(allid[i]);
-			ida.add(id);
-		}
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		List<Integer> ida = new ArrayList<Integer>();
+		String[] allid = ids.split(",");
+		for (int i = 0; i < allid.length; i++) {
+			Integer id = Integer.valueOf(allid[i]);
+			CollectionPost collectionPost = simpleUserService.getCollectPostById(id);
+			GetResume getResume = simpleUserService.msgResume(collectionPost.getPostId(), simpleUser.getId());
+			if (getResume != null) {
+				continue;
+			} else {
+				ida.add(id);
+			}
+		}
 		if (null == simpleUser) {
 			return Msg.fail().add("msg", "请登录！");
+		}
+		if (ida.size() == 0) {
+			return Msg.fail().add("msg", "已投递请勿重新投递！");
 		}
 		boolean state = simpleUserService.sendResumeToCollectionPost(ida, simpleUser);
 		if (state) {
@@ -1056,7 +1100,150 @@ public class SimpleUserController {
 			return Msg.success().add("msg", msg);
 		}
 	}
-	
+
+	/**
+	 * 用户名修改 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateUserName", method = RequestMethod.GET)
+	public Msg updateUserName(HttpSession session, String simpleName) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		simpleUser.setSimpleName(simpleName);
+		boolean state = simpleUserService.updateUserName(simpleUser);
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+
+	/**
+	 * 手机号修改 TODO
+	 * 
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateUserMobile", method = RequestMethod.GET)
+	public Msg updateUserMobile(HttpSession session, String mobile, String code) throws Exception {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		MobileCode mobileCode = simpleUserService.getMobileCode(mobile);
+		if (code.equals(mobileCode.getMobileCode())) {
+			Resume resume = simpleUserService.getResume(simpleUser);
+			resume.setRealName(mobile);
+			simpleUser.setMobile(mobile);
+			boolean state = simpleUserService.updateUserMobile(simpleUser, resume);
+			if (state) {
+				return Msg.success().add("msg", "修改成功！");
+			} else {
+				return Msg.fail().add("msg", "修改失败！");
+			}
+		} else {
+			return Msg.fail().add("msg", "验证码有误！");
+		}
+	}
+
+	/**
+	 * 返回手机号 TODO
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getUserMobile", method = RequestMethod.GET)
+	public Msg getUserMobile(HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登入！");
+		} else {
+			return Msg.success().add("mobile", simpleUser.getMobile());
+		}
+
+	}
+
+	/**
+	 * 邮箱更改 TODO
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateUserEmail", method = RequestMethod.GET)
+	public Msg updateUserEmail(HttpSession session, String simpleEmail) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登入！");
+		}
+		simpleUser.setSimpleEmail(simpleEmail);
+		boolean state = simpleUserService.updateUserName(simpleUser);
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+
+	/**
+	 * 修改密码 TODO
+	 * 
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updataUserPsd", method = RequestMethod.POST)
+	public Msg updataUserPsd(HttpSession session, String newPassword, String oldPassword) throws Exception {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登入！");
+		}
+		if (null == newPassword) {
+			return Msg.fail().add("msg", "请输入密码！");
+		} else {
+			SimpleUser simpleUsers = simpleUserService.getSimpleUser(simpleUser.getMobile());
+			boolean state = simpleUsers.getSimplePassword().equals(UtilsMD5.md5(oldPassword));
+			if (state) {
+				simpleUser.setSimplePassword(UtilsMD5.md5(newPassword));
+				boolean states = simpleUserService.updateUserName(simpleUser);
+				if (states) {
+					return Msg.success().add("msg", "修改成功！");
+				} else {
+					return Msg.fail().add("msg", "修改失败！");
+				}
+			} else {
+				return Msg.fail().add("msg", "原密码错误!");
+			}
+		}
+	}
+
+	/**
+	 * 第一步 TODO
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/modifyPasswordByMobileTry", method = RequestMethod.GET)
+	public Msg modifyPasswordByMobileOne(String mobile, String code, HttpSession session) throws Exception {
+		SimpleUser simpleUser = simpleUserService.getSimpleUser(mobile);
+		if (simpleUser == null) {
+			String msg = "用户不存在！或手机号错误！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			MobileCode mobileCode = simpleUserService.getMobileCode(mobile);
+			boolean state = false;
+			if (mobileCode.getMobileCode().equals(code)) {
+				state = true;
+			} else {
+				state = false;
+			}
+			if (state) {
+				String msg = "验证码正确！";
+				session.setAttribute("modifyUser", simpleUser);
+				return Msg.success().add("msg", msg);
+			} else {
+				String msg = "验证码错误！";
+				return Msg.fail().add("msg", msg);
+			}
+		}
+	}
+
 	// TODO
 	// 不使用///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1209,30 +1396,6 @@ public class SimpleUserController {
 			String msg = "修改成功！";
 			session.removeAttribute("modifyUser");
 			return Msg.success().add("msg", msg);
-		}
-	}
-
-	/**
-	 * 第一步
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/modifyPasswordByMobileTry", method = RequestMethod.GET)
-	public Msg modifyPasswordByMobileOne(String mobile, HttpSession session) throws Exception {
-		SimpleUser simpleUser = simpleUserService.getSimpleUser(mobile);
-		if (simpleUser == null) {
-			String msg = "用户不存在！或手机号错误！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			boolean state = simpleUserService.checkCode(mobile);
-			if (state) {
-				String msg = "验证码正确！";
-				session.setAttribute("modifyUser", simpleUser);
-				return Msg.success().add("msg", msg);
-			} else {
-				String msg = "验证码错误！";
-				return Msg.fail().add("msg", msg);
-			}
 		}
 	}
 
@@ -1544,8 +1707,6 @@ public class SimpleUserController {
 			return Msg.fail().add("msg", msg);
 		}
 	}
-
-	
 
 	/**
 	 * 实习生列表
