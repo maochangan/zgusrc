@@ -657,8 +657,8 @@ public class SimpleUserController {
 		}
 	}
 
-	@RequestMapping(value = "/getAllSimpleUserInfoByAnother", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/getAllSimpleUserInfoByAnother", method = RequestMethod.GET)
 	public Msg getAllSimpleUserInfoByAnother(HttpSession session) {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (simpleUser == null) {
@@ -700,7 +700,6 @@ public class SimpleUserController {
 	@RequestMapping(value = "/updateSimpleUserResume", method = RequestMethod.POST)
 	@ResponseBody
 	public Msg updateSimpleUserResume(Resume resumes, HttpSession session) {
-		System.out.println(resumes.getUserName() + resumes.getCountry() + resumes.getOldCompanyName());
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (simpleUser == null) {
 			String msg = "请登入";
@@ -804,7 +803,7 @@ public class SimpleUserController {
 		if (simpleUser == null) {
 			return Msg.fail().add("msg", "请登入！");
 		} else {
-			PageHelper.startPage(pn, 10000);
+			PageHelper.startPage(pn, 100);
 			List<Map<String, Object>> list = simpleUserService.getSendCompanyList(simpleUser.getId(), pn);
 			if (list == null) {
 				return Msg.success().add("msg", "无投递信息！");

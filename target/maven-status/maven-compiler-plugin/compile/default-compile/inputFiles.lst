@@ -9,15 +9,18 @@ E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\GetMobileCode.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CollectionPostExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\ImageInfo.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CarouselPic.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\BookPrice.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyTypeExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\bean\CPost.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\BookComment.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\PositionNameExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\UtilStringBufferToString.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\SimpleUser.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyVip.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\beifeng\PostReleaseDynamicSQL.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\ArticleMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\BookList.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\CompanyVipMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\PostRelease.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\HatAreaExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\MobileUtils\IndustrySMS.java
@@ -49,6 +52,7 @@ E:\workspace\zgysrc\src\main\java\net\zgysrc\www\beifeng\BookListDynamicSQLMappe
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\FilterMyself.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\MobileUtils\Config.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\DeanInfo.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\SimplePriceExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\service\simservice\RecruitmentSpecialService.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\BookInfoExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CollectionPost.java
@@ -80,11 +84,14 @@ E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\BookTypesMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\service\MobileCodeService.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\PostReleaseDynamicSQL.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyType.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\SimplePriceMapper.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyVipExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\PostReleaseMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\Resume.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\ArtGalleryMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\HatArea.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\CompanyTypesMapper.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\SimplePrice.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\service\ArtGalleryService.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\AdminUser.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\HatAreaMapper.java
@@ -96,6 +103,7 @@ E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\ResumeExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\FollowListMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyTypes.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\HatCity.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\BookPriceMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\NetDownUtil.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\UtilsMD5.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\controller\AdminController.java
@@ -119,6 +127,7 @@ E:\workspace\zgysrc\src\main\java\net\zgysrc\www\utils\WXPayConfig.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyInfo.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\dao\HatCityMapper.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\ArticleExample.java
+E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\BookPriceExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\IndustryCategoryExample.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\CompanyUser.java
 E:\workspace\zgysrc\src\main\java\net\zgysrc\www\bean\SimpleUserExample.java

@@ -61,9 +61,8 @@
 			<if test="articleInfo != null">
 				article_info = #{articleInfo,jdbcType=VARCHAR}
 			</if>
-
 		</where>
-
+			ORDER BY article_list_create_time DESC
 	</select>
 
 

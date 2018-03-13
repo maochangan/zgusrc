@@ -12,13 +12,13 @@
     <result column="collection" jdbcType="INTEGER" property="collection" />
     <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
     <result column="resume_path" jdbcType="VARCHAR" property="resumePath" />
-    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="register_time" jdbcType="VARCHAR" property="registerTime" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
     <result column="age" jdbcType="VARCHAR" property="age" />
     <result column="vip_type" jdbcType="VARCHAR" property="vipType" />
     <result column="pay_price" jdbcType="VARCHAR" property="payPrice" />
-    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
-    <result column="vip_end_time" jdbcType="TIMESTAMP" property="vipEndTime" />
+    <result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+    <result column="vip_end_time" jdbcType="VARCHAR" property="vipEndTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -122,9 +122,9 @@
     values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{simpleName,jdbcType=VARCHAR}, 
       #{simpleEmail,jdbcType=VARCHAR}, #{simplePassword,jdbcType=VARCHAR}, #{simpleResume,jdbcType=VARCHAR}, 
       #{srId,jdbcType=INTEGER}, #{collection,jdbcType=INTEGER}, #{imgPath,jdbcType=VARCHAR}, 
-      #{resumePath,jdbcType=VARCHAR}, #{registerTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=VARCHAR}, 
+      #{resumePath,jdbcType=VARCHAR}, #{registerTime,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{age,jdbcType=VARCHAR}, #{vipType,jdbcType=VARCHAR}, #{payPrice,jdbcType=VARCHAR}, 
-      #{payTime,jdbcType=TIMESTAMP}, #{vipEndTime,jdbcType=TIMESTAMP})
+      #{payTime,jdbcType=VARCHAR}, #{vipEndTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.SimpleUser">
     insert into simple_user
@@ -213,7 +213,7 @@
         #{resumePath,jdbcType=VARCHAR},
       </if>
       <if test="registerTime != null">
-        #{registerTime,jdbcType=TIMESTAMP},
+        #{registerTime,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         #{sex,jdbcType=VARCHAR},
@@ -228,10 +228,10 @@
         #{payPrice,jdbcType=VARCHAR},
       </if>
       <if test="payTime != null">
-        #{payTime,jdbcType=TIMESTAMP},
+        #{payTime,jdbcType=VARCHAR},
       </if>
       <if test="vipEndTime != null">
-        #{vipEndTime,jdbcType=TIMESTAMP},
+        #{vipEndTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -275,7 +275,7 @@
         resume_path = #{record.resumePath,jdbcType=VARCHAR},
       </if>
       <if test="record.registerTime != null">
-        register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+        register_time = #{record.registerTime,jdbcType=VARCHAR},
       </if>
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=VARCHAR},
@@ -290,10 +290,10 @@
         pay_price = #{record.payPrice,jdbcType=VARCHAR},
       </if>
       <if test="record.payTime != null">
-        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+        pay_time = #{record.payTime,jdbcType=VARCHAR},
       </if>
       <if test="record.vipEndTime != null">
-        vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP},
+        vip_end_time = #{record.vipEndTime,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -312,13 +312,13 @@
       collection = #{record.collection,jdbcType=INTEGER},
       img_path = #{record.imgPath,jdbcType=VARCHAR},
       resume_path = #{record.resumePath,jdbcType=VARCHAR},
-      register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      register_time = #{record.registerTime,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       age = #{record.age,jdbcType=VARCHAR},
       vip_type = #{record.vipType,jdbcType=VARCHAR},
       pay_price = #{record.payPrice,jdbcType=VARCHAR},
-      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
-      vip_end_time = #{record.vipEndTime,jdbcType=TIMESTAMP}
+      pay_time = #{record.payTime,jdbcType=VARCHAR},
+      vip_end_time = #{record.vipEndTime,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -354,7 +354,7 @@
         resume_path = #{resumePath,jdbcType=VARCHAR},
       </if>
       <if test="registerTime != null">
-        register_time = #{registerTime,jdbcType=TIMESTAMP},
+        register_time = #{registerTime,jdbcType=VARCHAR},
       </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=VARCHAR},
@@ -369,10 +369,10 @@
         pay_price = #{payPrice,jdbcType=VARCHAR},
       </if>
       <if test="payTime != null">
-        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        pay_time = #{payTime,jdbcType=VARCHAR},
       </if>
       <if test="vipEndTime != null">
-        vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP},
+        vip_end_time = #{vipEndTime,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -388,13 +388,13 @@
       collection = #{collection,jdbcType=INTEGER},
       img_path = #{imgPath,jdbcType=VARCHAR},
       resume_path = #{resumePath,jdbcType=VARCHAR},
-      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      register_time = #{registerTime,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       age = #{age,jdbcType=VARCHAR},
       vip_type = #{vipType,jdbcType=VARCHAR},
       pay_price = #{payPrice,jdbcType=VARCHAR},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      vip_end_time = #{vipEndTime,jdbcType=TIMESTAMP}
+      pay_time = #{payTime,jdbcType=VARCHAR},
+      vip_end_time = #{vipEndTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -12,6 +12,7 @@
     <result column="index_info" jdbcType="VARCHAR" property="indexInfo" />
     <result column="book_type" jdbcType="VARCHAR" property="bookType" />
     <result column="book_type_id" jdbcType="INTEGER" property="bookTypeId" />
+    <result column="book_price" jdbcType="VARCHAR" property="bookPrice" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +74,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, book_name, book_writer, collection_num, click_num, book_create_time, book_info_image_path, 
-    index_info, book_type, book_type_id
+    index_info, book_type, book_type_id, book_price
   </sql>
   <select id="selectByExample" parameterType="net.zgysrc.www.bean.BookInfoExample" resultMap="BaseResultMap">
     select
@@ -109,11 +110,11 @@
     insert into book_info (id, book_name, book_writer, 
       collection_num, click_num, book_create_time, 
       book_info_image_path, index_info, book_type, 
-      book_type_id)
+      book_type_id, book_price)
     values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{bookWriter,jdbcType=VARCHAR}, 
       #{collectionNum,jdbcType=INTEGER}, #{clickNum,jdbcType=INTEGER}, #{bookCreateTime,jdbcType=VARCHAR}, 
       #{bookInfoImagePath,jdbcType=VARCHAR}, #{indexInfo,jdbcType=VARCHAR}, #{bookType,jdbcType=VARCHAR}, 
-      #{bookTypeId,jdbcType=INTEGER})
+      #{bookTypeId,jdbcType=INTEGER}, #{bookPrice,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.BookInfo">
     insert into book_info
@@ -148,6 +149,9 @@
       <if test="bookTypeId != null">
         book_type_id,
       </if>
+      <if test="bookPrice != null">
+        book_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -179,6 +183,9 @@
       </if>
       <if test="bookTypeId != null">
         #{bookTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="bookPrice != null">
+        #{bookPrice,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +228,9 @@
       <if test="record.bookTypeId != null">
         book_type_id = #{record.bookTypeId,jdbcType=INTEGER},
       </if>
+      <if test="record.bookPrice != null">
+        book_price = #{record.bookPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +247,8 @@
       book_info_image_path = #{record.bookInfoImagePath,jdbcType=VARCHAR},
       index_info = #{record.indexInfo,jdbcType=VARCHAR},
       book_type = #{record.bookType,jdbcType=VARCHAR},
-      book_type_id = #{record.bookTypeId,jdbcType=INTEGER}
+      book_type_id = #{record.bookTypeId,jdbcType=INTEGER},
+      book_price = #{record.bookPrice,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +283,9 @@
       <if test="bookTypeId != null">
         book_type_id = #{bookTypeId,jdbcType=INTEGER},
       </if>
+      <if test="bookPrice != null">
+        book_price = #{bookPrice,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -285,7 +299,8 @@
       book_info_image_path = #{bookInfoImagePath,jdbcType=VARCHAR},
       index_info = #{indexInfo,jdbcType=VARCHAR},
       book_type = #{bookType,jdbcType=VARCHAR},
-      book_type_id = #{bookTypeId,jdbcType=INTEGER}
+      book_type_id = #{bookTypeId,jdbcType=INTEGER},
+      book_price = #{bookPrice,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

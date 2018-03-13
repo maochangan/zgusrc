@@ -321,8 +321,16 @@ public class CompanyUserController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String time = sdf.format(date);
 		postRelease.setpStartTime(time);
-		postRelease.setpWelfare(companyInfo.getcSitting());
-		postRelease.setpWelfare("");
+		
+		String as = companyInfo.getcSitting();
+		StringBuffer sbf = new StringBuffer();
+		for(int i = 0 ; i < 4 ; i ++){
+			sbf.append(as.split(",")[i]);
+			sbf.append("，");
+		}
+		sbf.delete(sbf.length()-1, sbf.length());
+		String finalSring = sbf.toString();
+		postRelease.setpWelfare(finalSring);
 		boolean state = postReleaseService.postReleaseAdd(postRelease);
 		if (state) {
 			String msg = "发布成功！";

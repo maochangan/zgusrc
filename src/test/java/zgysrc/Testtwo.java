@@ -1,15 +1,16 @@
 package zgysrc;
 
-import net.zgysrc.www.utils.UtilsMD5;
 
 public class Testtwo {
 
 	public static void main(String[] args) throws Exception {
-		System.out.println(UtilsMD5.md5("123456"));
-		String a = "25f9e794323b453885f5181f1b624d0b";
-		boolean state = a.equals(UtilsMD5.md5("123456789"));
-		System.out.println(state);
-		
+		String as = "11,11,11,11";
+		StringBuffer sbf = new StringBuffer();
+		for(int i = 0 ; i < 4 ; i ++){
+			sbf.append(as.split(",")[i]);
+			sbf.append("，");
+		}
+		sbf.delete(sbf.length()-1, sbf.length());
 	}
 
 }
