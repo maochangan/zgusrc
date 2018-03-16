@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.SimplePriceMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.SimplePrice">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="simple_vip_type" jdbcType="VARCHAR" property="simpleVipType" />
+    <result column="simple_vip_price" jdbcType="VARCHAR" property="simpleVipPrice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, simple_vip_type, simple_vip_price
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.SimplePriceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from simple_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from simple_price
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from simple_price
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.SimplePriceExample">
+    delete from simple_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.SimplePrice">
+    insert into simple_price (id, simple_vip_type, simple_vip_price
+      )
+    values (#{id,jdbcType=INTEGER}, #{simpleVipType,jdbcType=VARCHAR}, #{simpleVipPrice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.SimplePrice">
+    insert into simple_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="simpleVipType != null">
+        simple_vip_type,
+      </if>
+      <if test="simpleVipPrice != null">
+        simple_vip_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="simpleVipType != null">
+        #{simpleVipType,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleVipPrice != null">
+        #{simpleVipPrice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.SimplePriceExample" resultType="java.lang.Long">
+    select count(*) from simple_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update simple_price
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.simpleVipType != null">
+        simple_vip_type = #{record.simpleVipType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleVipPrice != null">
+        simple_vip_price = #{record.simpleVipPrice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update simple_price
+    set id = #{record.id,jdbcType=INTEGER},
+      simple_vip_type = #{record.simpleVipType,jdbcType=VARCHAR},
+      simple_vip_price = #{record.simpleVipPrice,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.SimplePrice">
+    update simple_price
+    <set>
+      <if test="simpleVipType != null">
+        simple_vip_type = #{simpleVipType,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleVipPrice != null">
+        simple_vip_price = #{simpleVipPrice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.SimplePrice">
+    update simple_price
+    set simple_vip_type = #{simpleVipType,jdbcType=VARCHAR},
+      simple_vip_price = #{simpleVipPrice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
