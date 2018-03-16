@@ -70,6 +70,8 @@
 		<table tableName="book_price" domainObjectName="BookPrice"></table>
 		<table tableName="company_vip" domainObjectName="CompanyVip"></table>
 		<table tableName="simple_price" domainObjectName="SimplePrice"></table>
+		<table tableName="art_pic_classify" domainObjectName="ArtPicClassify"></table>
+		
 		
 	</context>
 </generatorConfiguration>

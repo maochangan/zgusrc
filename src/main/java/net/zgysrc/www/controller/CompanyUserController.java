@@ -72,7 +72,7 @@ public class CompanyUserController {
 			return Msg.fail().add("msg", msg);
 		}
 	}
-
+	
 	/**
 	 * 注册 TODO 在用
 	 * 

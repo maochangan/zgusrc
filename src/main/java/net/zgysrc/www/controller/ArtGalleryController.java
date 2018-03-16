@@ -37,7 +37,7 @@ public class ArtGalleryController {
 	private ArtGalleryService artGalleryService;
 
 	/**
-	 * 页数 美术馆大类 TODO
+	 * 页数 美术馆大类 
 	 * 
 	 * @param pn
 	 * @return
@@ -57,7 +57,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 美术馆全部 TODO
+	 * 美术馆全部 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getAllArtGalleryListAdmin", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 3个信息 TODO
+	 * 3个信息 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTopArtGallery", method = RequestMethod.GET)
@@ -89,7 +89,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 4个信息 TODO
+	 * 4个信息 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTopTwoArtGallery", method = RequestMethod.GET)
@@ -105,7 +105,7 @@ public class ArtGalleryController {
 
 	/**
 	 * 
-	 * 添加美术馆大类 TODO
+	 * 添加美术馆大类 
 	 * 
 	 * @throws Exception
 	 * 
@@ -142,7 +142,7 @@ public class ArtGalleryController {
 
 	/**
 	 * 
-	 * 创建美术馆小类 TODO
+	 * 创建美术馆小类 
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -192,7 +192,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆大类id 获得对应美术馆小类 TODO
+	 * id 美术馆大类id 获得对应美术馆小类 
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -220,7 +220,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆大类id 获得对应美术馆小类 TODO
+	 * id 美术馆大类id 获得对应美术馆小类 
 	 * 
 	 * @throws Exception
 	 *             admin
@@ -243,7 +243,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆小类id 获得对应美术馆小类 TODO
+	 * id 美术馆小类id 获得对应美术馆小类 
 	 * 
 	 * @throws Exception
 	 *             admin
@@ -265,7 +265,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆小类id 获得对应美术馆小类 TODO
+	 * id 美术馆小类id 获得对应美术馆小类 
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -292,7 +292,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 修改小类信息 TODO
+	 * 修改小类信息 
 	 * 
 	 * @param id
 	 *            小类id
@@ -340,7 +340,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 删除美术馆大类 TODO
+	 * 删除美术馆大类 
 	 * 
 	 * @param artComment
 	 * @param id
@@ -361,7 +361,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 删除美术馆小类 TODO
+	 * 删除美术馆小类 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteArtImgInfo", method = RequestMethod.GET)
@@ -377,7 +377,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 创建评论 TODO
+	 * 创建评论 
 	 * 
 	 * @param artComment
 	 * @param id
@@ -410,7 +410,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 获取品论 TODO
+	 * 获取品论 
 	 * 
 	 * @param id
 	 *            小类id
@@ -431,7 +431,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 评论数量 TODO
+	 * 评论数量 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getCommentSize", method = RequestMethod.GET)
@@ -447,7 +447,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 美术馆排行 TODO
+	 * 美术馆排行 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/artRankingList", method = RequestMethod.GET)
@@ -462,7 +462,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 十条小信息 TODO
+	 * 十条小信息 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTenList", method = RequestMethod.GET)
@@ -475,6 +475,20 @@ public class ArtGalleryController {
 			return Msg.success().add("list", list);
 		}
 	}
+	
+	/**
+	 * 分类设置
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtPicTypes" , method = RequestMethod.GET)
+	public Msg getArtPicTypes(){
+		
+		//TODO
+		return null;
+	}
+	
+	
+	
 	// TODO 不使用
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////
 

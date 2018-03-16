@@ -972,4 +972,46 @@ public class SimpleUserService {
 		return collectionPost;
 	}
 
+	public List<PostRelease> getInterestedPost(Integer id) {
+		PostRelease postRelease = postReleaseMapper.selectByPrimaryKey(id);
+		PostReleaseExample example = new PostReleaseExample();
+		example.setOrderByClause("id desc");
+		net.zgysrc.www.bean.PostReleaseExample.Criteria criteria = example.createCriteria();
+		criteria.andPNameLike(UtilStringBufferToString.stringBufferToString(postRelease.getpName()));
+		List<PostRelease> list = postReleaseMapper.selectByExample(example);
+		if(list.size() == 0){
+			return null;
+		}else{
+			list.remove(postRelease);
+			return list;
+		}
+	}
+
+	public List<Map<String, Object>> getHotPost() {
+		PostReleaseExample example = new PostReleaseExample();
+		example.setOrderByClause("clicks desc");
+		List<PostRelease> list = postReleaseMapper.selectByExample(example);
+		List<Map<String, Object>> listFinall = new ArrayList<Map<String,Object>>();
+		for(int i = 0 ; i < 15 ; i ++){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", list.get(i).getId());
+			map.put("postName", list.get(i).getpTyoeTwo());
+			listFinall.add(map);
+		}
+		return listFinall;
+	}
+
+	public List<Map<String, Object>> getHotCity() {
+		PostReleaseExample example = new PostReleaseExample();
+		example.setOrderByClause("clicks desc");
+		List<PostRelease> list = postReleaseMapper.selectByExample(example);
+		List<Map<String, Object>> listFinall = new ArrayList<Map<String,Object>>();
+		for(int i = 0 ; i < 15 ; i ++){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("City", list.get(i).getpCity());
+			listFinall.add(map);
+		}
+		return listFinall;
+	}
+
 }

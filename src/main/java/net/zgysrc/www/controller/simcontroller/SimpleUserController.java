@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,8 +106,8 @@ public class SimpleUserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/reviseByMobile", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/reviseByMobile", method = RequestMethod.GET)
 	public Msg revise(String mobile, String code, String simplePassword, SimpleUser simpleUser, HttpSession session)
 			throws Exception {
 		if (mobile == null && code == null) {
@@ -494,9 +495,12 @@ public class SimpleUserController {
 			String msg = "暂无推荐企业";
 			return Msg.fail().add("msg", msg);
 		} else {
-			List<String> list = new ArrayList<String>();
+			List<Map<String , Object>> list = new ArrayList<Map<String , Object>>();
 			for (CompanyInfo companyInfo : lists) {
-				list.add(companyInfo.getcCompanyName());
+				Map<String , Object> map = new HashMap<String, Object>();
+				map.put("id", companyInfo.getId());
+				map.put("companyName", companyInfo.getcCompanyName());
+				list.add(map);
 			}
 			return Msg.success().add("list", list);
 		}
@@ -512,6 +516,7 @@ public class SimpleUserController {
 	@RequestMapping(value = "/findByCondition", method = RequestMethod.GET)
 	@ResponseBody
 	public Msg findByCondition(PostRelease postRelease, Integer pn) {
+		System.out.println(postRelease.getFindName()+postRelease.getpName()+postRelease.getpTyoeTwo());
 		PageHelper.startPage(pn, 20);
 		if ((postRelease.getpCity() != "" && postRelease.getpCity() != null)
 				|| (postRelease.getpName() != "" && postRelease.getpName() != null)
@@ -1241,6 +1246,53 @@ public class SimpleUserController {
 				return Msg.fail().add("msg", msg);
 			}
 		}
+	}
+	
+	/**
+	 * TODO
+	 * 可能感兴趣的职位
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getInterestedPost" , method = RequestMethod.GET)
+	public Msg getInterestedPost(Integer id){
+		List<PostRelease> list = simpleUserService.getInterestedPost(id);
+		if(list == null){
+			return Msg.fail().add("msg", "无推荐职位！");
+		}else{
+			if(list.size()<=5){
+				return Msg.success().add("list", list);
+			}else{
+				List<PostRelease> list2 = new ArrayList<PostRelease>();
+				list2.add(list.get(0));
+				list2.add(list.get(1));
+				list2.add(list.get(2));
+				list2.add(list.get(3));
+				list2.add(list.get(4));
+				return Msg.success().add("list", list2);
+			}
+		}
+	}
+	
+	/**
+	 * TODO
+	 * 热门职位
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getHotPost" , method = RequestMethod.GET)
+	public Msg getHotPost(){
+		List<Map<String , Object>> list = simpleUserService.getHotPost();
+		return Msg.success().add("list", list);
+	}
+	
+	/**
+	 * TODO
+	 * 热门城市
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getHotCity" , method = RequestMethod.GET)
+	public Msg getHotCity(){
+		List<Map<String , Object>> list = simpleUserService.getHotCity();
+		return Msg.success().add("list", list);
 	}
 
 	// TODO
