@@ -20,8 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import net.zgysrc.www.bean.ArtCarousel;
 import net.zgysrc.www.bean.ArtComment;
 import net.zgysrc.www.bean.ArtGallery;
+import net.zgysrc.www.bean.ArtPicClassify;
 import net.zgysrc.www.bean.ArtPicInfo;
 import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.service.ArtGalleryService;
@@ -477,16 +479,74 @@ public class ArtGalleryController {
 	}
 	
 	/**
-	 * 分类设置
+	 * 获取分类
+	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtPicTypes" , method = RequestMethod.GET)
-	public Msg getArtPicTypes(){
-		
-		//TODO
-		return null;
+	@RequestMapping(value = "/getArtPicClassify" , method = RequestMethod.GET)
+	public Msg getArtPicClassify(){
+		List<ArtPicClassify> list = artGalleryService.getArtPicClassify();
+		if(list == null){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			return Msg.success().add("list", list);
+		}
 	}
 	
+	
+	/**
+	 * 轮播图
+	 * 2种 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtCarouselImg" , method = RequestMethod.GET)
+	public Msg getArtCarouselImg(Integer type){
+		List<ArtCarousel> list = artGalleryService.getArtCarouselImg(type);
+		if(null == list){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			return Msg.success().add("list", list);
+		}
+	}
+	
+	/**
+	 * 轮播图
+	 * 2种 
+	 * @throws Exception 
+	 * @throws IllegalStateException 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addArtCarouselImg" , method = RequestMethod.POST)
+	public Msg addArtCarouselImg(ArtCarousel artCarousel , MultipartFile files , HttpServletRequest request) throws IllegalStateException, Exception{
+		String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/ArtCarousel/"
+				+ files.getOriginalFilename();
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		files.transferTo(dir);
+		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
+				+ request.getServletContext().getContextPath() + "files/pic/ArtCarousel/"
+				+ "/" + files.getOriginalFilename();
+		artCarousel.setArtCarouselImgPath(dataPath);
+		boolean state = artGalleryService.addArtCarouselImg(artCarousel);
+		if(state){
+			return Msg.success().add("msg", "添加成功！");
+		}else{
+			return Msg.fail().add("msg", "添加失败！");
+		}
+	}
+	
+	/**
+	 * 美术馆10个 需求更改 
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtGalleryListByIndex" , method = RequestMethod.GET)
+	public Msg getArtGalleryListByIndex(){
+		List<ArtGallery> list = artGalleryService.getArtGalleryListByIndex();
+		return Msg.success().add("list", list);
+	}
 	
 	
 	// TODO 不使用

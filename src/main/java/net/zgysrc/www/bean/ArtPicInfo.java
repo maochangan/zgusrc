@@ -29,6 +29,10 @@ public class ArtPicInfo {
 
     private String buyUserName;
 
+    private String picClassify;
+
+    private Integer picClassifyId;
+
     public Integer getId() {
         return id;
     }
@@ -139,5 +143,21 @@ public class ArtPicInfo {
 
     public void setBuyUserName(String buyUserName) {
         this.buyUserName = buyUserName == null ? null : buyUserName.trim();
+    }
+
+    public String getPicClassify() {
+        return picClassify;
+    }
+
+    public void setPicClassify(String picClassify) {
+        this.picClassify = picClassify == null ? null : picClassify.trim();
+    }
+
+    public Integer getPicClassifyId() {
+        return picClassifyId;
+    }
+
+    public void setPicClassifyId(Integer picClassifyId) {
+        this.picClassifyId = picClassifyId;
     }
 }

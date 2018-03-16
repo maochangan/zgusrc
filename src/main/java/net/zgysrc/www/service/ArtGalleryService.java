@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.zgysrc.www.bean.ArtCarousel;
+import net.zgysrc.www.bean.ArtCarouselExample;
 import net.zgysrc.www.bean.ArtComment;
 import net.zgysrc.www.bean.ArtCommentExample;
 import net.zgysrc.www.bean.ArtGallery;
 import net.zgysrc.www.bean.ArtGalleryExample;
 import net.zgysrc.www.bean.ArtGalleryExample.Criteria;
+import net.zgysrc.www.bean.ArtPicClassify;
 import net.zgysrc.www.bean.ArtPicInfo;
 import net.zgysrc.www.bean.ArtPicInfoExample;
+import net.zgysrc.www.dao.ArtCarouselMapper;
 import net.zgysrc.www.dao.ArtCommentMapper;
 import net.zgysrc.www.dao.ArtGalleryMapper;
+import net.zgysrc.www.dao.ArtPicClassifyMapper;
 import net.zgysrc.www.dao.ArtPicInfoMapper;
 import net.zgysrc.www.utils.UtilStringBufferToString;
 
@@ -31,6 +36,10 @@ public class ArtGalleryService {
 	private ArtPicInfoMapper artPicInfoMapper;
 	@Autowired
 	private ArtCommentMapper artCommentMapper;
+	@Autowired
+	private ArtPicClassifyMapper artPicClassifyMapper;
+	@Autowired
+	private ArtCarouselMapper artCarouselMapper;
 
 	public List<ArtGallery> getAllArtGallery() {
 		List<ArtGallery> list = artGalleryMapper.selectByExample(null);
@@ -314,6 +323,47 @@ public class ArtGalleryService {
 		}else{
 			return list;
 		}
+	}
+
+	public List<ArtPicClassify> getArtPicClassify() {
+		List<ArtPicClassify> list = artPicClassifyMapper.selectByExample(null);
+		if(0 == list.size()){
+			return null;
+		}else{
+			return list;
+		}
+	}
+
+	public List<ArtCarousel> getArtCarouselImg(Integer type) {
+		ArtCarouselExample example = new ArtCarouselExample();
+		net.zgysrc.www.bean.ArtCarouselExample.Criteria criteria = example.createCriteria();
+		criteria.andArtCarouselTypeEqualTo(type);
+		List<ArtCarousel> list = artCarouselMapper.selectByExample(example);
+		if(0 == list.size()){
+			return null;
+		}else{
+			return list;
+		}
+	}
+
+	public boolean addArtCarouselImg(ArtCarousel artCarousel) {
+		int state = artCarouselMapper.insert(artCarousel);
+		if(0 == state){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public List<ArtGallery> getArtGalleryListByIndex() {
+		ArtGalleryExample example = new ArtGalleryExample();
+		example.setOrderByClause("id desc");
+		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
+		List<ArtGallery> list2 = new ArrayList<ArtGallery>();
+		for(int i = 0 ; i < 10 ; i ++){
+			list2.add(list.get(i));
+		}
+		return list2;
 	}
 
 }
