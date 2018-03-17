@@ -333,6 +333,95 @@ public class AdminController {
 		return Msg.success().add("companyInfo", companyInfo);
 	}
 
+	/**
+	 * 支付设置
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getSimpelVipInfo", method = RequestMethod.GET)
+	public Msg getSimpelVipInfo() {
+		List<SimplePrice> list = adminService.getSimpelVipInfo();
+		if (list == null) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 添加修改普通用户vip价格
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateSimpelVipInfo", method = RequestMethod.GET)
+	public Msg updateSimpelVipInfo(SimplePrice simplePrice) {
+		boolean state = adminService.updateSimpelVipInfo(simplePrice);
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+	
+	/**
+	 * 添加vip分类
+	 * @param companyVip
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/setCompanyVipType" , method = RequestMethod.GET)
+	public Msg setCompanyVipType(CompanyVip companyVip){
+		boolean state = adminService.setCompanyVipType(companyVip);
+		if(state){
+			return Msg.success().add("msg", "添加成功！");
+		}else{
+			return Msg.success().add("msg", "添加失败！");
+		}
+	}
+
+	/**
+	 * 企业vip收费设置列表 设置
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateCompanyPriceList", method = RequestMethod.GET)
+	public Msg updateCompanyPriceList(CompanyVip companyVip) {
+		boolean state = adminService.updateCompanyPriceList(companyVip);
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
+		}
+	}
+
+	/**
+	 * 企业vip收费设置列表
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getCompanyPriceList", method = RequestMethod.GET)
+	public Msg getCompanyPriceList() {
+		List<CompanyVip> list = adminService.getCompanyPriceList();
+		if (list == null) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+	
+	/**
+	 * 企业vip类别删除
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteCompanyVipType", method = RequestMethod.GET)
+	public Msg deleteCompanyVipType(Integer id){
+		boolean state = adminService.deleteCompanyVipType(id);
+		if(state){
+			return Msg.success().add("msg", "删除成功！");
+		}else{
+			return Msg.success().add("msg", "删除失败！");
+		}
+	}
+	
+	
+
 	// TODO
 	// 不使用/////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -976,63 +1065,6 @@ public class AdminController {
 				+ files.getOriginalFilename();
 		carouselPic.setImagePath(dataPath);
 		boolean state = adminService.updateCarouselPic(carouselPic);
-		if (state) {
-			return Msg.success().add("msg", "修改成功！");
-		} else {
-			return Msg.fail().add("msg", "修改失败！");
-		}
-	}
-
-	/**
-	 * 支付设置
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getSimpelVipInfo", method = RequestMethod.GET)
-	public Msg getSimpelVipInfo() {
-		List<SimplePrice> list = adminService.getSimpelVipInfo();
-		if (list == null) {
-			return Msg.fail().add("msg", "无信息！");
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 添加修改普通用户vip价格
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateSimpelVipInfo", method = RequestMethod.GET)
-	public Msg updateSimpelVipInfo(SimplePrice simplePrice) {
-		boolean state = adminService.updateSimpelVipInfo(simplePrice);
-		if (state) {
-			return Msg.success().add("msg", "修改成功！");
-		} else {
-			return Msg.fail().add("msg", "修改失败！");
-		}
-	}
-
-	/**
-	 * 企业vip收费设置列表
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/getCompanyPriceList", method = RequestMethod.GET)
-	public Msg getCompanyPriceList() {
-		List<CompanyVip> list = adminService.getCompanyPriceList();
-		if (list == null) {
-			return Msg.fail().add("msg", "无信息！");
-		} else {
-			return Msg.success().add("list", list);
-		}
-	}
-
-	/**
-	 * 企业vip收费设置列表 设置
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/updateCompanyPriceList", method = RequestMethod.GET)
-	public Msg updateCompanyPriceList(CompanyVip companyVip) {
-		boolean state = adminService.updateCompanyPriceList(companyVip);
 		if (state) {
 			return Msg.success().add("msg", "修改成功！");
 		} else {

@@ -14,6 +14,7 @@ import net.zgysrc.www.bean.CompanyType;
 import net.zgysrc.www.bean.CompanyTypeExample;
 import net.zgysrc.www.bean.CompanyTypeExample.Criteria;
 import net.zgysrc.www.bean.CompanyTypes;
+import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.HatArea;
 import net.zgysrc.www.bean.HatAreaExample;
 import net.zgysrc.www.bean.HatCity;
@@ -30,6 +31,7 @@ import net.zgysrc.www.dao.CarouselPicMapper;
 import net.zgysrc.www.dao.CompanyInfoMapper;
 import net.zgysrc.www.dao.CompanyTypeMapper;
 import net.zgysrc.www.dao.CompanyTypesMapper;
+import net.zgysrc.www.dao.CompanyVipMapper;
 import net.zgysrc.www.dao.HatAreaMapper;
 import net.zgysrc.www.dao.HatCityMapper;
 import net.zgysrc.www.dao.HatProvinceMapper;
@@ -64,6 +66,8 @@ public class UtilsControllerService {
 	private CarouselPicMapper carouselPicMapper;
 	@Autowired
 	private CompanyTypesMapper companyTypesMapper;
+	@Autowired
+	private CompanyVipMapper companyVipMapper;
 	
 	
 
@@ -295,5 +299,4 @@ public class UtilsControllerService {
 			return list;
 		}
 	}
-
 }

@@ -867,4 +867,22 @@ public class AdminService {
 		}
 	}
 
+	public boolean setCompanyVipType(CompanyVip companyVip) {
+		int state = companyVipMapper.insert(companyVip);
+		if(0 == state){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public boolean deleteCompanyVipType(Integer id) {
+		int state = companyVipMapper.deleteByPrimaryKey(id);
+		if(0 == state){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 }

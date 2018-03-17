@@ -20,6 +20,7 @@ import net.zgysrc.www.bean.CarouselPic;
 import net.zgysrc.www.bean.CompanyInfo;
 import net.zgysrc.www.bean.CompanyType;
 import net.zgysrc.www.bean.CompanyTypes;
+import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.HatArea;
 import net.zgysrc.www.bean.HatCity;
 import net.zgysrc.www.bean.HatProvince;
@@ -50,8 +51,8 @@ public class UtilsController {
 	 * @return
 	 */
 
-	@RequestMapping(value = "/addCompanyType", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/addCompanyType", method = RequestMethod.GET)
 	public Msg addCompanyType(CompanyType cType, Model model, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
 		if (cType.getConpanyType() != null) {
@@ -76,8 +77,8 @@ public class UtilsController {
 	 * @param cType
 	 * @return
 	 */
-	@RequestMapping(value = "/dropCompanyType", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/dropCompanyType", method = RequestMethod.GET)
 	public Msg dropCompanyType(Integer id) {
 		boolean state = utilsControllerService.dropType(id);
 		if (state) {
@@ -94,8 +95,8 @@ public class UtilsController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/companyType", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/companyType", method = RequestMethod.GET)
 	public Msg companyType() {
 		List<CompanyType> cType = utilsControllerService.findAll();
 		return Msg.success().add("companyType", cType);
@@ -105,8 +106,8 @@ public class UtilsController {
 	/**
 	 * 行业类型 TODO
 	 */
-	@RequestMapping(value = "/industryCategory", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/industryCategory", method = RequestMethod.GET)
 	public Msg industryCategory() {
 		List<IndustryCategory> list = utilsControllerService.findIndustryAll();
 		return Msg.success().add("industryCategory", list);
@@ -117,8 +118,8 @@ public class UtilsController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/getAllprovince", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/getAllprovince", method = RequestMethod.GET)
 	public Msg getAllprovince() {
 		List<HatProvince> list = utilsControllerService.getAllprovince();
 		if (list == null) {
@@ -132,8 +133,8 @@ public class UtilsController {
 	/**
 	 * 获取市 TODO
 	 */
-	@RequestMapping(value = "/getCity", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/getCity", method = RequestMethod.GET)
 	public Msg getCity(String id) {
 		List<HatCity> list = utilsControllerService.getCity(id);
 		if (list == null) {
@@ -147,8 +148,8 @@ public class UtilsController {
 	/**
 	 * 热门信息 TODO
 	 */
-	@RequestMapping(value = "/hotMessage", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/hotMessage", method = RequestMethod.GET)
 	public Msg hotMessage() {
 		List<CompanyInfo> hotCompany = utilsControllerService.getHotCompany();
 		List<PositionName> hotPost = utilsControllerService.getHotPostName();
@@ -169,8 +170,8 @@ public class UtilsController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/carouselPic", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/carouselPic", method = RequestMethod.GET)
 	public Msg carouselPic() {
 		List<CarouselPic> list = utilsControllerService.carouselPic();
 		if (list == null) {
@@ -186,8 +187,8 @@ public class UtilsController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/carouselPicScl", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/carouselPicScl", method = RequestMethod.GET)
 	public Msg carouselPicScl() {
 		List<CarouselPic> list = utilsControllerService.carouselPicScl();
 		if (list == null) {
@@ -213,8 +214,6 @@ public class UtilsController {
 		}
 	}
 	
-	
-
 	// TODO
 	// 不使用/////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
