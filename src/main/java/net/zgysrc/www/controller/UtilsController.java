@@ -20,7 +20,6 @@ import net.zgysrc.www.bean.CarouselPic;
 import net.zgysrc.www.bean.CompanyInfo;
 import net.zgysrc.www.bean.CompanyType;
 import net.zgysrc.www.bean.CompanyTypes;
-import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.HatArea;
 import net.zgysrc.www.bean.HatCity;
 import net.zgysrc.www.bean.HatProvince;
@@ -437,7 +436,6 @@ public class UtilsController {
 			// post.setpStartTime(hashMap.get("date"));
 			utilsControllerService.addPost(post);
 		}
-
 		return Msg.success().add("lisg", list);
 	}
 

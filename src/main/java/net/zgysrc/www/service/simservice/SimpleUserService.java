@@ -28,6 +28,8 @@ import net.zgysrc.www.bean.GetResumeExample;
 import net.zgysrc.www.bean.ImageInfo;
 import net.zgysrc.www.bean.MobileCode;
 import net.zgysrc.www.bean.MobileCodeExample;
+import net.zgysrc.www.bean.PicPayInfo;
+import net.zgysrc.www.bean.PicPayInfoExample;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.PostReleaseExample;
 import net.zgysrc.www.bean.Resume;
@@ -35,6 +37,7 @@ import net.zgysrc.www.bean.ResumeExample;
 import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.bean.SimpleUserExample;
 import net.zgysrc.www.bean.SimpleUserExample.Criteria;
+import net.zgysrc.www.bean.UserReceivingAddress;
 import net.zgysrc.www.dao.ArticleDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListMapper;
@@ -47,10 +50,12 @@ import net.zgysrc.www.dao.FollowListMapper;
 import net.zgysrc.www.dao.GetResumeMapper;
 import net.zgysrc.www.dao.ImageInfoMapper;
 import net.zgysrc.www.dao.MobileCodeMapper;
+import net.zgysrc.www.dao.PicPayInfoMapper;
 import net.zgysrc.www.dao.PostReleaseDynamicSQL;
 import net.zgysrc.www.dao.PostReleaseMapper;
 import net.zgysrc.www.dao.ResumeMapper;
 import net.zgysrc.www.dao.SimpleUserMapper;
+import net.zgysrc.www.dao.UserReceivingAddressMapper;
 import net.zgysrc.www.utils.UtilStringBufferToString;
 import net.zgysrc.www.utils.UtilsMD5;
 
@@ -90,6 +95,10 @@ public class SimpleUserService {
 	private MobileCodeMapper mobileCodeMapper;
 	@Autowired
 	private CollectionPostMapper collectionPostMapper;
+	@Autowired
+	private PicPayInfoMapper picPayInfoMapper;
+	@Autowired
+	private UserReceivingAddressMapper userReceivingAddressMapper;
 
 	public boolean checkMobile(String mobile) {
 		SimpleUserExample example = new SimpleUserExample();
@@ -979,9 +988,9 @@ public class SimpleUserService {
 		net.zgysrc.www.bean.PostReleaseExample.Criteria criteria = example.createCriteria();
 		criteria.andPNameLike(UtilStringBufferToString.stringBufferToString(postRelease.getpName()));
 		List<PostRelease> list = postReleaseMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			list.remove(postRelease);
 			return list;
 		}
@@ -991,8 +1000,8 @@ public class SimpleUserService {
 		PostReleaseExample example = new PostReleaseExample();
 		example.setOrderByClause("clicks desc");
 		List<PostRelease> list = postReleaseMapper.selectByExample(example);
-		List<Map<String, Object>> listFinall = new ArrayList<Map<String,Object>>();
-		for(int i = 0 ; i < 15 ; i ++){
+		List<Map<String, Object>> listFinall = new ArrayList<Map<String, Object>>();
+		for (int i = 0; i < 15; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", list.get(i).getId());
 			map.put("postName", list.get(i).getpTyoeTwo());
@@ -1005,13 +1014,30 @@ public class SimpleUserService {
 		PostReleaseExample example = new PostReleaseExample();
 		example.setOrderByClause("clicks desc");
 		List<PostRelease> list = postReleaseMapper.selectByExample(example);
-		List<Map<String, Object>> listFinall = new ArrayList<Map<String,Object>>();
-		for(int i = 0 ; i < 15 ; i ++){
+		List<Map<String, Object>> listFinall = new ArrayList<Map<String, Object>>();
+		for (int i = 0; i < 15; i++) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("City", list.get(i).getpCity());
 			listFinall.add(map);
 		}
 		return listFinall;
+	}
+
+	public List<PicPayInfo> getPicPayList(Integer integer) {
+		PicPayInfoExample example = new PicPayInfoExample();
+		example.setOrderByClause("id desc");
+		net.zgysrc.www.bean.PicPayInfoExample.Criteria criteria = example.createCriteria();
+		criteria.andUserIdEqualTo(integer);
+		List<PicPayInfo> list = picPayInfoMapper.selectByExample(example);
+		if (0 == list.size()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	public void addUserReceivingAddress(UserReceivingAddress userReceivingAddress) {
+		userReceivingAddressMapper.insert(userReceivingAddress);
 	}
 
 }

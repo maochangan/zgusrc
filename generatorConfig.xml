@@ -74,6 +74,7 @@
 		<table tableName="art_carousel" domainObjectName="ArtCarousel"></table>
 		<table tableName="pic_type" domainObjectName="PicType"></table>
 		<table tableName="pic_pay_info" domainObjectName="PicPayInfo"></table>
+		<table tableName="user_receiving_address" domainObjectName="UserReceivingAddress"></table>
 		
 		
 	</context>

@@ -216,7 +216,6 @@ public class ArtGalleryController {
 			return Msg.fail().add("msg", msg).add("artGallery", artGallery);
 		} else {
 			PageInfo<ArtPicInfo> pageinfo = new PageInfo<ArtPicInfo>(list);
-			System.out.println(id);
 			return Msg.success().add("pageinfo", pageinfo).add("artGallery", artGallery);
 		}
 	}
@@ -275,9 +274,11 @@ public class ArtGalleryController {
 	public Msg getArtImgInfo(Integer id) {
 		ArtPicInfo artImgInfo = artGalleryService.getArtImgInfoById(id);
 		ArtGallery artGallery = artGalleryService.getArtGalleryById(artImgInfo.getFatherId());
+		List<ArtPicInfo> list = artGalleryService.getAllArtImgInfoByFatherId(artGallery.getId());
+		list.remove(artImgInfo);
 		if (artImgInfo == null) {
 			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
+			return Msg.fail().add("msg", msg).add("artGallery", artGallery).add("list", list);
 		} else {
 			Integer click = artImgInfo.getPicClickNum();
 			ArtPicInfo artImgInfos = new ArtPicInfo();
@@ -285,7 +286,7 @@ public class ArtGalleryController {
 			click++;
 			artImgInfos.setPicClickNum(click);
 			artGalleryService.updateArtImgInfo(artImgInfos);
-			return Msg.success().add("artImgInfo", artImgInfo).add("artGallery", artGallery);
+			return Msg.success().add("artImgInfo", artImgInfo).add("artGallery", artGallery).add("list", list);
 		}
 	}
 

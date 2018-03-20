@@ -28,6 +28,7 @@ import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.PicPayInfo;
 import net.zgysrc.www.bean.SimplePrice;
 import net.zgysrc.www.bean.SimpleUser;
+import net.zgysrc.www.bean.UserReceivingAddress;
 import net.zgysrc.www.service.AdminService;
 import net.zgysrc.www.service.ArtGalleryService;
 import net.zgysrc.www.service.CompanyUserService;
@@ -63,13 +64,16 @@ public class AlipayController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "gotoPay", method = RequestMethod.POST)
-	public Msg gotoPay(Integer id, HttpServletResponse response, HttpSession session) throws Exception {
+	public Msg gotoPay(UserReceivingAddress userReceivingAddress, Integer ids, HttpServletResponse response,
+			HttpSession session) throws Exception {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
 		if (simpleUser == null) {
 			String msg = "请登录！";
 			return Msg.fail().add("msg", msg);
 		}
-		ArtPicInfo artPicInfo = artGalleryService.getArtImgInfoById(id);
+		userReceivingAddress.setUserId(simpleUser.getId());
+		userReceivingAddress.setGoodsId(ids);
+		ArtPicInfo artPicInfo = artGalleryService.getArtImgInfoById(ids);
 		if (artPicInfo == null) {
 			String msg = "无产品信息！";
 			return Msg.fail().add("msg", msg);
@@ -84,7 +88,7 @@ public class AlipayController {
 				String msg = "已出售！";
 				return Msg.fail().add("msg", msg);
 			} else {
-
+				simpleUserService.addUserReceivingAddress(userReceivingAddress);
 				AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id,
 						AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key,
 						AlipayConfig.sign_type);
@@ -94,7 +98,9 @@ public class AlipayController {
 				alipayRequest.setReturnUrl(AlipayConfig.return_url);
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 				// 商户订单号，商户网站订单系统中唯一订单号，必填
-				String out_trade_no = sdf.format(new Date()) + "?" + id + "!" + simpleUser.getId();
+				String out_trade_no = sdf.format(new Date()) + "?" + ids + "!" + 1;
+				// String out_trade_no = sdf.format(new Date()) + "?" + id + "!"
+				// + simpleUser.getId();
 				// 付款金额，必填
 				String total_amount = price.replace(",", "");
 				alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\""
@@ -138,7 +144,6 @@ public class AlipayController {
 		// 交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "utf-8");
 
-		
 		PicPayInfo picPayInfo = new PicPayInfo();
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -150,8 +155,7 @@ public class AlipayController {
 		picPayInfo.setPrice(total_amount);
 		picPayInfo.setOutTradeNo(out_trade_no);
 		picPayInfo.setTradeNo(trade_no);
-		
-		
+
 		if (trade_status.equals("TRADE_SUCCESS")) {// 支付成功商家操作
 			picPayInfo.setTradeStatus(trade_status);
 			adminService.updatePicPayInfo(picPayInfo);
@@ -164,7 +168,7 @@ public class AlipayController {
 		} else {
 			picPayInfo.setTradeStatus(trade_status);
 			adminService.updatePicPayInfo(picPayInfo);
-			
+
 			String msg = "失败！";
 			return Msg.fail().add("e", e.toString()).add("msg", msg);
 		}

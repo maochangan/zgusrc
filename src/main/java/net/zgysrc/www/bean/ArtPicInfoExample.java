@@ -1033,6 +1033,76 @@ public class ArtPicInfoExample {
             addCriterion("buy_user_name not between", value1, value2, "buyUserName");
             return (Criteria) this;
         }
+
+        public Criteria andPicSpecIsNull() {
+            addCriterion("pic_spec is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecIsNotNull() {
+            addCriterion("pic_spec is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecEqualTo(String value) {
+            addCriterion("pic_spec =", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecNotEqualTo(String value) {
+            addCriterion("pic_spec <>", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecGreaterThan(String value) {
+            addCriterion("pic_spec >", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecGreaterThanOrEqualTo(String value) {
+            addCriterion("pic_spec >=", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecLessThan(String value) {
+            addCriterion("pic_spec <", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecLessThanOrEqualTo(String value) {
+            addCriterion("pic_spec <=", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecLike(String value) {
+            addCriterion("pic_spec like", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecNotLike(String value) {
+            addCriterion("pic_spec not like", value, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecIn(List<String> values) {
+            addCriterion("pic_spec in", values, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecNotIn(List<String> values) {
+            addCriterion("pic_spec not in", values, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecBetween(String value1, String value2) {
+            addCriterion("pic_spec between", value1, value2, "picSpec");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicSpecNotBetween(String value1, String value2) {
+            addCriterion("pic_spec not between", value1, value2, "picSpec");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

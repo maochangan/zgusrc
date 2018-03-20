@@ -284,7 +284,6 @@ public class ArtGalleryService {
 
 	public List<Map<String, Object>> getTenList() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map = new HashMap<String, Object>();
 		ArtPicInfoExample example = new ArtPicInfoExample();
 		example.setOrderByClause("pic_click_num desc");
 		List<ArtPicInfo> lists = artPicInfoMapper.selectByExample(example);
@@ -292,6 +291,7 @@ public class ArtGalleryService {
 			return null;
 		}
 		for (int i = 0; i < lists.size(); i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
 			if (i == 9) {
 				break;
 			}

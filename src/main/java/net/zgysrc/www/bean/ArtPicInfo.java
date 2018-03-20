@@ -29,6 +29,8 @@ public class ArtPicInfo {
 
     private String buyUserName;
 
+    private String picSpec;
+
     public Integer getId() {
         return id;
     }
@@ -139,5 +141,13 @@ public class ArtPicInfo {
 
     public void setBuyUserName(String buyUserName) {
         this.buyUserName = buyUserName == null ? null : buyUserName.trim();
+    }
+
+    public String getPicSpec() {
+        return picSpec;
+    }
+
+    public void setPicSpec(String picSpec) {
+        this.picSpec = picSpec == null ? null : picSpec.trim();
     }
 }

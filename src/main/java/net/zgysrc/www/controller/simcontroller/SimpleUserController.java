@@ -32,6 +32,7 @@ import net.zgysrc.www.bean.CompanyUser;
 import net.zgysrc.www.bean.GetResume;
 import net.zgysrc.www.bean.ImageInfo;
 import net.zgysrc.www.bean.MobileCode;
+import net.zgysrc.www.bean.PicPayInfo;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.Resume;
 import net.zgysrc.www.bean.SimpleUser;
@@ -495,9 +496,9 @@ public class SimpleUserController {
 			String msg = "暂无推荐企业";
 			return Msg.fail().add("msg", msg);
 		} else {
-			List<Map<String , Object>> list = new ArrayList<Map<String , Object>>();
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 			for (CompanyInfo companyInfo : lists) {
-				Map<String , Object> map = new HashMap<String, Object>();
+				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("id", companyInfo.getId());
 				map.put("companyName", companyInfo.getcCompanyName());
 				list.add(map);
@@ -516,7 +517,7 @@ public class SimpleUserController {
 	@RequestMapping(value = "/findByCondition", method = RequestMethod.GET)
 	@ResponseBody
 	public Msg findByCondition(PostRelease postRelease, Integer pn) {
-		System.out.println(postRelease.getFindName()+postRelease.getpName()+postRelease.getpTyoeTwo());
+		System.out.println(postRelease.getFindName() + postRelease.getpName() + postRelease.getpTyoeTwo());
 		PageHelper.startPage(pn, 20);
 		if ((postRelease.getpCity() != "" && postRelease.getpCity() != null)
 				|| (postRelease.getpName() != "" && postRelease.getpName() != null)
@@ -1247,21 +1248,20 @@ public class SimpleUserController {
 			}
 		}
 	}
-	
+
 	/**
-	 * TODO
-	 * 可能感兴趣的职位
+	 * TODO 可能感兴趣的职位
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getInterestedPost" , method = RequestMethod.GET)
-	public Msg getInterestedPost(Integer id){
+	@RequestMapping(value = "/getInterestedPost", method = RequestMethod.GET)
+	public Msg getInterestedPost(Integer id) {
 		List<PostRelease> list = simpleUserService.getInterestedPost(id);
-		if(list == null){
+		if (list == null) {
 			return Msg.fail().add("msg", "无推荐职位！");
-		}else{
-			if(list.size()<=5){
+		} else {
+			if (list.size() <= 5) {
 				return Msg.success().add("list", list);
-			}else{
+			} else {
 				List<PostRelease> list2 = new ArrayList<PostRelease>();
 				list2.add(list.get(0));
 				list2.add(list.get(1));
@@ -1272,45 +1272,45 @@ public class SimpleUserController {
 			}
 		}
 	}
-	
+
 	/**
-	 * TODO
-	 * 热门职位
+	 * TODO 热门职位
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getHotPost" , method = RequestMethod.GET)
-	public Msg getHotPost(){
-		List<Map<String , Object>> list = simpleUserService.getHotPost();
+	@RequestMapping(value = "/getHotPost", method = RequestMethod.GET)
+	public Msg getHotPost() {
+		List<Map<String, Object>> list = simpleUserService.getHotPost();
 		return Msg.success().add("list", list);
 	}
-	
+
 	/**
-	 * TODO
-	 * 热门城市
+	 * TODO 热门城市
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getHotCity" , method = RequestMethod.GET)
-	public Msg getHotCity(){
-		List<Map<String , Object>> list = simpleUserService.getHotCity();
+	@RequestMapping(value = "/getHotCity", method = RequestMethod.GET)
+	public Msg getHotCity() {
+		List<Map<String, Object>> list = simpleUserService.getHotCity();
 		return Msg.success().add("list", list);
 	}
-	
-	
+
 	/**
 	 * 用户订单列表
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getPicPayList" , method = RequestMethod.GET)
-	public Msg getPicPayList(HttpSession session){
+	@RequestMapping(value = "/getPicPayList", method = RequestMethod.GET)
+	public Msg getPicPayList(HttpSession session) {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
-		if(null == simpleUser){
+		if (null == simpleUser) {
 			return Msg.fail().add("msg", "请登入！");
 		}
-		//TODO
-		return null;
+		List<PicPayInfo> list = simpleUserService.getPicPayList(simpleUser.getId());
+		if (null == list) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
 	}
-	
 
 	// TODO
 	// 不使用///////////////////////////////////////////////////////////////////////////////////////////////////////////////
