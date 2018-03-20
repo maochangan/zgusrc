@@ -29,6 +29,7 @@ import net.zgysrc.www.bean.CompanyInfo;
 import net.zgysrc.www.bean.CompanyUser;
 import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.ImageInfo;
+import net.zgysrc.www.bean.PicPayInfo;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.Resume;
 import net.zgysrc.www.bean.SimplePrice;
@@ -417,6 +418,24 @@ public class AdminController {
 			return Msg.success().add("msg", "删除成功！");
 		}else{
 			return Msg.success().add("msg", "删除失败！");
+		}
+	}
+	
+	
+	/**
+	 * 订单列表
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getPicPayList", method = RequestMethod.GET)
+	public Msg getPicPayList(Integer pn , Integer pSize){
+		PageHelper.startPage(pn,pSize);
+		List<PicPayInfo> list = adminService.getPicPayList();
+		if(null == list){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			PageInfo<PicPayInfo> pageInfo = new PageInfo<PicPayInfo>(list);
+			return Msg.success().add("pageInfo", pageInfo);
 		}
 	}
 	

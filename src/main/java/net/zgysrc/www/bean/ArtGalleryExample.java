@@ -913,6 +913,216 @@ public class ArtGalleryExample {
             addCriterion("art_time not between", value1, value2, "artTime");
             return (Criteria) this;
         }
+
+        public Criteria andPicClassifyIsNull() {
+            addCriterion("pic_classify is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIsNotNull() {
+            addCriterion("pic_classify is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyEqualTo(String value) {
+            addCriterion("pic_classify =", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyNotEqualTo(String value) {
+            addCriterion("pic_classify <>", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyGreaterThan(String value) {
+            addCriterion("pic_classify >", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyGreaterThanOrEqualTo(String value) {
+            addCriterion("pic_classify >=", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyLessThan(String value) {
+            addCriterion("pic_classify <", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyLessThanOrEqualTo(String value) {
+            addCriterion("pic_classify <=", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyLike(String value) {
+            addCriterion("pic_classify like", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyNotLike(String value) {
+            addCriterion("pic_classify not like", value, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIn(List<String> values) {
+            addCriterion("pic_classify in", values, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyNotIn(List<String> values) {
+            addCriterion("pic_classify not in", values, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyBetween(String value1, String value2) {
+            addCriterion("pic_classify between", value1, value2, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyNotBetween(String value1, String value2) {
+            addCriterion("pic_classify not between", value1, value2, "picClassify");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdIsNull() {
+            addCriterion("pic_classify_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdIsNotNull() {
+            addCriterion("pic_classify_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdEqualTo(String value) {
+            addCriterion("pic_classify_id =", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdNotEqualTo(String value) {
+            addCriterion("pic_classify_id <>", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdGreaterThan(String value) {
+            addCriterion("pic_classify_id >", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdGreaterThanOrEqualTo(String value) {
+            addCriterion("pic_classify_id >=", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdLessThan(String value) {
+            addCriterion("pic_classify_id <", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdLessThanOrEqualTo(String value) {
+            addCriterion("pic_classify_id <=", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdLike(String value) {
+            addCriterion("pic_classify_id like", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdNotLike(String value) {
+            addCriterion("pic_classify_id not like", value, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdIn(List<String> values) {
+            addCriterion("pic_classify_id in", values, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdNotIn(List<String> values) {
+            addCriterion("pic_classify_id not in", values, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdBetween(String value1, String value2) {
+            addCriterion("pic_classify_id between", value1, value2, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicClassifyIdNotBetween(String value1, String value2) {
+            addCriterion("pic_classify_id not between", value1, value2, "picClassifyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherIsNull() {
+            addCriterion("pic_type_another is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherIsNotNull() {
+            addCriterion("pic_type_another is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherEqualTo(String value) {
+            addCriterion("pic_type_another =", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherNotEqualTo(String value) {
+            addCriterion("pic_type_another <>", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherGreaterThan(String value) {
+            addCriterion("pic_type_another >", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherGreaterThanOrEqualTo(String value) {
+            addCriterion("pic_type_another >=", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherLessThan(String value) {
+            addCriterion("pic_type_another <", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherLessThanOrEqualTo(String value) {
+            addCriterion("pic_type_another <=", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherLike(String value) {
+            addCriterion("pic_type_another like", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherNotLike(String value) {
+            addCriterion("pic_type_another not like", value, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherIn(List<String> values) {
+            addCriterion("pic_type_another in", values, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherNotIn(List<String> values) {
+            addCriterion("pic_type_another not in", values, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherBetween(String value1, String value2) {
+            addCriterion("pic_type_another between", value1, value2, "picTypeAnother");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicTypeAnotherNotBetween(String value1, String value2) {
+            addCriterion("pic_type_another not between", value1, value2, "picTypeAnother");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -25,6 +25,7 @@ import net.zgysrc.www.bean.ArtComment;
 import net.zgysrc.www.bean.ArtGallery;
 import net.zgysrc.www.bean.ArtPicClassify;
 import net.zgysrc.www.bean.ArtPicInfo;
+import net.zgysrc.www.bean.PicType;
 import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.service.ArtGalleryService;
 import net.zgysrc.www.utils.Configuration;
@@ -203,21 +204,20 @@ public class ArtGalleryController {
 	@ResponseBody
 	@RequestMapping(value = "/getAllArtImgInfo", method = RequestMethod.GET)
 	public Msg getAllArtImgInfo(Integer id, Integer pn) {
-		ArtGallery artGallery = new ArtGallery();
-		artGallery.setId(id);
-		ArtGallery artGallerys = artGalleryService.getArtGalleryById(id);
-		Integer click = artGallerys.getClick();
+		ArtGallery artGallery = artGalleryService.getArtGalleryById(id);
+		Integer click = artGallery.getClick();
 		click++;
 		artGallery.setClick(click);
 		artGalleryService.updateArtGalleryById(artGallery);
-		PageHelper.startPage(pn, 16);
+		PageHelper.startPage(pn, 12);
 		List<ArtPicInfo> list = artGalleryService.getAllArtImgInfoByFatherId(id);
 		if (list == null) {
 			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
+			return Msg.fail().add("msg", msg).add("artGallery", artGallery);
 		} else {
 			PageInfo<ArtPicInfo> pageinfo = new PageInfo<ArtPicInfo>(list);
-			return Msg.success().add("pageinfo", pageinfo).add("artGallery", artGallerys);
+			System.out.println(id);
+			return Msg.success().add("pageinfo", pageinfo).add("artGallery", artGallery);
 		}
 	}
 
@@ -252,18 +252,14 @@ public class ArtGalleryController {
 	 * @throws Throwable
 	 * @throws IllegalStateException
 	 */
-	@SuppressWarnings("unused")
 	@ResponseBody
 	@RequestMapping(value = "/getArtImgInfoAdmin", method = RequestMethod.GET)
 	public Msg getArtImgInfoAdmin(Integer id) {
 		ArtPicInfo artImgInfo = artGalleryService.getArtImgInfoById(id);
 		ArtGallery artGallery = artGalleryService.getArtGalleryById(artImgInfo.getFatherId());
-		if (artImgInfo == null) {
-			String msg = "无信息！";
-			return Msg.fail().add("msg", msg);
-		} else {
-			return Msg.success().add("artImgInfo", artImgInfo).add("artGallery", artGallery);
-		}
+		List<ArtPicInfo> list = artGalleryService.getAllArtImgInfoByFatherId(artGallery.getId());
+		list.remove(artImgInfo);
+		return Msg.success().add("artImgInfo", artImgInfo).add("artGallery", artGallery).add("list", list);
 	}
 
 	/**
@@ -492,6 +488,21 @@ public class ArtGalleryController {
 			return Msg.success().add("list", list);
 		}
 	}
+
+	/**
+	 * 获取其他分类
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtPicType" , method = RequestMethod.GET)
+	public Msg getArtPicType(){
+		List<PicType> list = artGalleryService.getArtPicType();
+		if(list == null){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			return Msg.success().add("list", list);
+		}
+	}
 	
 	
 	/**
@@ -538,14 +549,56 @@ public class ArtGalleryController {
 	}
 	
 	/**
-	 * 美术馆10个 需求更改 
+	 * 美术馆8个 需求更改 
+	 * 根据分类
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtGalleryListByIndex" , method = RequestMethod.GET)
-	public Msg getArtGalleryListByIndex(){
-		List<ArtGallery> list = artGalleryService.getArtGalleryListByIndex();
-		return Msg.success().add("list", list);
+	@RequestMapping(value = "/getArtGalleryListByClassify" , method = RequestMethod.GET)
+	public Msg getArtGalleryListByClassify(String picClassify){
+		List<ArtGallery> list = artGalleryService.getArtGalleryListByClassify(picClassify);
+		if(null == list){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			return Msg.success().add("list", list);
+		}
+	}
+	
+	/**
+	 * 获取分类全部
+	 * @param pn
+	 * @param pSize
+	 * @param artSell
+	 * @param picClassify
+	 * @param picTypeAnother
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtGalleryListByCondition" , method = RequestMethod.GET)
+	public Msg getArtGalleryListByCondition(Integer pn , Integer pSize , String artSell , String picClassify , String picTypeAnother){
+		PageHelper.startPage(pn, pSize);
+		List<ArtGallery> list = artGalleryService.getArtGalleryListByCondition(artSell,picClassify,picTypeAnother);
+		if(null == list){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			PageInfo<ArtGallery> pageInfo = new PageInfo<ArtGallery>(list);
+			return Msg.success().add("pageInfo", pageInfo);
+		}
+	}
+	
+	/**
+	 * 美术馆推荐  5个
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtGalleryListByRecommend" , method = RequestMethod.GET)
+	public Msg getArtGalleryListByRecommend(){
+		List<ArtGallery> list = artGalleryService.getArtGalleryListByRecommend();
+		if(null == list){
+			return Msg.fail().add("msg", "无信息！");
+		}else{
+			return Msg.success().add("list", list);
+		}
 	}
 	
 	

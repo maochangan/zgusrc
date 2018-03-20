@@ -73,6 +73,7 @@
 		<table tableName="art_pic_classify" domainObjectName="ArtPicClassify"></table>
 		<table tableName="art_carousel" domainObjectName="ArtCarousel"></table>
 		<table tableName="pic_type" domainObjectName="PicType"></table>
+		<table tableName="pic_pay_info" domainObjectName="PicPayInfo"></table>
 		
 		
 	</context>

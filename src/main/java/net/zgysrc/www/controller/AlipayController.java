@@ -25,6 +25,7 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import net.zgysrc.www.bean.ArtPicInfo;
 import net.zgysrc.www.bean.CompanyUser;
 import net.zgysrc.www.bean.CompanyVip;
+import net.zgysrc.www.bean.PicPayInfo;
 import net.zgysrc.www.bean.SimplePrice;
 import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.service.AdminService;
@@ -64,8 +65,7 @@ public class AlipayController {
 	@RequestMapping(value = "gotoPay", method = RequestMethod.POST)
 	public Msg gotoPay(Integer id, HttpServletResponse response, HttpSession session) throws Exception {
 		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
-		CompanyUser companyUser = (CompanyUser) session.getAttribute("user");
-		if (simpleUser == null || companyUser == null) {
+		if (simpleUser == null) {
 			String msg = "请登录！";
 			return Msg.fail().add("msg", msg);
 		}
@@ -137,7 +137,24 @@ public class AlipayController {
 		String cus = new String(request.getParameter("body").getBytes("ISO-8859-1"), "utf-8");
 		// 交易状态
 		String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"), "utf-8");
+
+		
+		PicPayInfo picPayInfo = new PicPayInfo();
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String createDate = sdf.format(date);
+		picPayInfo.setCreateDate(createDate);
+		picPayInfo.setCus(cus);
+		picPayInfo.setGoodsId(id);
+		picPayInfo.setUserId(userId);
+		picPayInfo.setPrice(total_amount);
+		picPayInfo.setOutTradeNo(out_trade_no);
+		picPayInfo.setTradeNo(trade_no);
+		
+		
 		if (trade_status.equals("TRADE_SUCCESS")) {// 支付成功商家操作
+			picPayInfo.setTradeStatus(trade_status);
+			adminService.updatePicPayInfo(picPayInfo);
 			artPicInfo.setBuyUserName(trade_no);
 			artPicInfo.setSellOrNot("sell");
 			artPicInfo.setBuyUserId(userId);
@@ -145,6 +162,9 @@ public class AlipayController {
 			artGalleryService.updateArtImgInfo(artPicInfo);
 			return Msg.success().add("msg", cus);
 		} else {
+			picPayInfo.setTradeStatus(trade_status);
+			adminService.updatePicPayInfo(picPayInfo);
+			
 			String msg = "失败！";
 			return Msg.fail().add("e", e.toString()).add("msg", msg);
 		}
@@ -166,7 +186,7 @@ public class AlipayController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("单号", out_trade_no);
 		map.put("out_trade_no", out_trade_no);
-		String msg = "付款成功！请联系商家确定个人信息！";
+		String msg = "付款成功！请到用户中心查看订单信息！";
 		return Msg.success().add("msg", msg).add("map", map);
 	}
 

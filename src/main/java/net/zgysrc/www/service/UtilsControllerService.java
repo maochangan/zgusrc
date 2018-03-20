@@ -14,7 +14,6 @@ import net.zgysrc.www.bean.CompanyType;
 import net.zgysrc.www.bean.CompanyTypeExample;
 import net.zgysrc.www.bean.CompanyTypeExample.Criteria;
 import net.zgysrc.www.bean.CompanyTypes;
-import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.HatArea;
 import net.zgysrc.www.bean.HatAreaExample;
 import net.zgysrc.www.bean.HatCity;
@@ -31,7 +30,6 @@ import net.zgysrc.www.dao.CarouselPicMapper;
 import net.zgysrc.www.dao.CompanyInfoMapper;
 import net.zgysrc.www.dao.CompanyTypeMapper;
 import net.zgysrc.www.dao.CompanyTypesMapper;
-import net.zgysrc.www.dao.CompanyVipMapper;
 import net.zgysrc.www.dao.HatAreaMapper;
 import net.zgysrc.www.dao.HatCityMapper;
 import net.zgysrc.www.dao.HatProvinceMapper;
@@ -66,10 +64,6 @@ public class UtilsControllerService {
 	private CarouselPicMapper carouselPicMapper;
 	@Autowired
 	private CompanyTypesMapper companyTypesMapper;
-	@Autowired
-	private CompanyVipMapper companyVipMapper;
-	
-	
 
 	public List<CompanyType> findAll() {
 		List<CompanyType> list = companyTypeMapper.selectByExample(null);
@@ -196,9 +190,9 @@ public class UtilsControllerService {
 
 	public List<HatProvince> getAllprovince() {
 		List<HatProvince> list = hatProvinceMapper.selectByExample(null);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -208,9 +202,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.HatCityExample.Criteria criteria = example.createCriteria();
 		criteria.andFatherEqualTo(id);
 		List<HatCity> list = hatCityMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -220,9 +214,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.HatAreaExample.Criteria criteria = example.createCriteria();
 		criteria.andFatherEqualTo(id);
 		List<HatArea> list = hatAreaMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -232,9 +226,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.PostitonTypeExample.Criteria criteria = example.createCriteria();
 		criteria.andFatherIdEqualTo(id);
 		List<PostitonType> list = postitonTypeMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -244,9 +238,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.CompanyInfoExample.Criteria criteria = example.createCriteria();
 		criteria.andHotOrNotEqualTo("hot");
 		List<CompanyInfo> list = companyInfoMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -256,9 +250,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.PositionNameExample.Criteria criteria = example.createCriteria();
 		criteria.andHotOrNotEqualTo("hot");
 		List<PositionName> list = positionNameMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -268,9 +262,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.CarouselPicExample.Criteria criteria = example.createCriteria();
 		criteria.andTypesEqualTo("1");
 		List<CarouselPic> list = carouselPicMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -280,9 +274,9 @@ public class UtilsControllerService {
 		net.zgysrc.www.bean.CarouselPicExample.Criteria criteria = example.createCriteria();
 		criteria.andTypesEqualTo("2");
 		List<CarouselPic> list = carouselPicMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -293,9 +287,9 @@ public class UtilsControllerService {
 
 	public List<CompanyTypes> getCompanyTypes() {
 		List<CompanyTypes> list = companyTypesMapper.selectByExample(null);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}

@@ -1294,6 +1294,23 @@ public class SimpleUserController {
 		List<Map<String , Object>> list = simpleUserService.getHotCity();
 		return Msg.success().add("list", list);
 	}
+	
+	
+	/**
+	 * 用户订单列表
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getPicPayList" , method = RequestMethod.GET)
+	public Msg getPicPayList(HttpSession session){
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if(null == simpleUser){
+			return Msg.fail().add("msg", "请登入！");
+		}
+		//TODO
+		return null;
+	}
+	
 
 	// TODO
 	// 不使用///////////////////////////////////////////////////////////////////////////////////////////////////////////////

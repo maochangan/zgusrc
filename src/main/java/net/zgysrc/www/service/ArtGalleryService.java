@@ -19,11 +19,13 @@ import net.zgysrc.www.bean.ArtGalleryExample.Criteria;
 import net.zgysrc.www.bean.ArtPicClassify;
 import net.zgysrc.www.bean.ArtPicInfo;
 import net.zgysrc.www.bean.ArtPicInfoExample;
+import net.zgysrc.www.bean.PicType;
 import net.zgysrc.www.dao.ArtCarouselMapper;
 import net.zgysrc.www.dao.ArtCommentMapper;
 import net.zgysrc.www.dao.ArtGalleryMapper;
 import net.zgysrc.www.dao.ArtPicClassifyMapper;
 import net.zgysrc.www.dao.ArtPicInfoMapper;
+import net.zgysrc.www.dao.PicTypeMapper;
 import net.zgysrc.www.utils.UtilStringBufferToString;
 
 @Service
@@ -40,6 +42,8 @@ public class ArtGalleryService {
 	private ArtPicClassifyMapper artPicClassifyMapper;
 	@Autowired
 	private ArtCarouselMapper artCarouselMapper;
+	@Autowired
+	private PicTypeMapper picTypeMapper;
 
 	public List<ArtGallery> getAllArtGallery() {
 		List<ArtGallery> list = artGalleryMapper.selectByExample(null);
@@ -234,12 +238,12 @@ public class ArtGalleryService {
 
 	public boolean deleteCommentInfo(Integer id) {
 		int state = artCommentMapper.deleteByPrimaryKey(id);
-		if(state == 0){
+		if (state == 0) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
-		
+
 	}
 
 	public List<ArtPicInfo> artRankingList() {
@@ -247,11 +251,11 @@ public class ArtGalleryService {
 		example.setOrderByClause("pic_click_num desc");
 		List<ArtPicInfo> list = artPicInfoMapper.selectByExample(example);
 		List<ArtPicInfo> lists = new ArrayList<ArtPicInfo>();
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
-			for(int i = 0 ; i < list.size() ; i++){
-				if(i == 9){
+		} else {
+			for (int i = 0; i < list.size(); i++) {
+				if (i == 9) {
 					break;
 				}
 				lists.add(list.get(i));
@@ -265,9 +269,9 @@ public class ArtGalleryService {
 		net.zgysrc.www.bean.ArtCommentExample.Criteria criteria = example.createCriteria();
 		criteria.andFatherIdEqualTo(id);
 		List<ArtComment> list = artCommentMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list.size();
 		}
 	}
@@ -279,23 +283,23 @@ public class ArtGalleryService {
 	}
 
 	public List<Map<String, Object>> getTenList() {
-		List<Map<String , Object>> list = new ArrayList<Map<String,Object>>();
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		ArtPicInfoExample example = new ArtPicInfoExample();
 		example.setOrderByClause("pic_click_num desc");
 		List<ArtPicInfo> lists = artPicInfoMapper.selectByExample(example);
-		if(lists.size() == 0){
+		if (lists.size() == 0) {
 			return null;
 		}
-		for (int i = 0 ; i < lists.size() ; i ++) {
-			if(i == 9){
+		for (int i = 0; i < lists.size(); i++) {
+			if (i == 9) {
 				break;
 			}
 			map.put("id", lists.get(i).getId());
 			map.put("picName", lists.get(i).getPicName());
 			list.add(map);
 		}
- 		return list;
+		return list;
 	}
 
 	public List<ArtGallery> getAllArtGalleryListAdmin(String artGalleryName) {
@@ -304,9 +308,9 @@ public class ArtGalleryService {
 		Criteria criteria = example.createCriteria();
 		criteria.andArtGalleryNameLike(UtilStringBufferToString.stringBufferToString(artGalleryName));
 		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -318,18 +322,18 @@ public class ArtGalleryService {
 		criteria.andFatherIdEqualTo(id);
 		criteria.andPicNameLike(UtilStringBufferToString.stringBufferToString(picName));
 		List<ArtPicInfo> list = artPicInfoMapper.selectByExample(example);
-		if(list.size() == 0){
+		if (list.size() == 0) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
 
 	public List<ArtPicClassify> getArtPicClassify() {
 		List<ArtPicClassify> list = artPicClassifyMapper.selectByExample(null);
-		if(0 == list.size()){
+		if (0 == list.size()) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
@@ -339,31 +343,75 @@ public class ArtGalleryService {
 		net.zgysrc.www.bean.ArtCarouselExample.Criteria criteria = example.createCriteria();
 		criteria.andArtCarouselTypeEqualTo(type);
 		List<ArtCarousel> list = artCarouselMapper.selectByExample(example);
-		if(0 == list.size()){
+		if (0 == list.size()) {
 			return null;
-		}else{
+		} else {
 			return list;
 		}
 	}
 
 	public boolean addArtCarouselImg(ArtCarousel artCarousel) {
 		int state = artCarouselMapper.insert(artCarousel);
-		if(0 == state){
+		if (0 == state) {
 			return false;
-		}else{
+		} else {
 			return true;
 		}
 	}
 
-	public List<ArtGallery> getArtGalleryListByIndex() {
+	public List<PicType> getArtPicType() {
+		List<PicType> list = picTypeMapper.selectByExample(null);
+		if (0 == list.size()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	public List<ArtGallery> getArtGalleryListByClassify(String picClassify) {
 		ArtGalleryExample example = new ArtGalleryExample();
 		example.setOrderByClause("id desc");
+		Criteria criteria = example.createCriteria();
+		criteria.andPicClassifyEqualTo(picClassify);
 		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
-		List<ArtGallery> list2 = new ArrayList<ArtGallery>();
-		for(int i = 0 ; i < 10 ; i ++){
-			list2.add(list.get(i));
+		if (0 == list.size()) {
+			return null;
+		} else {
+			if (list.size() < 8) {
+				return list;
+			} else {
+				List<ArtGallery> list2 = new ArrayList<ArtGallery>();
+				for (int i = 0; i < 8; i++) {
+					list2.add(list.get(i));
+				}
+				return list2;
+			}
 		}
-		return list2;
+	}
+
+	public List<ArtGallery> getArtGalleryListByCondition(String artSell, String picClassify, String picTypeAnother) {
+		ArtGalleryExample example = new ArtGalleryExample();
+		example.setOrderByClause("id desc");
+		Criteria criteria = example.createCriteria();
+		criteria.andPicClassifyLike(UtilStringBufferToString.stringBufferToString(picClassify));
+		criteria.andArtSellLike(UtilStringBufferToString.stringBufferToString(artSell));
+		criteria.andPicTypeAnotherLike(UtilStringBufferToString.stringBufferToString(picTypeAnother));
+		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
+		if (0 == list.size()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	public List<ArtGallery> getArtGalleryListByRecommend() {
+		ArtGalleryExample example = new ArtGalleryExample();
+		example.setOrderByClause("id desc");
+		Criteria criteria = example.createCriteria();
+		criteria.andIndexInfoEqualTo("1");
+		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
+		return list;
+
 	}
 
 }

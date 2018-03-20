@@ -25,6 +25,12 @@ public class ArtGallery {
 
     private String artTime;
 
+    private String picClassify;
+
+    private String picClassifyId;
+
+    private String picTypeAnother;
+
     public Integer getId() {
         return id;
     }
@@ -119,5 +125,29 @@ public class ArtGallery {
 
     public void setArtTime(String artTime) {
         this.artTime = artTime == null ? null : artTime.trim();
+    }
+
+    public String getPicClassify() {
+        return picClassify;
+    }
+
+    public void setPicClassify(String picClassify) {
+        this.picClassify = picClassify == null ? null : picClassify.trim();
+    }
+
+    public String getPicClassifyId() {
+        return picClassifyId;
+    }
+
+    public void setPicClassifyId(String picClassifyId) {
+        this.picClassifyId = picClassifyId == null ? null : picClassifyId.trim();
+    }
+
+    public String getPicTypeAnother() {
+        return picTypeAnother;
+    }
+
+    public void setPicTypeAnother(String picTypeAnother) {
+        this.picTypeAnother = picTypeAnother == null ? null : picTypeAnother.trim();
     }
 }

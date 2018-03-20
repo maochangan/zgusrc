@@ -14,6 +14,9 @@
     <result column="art_info" jdbcType="VARCHAR" property="artInfo" />
     <result column="art_date" jdbcType="VARCHAR" property="artDate" />
     <result column="art_time" jdbcType="VARCHAR" property="artTime" />
+    <result column="pic_classify" jdbcType="VARCHAR" property="picClassify" />
+    <result column="pic_classify_id" jdbcType="VARCHAR" property="picClassifyId" />
+    <result column="pic_type_another" jdbcType="VARCHAR" property="picTypeAnother" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +78,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, art_gallery_name, art_gallery_img_path, click, studio_name, like_num, index_info, 
-    art_address, art_sell, art_info, art_date, art_time
+    art_address, art_sell, art_info, art_date, art_time, pic_classify, pic_classify_id, 
+    pic_type_another
   </sql>
   <select id="selectByExample" parameterType="net.zgysrc.www.bean.ArtGalleryExample" resultMap="BaseResultMap">
     select
@@ -111,12 +115,14 @@
     insert into art_gallery (id, art_gallery_name, art_gallery_img_path, 
       click, studio_name, like_num, 
       index_info, art_address, art_sell, 
-      art_info, art_date, art_time
+      art_info, art_date, art_time, 
+      pic_classify, pic_classify_id, pic_type_another
       )
     values (#{id,jdbcType=INTEGER}, #{artGalleryName,jdbcType=VARCHAR}, #{artGalleryImgPath,jdbcType=VARCHAR}, 
       #{click,jdbcType=INTEGER}, #{studioName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
       #{indexInfo,jdbcType=VARCHAR}, #{artAddress,jdbcType=VARCHAR}, #{artSell,jdbcType=VARCHAR}, 
-      #{artInfo,jdbcType=VARCHAR}, #{artDate,jdbcType=VARCHAR}, #{artTime,jdbcType=VARCHAR}
+      #{artInfo,jdbcType=VARCHAR}, #{artDate,jdbcType=VARCHAR}, #{artTime,jdbcType=VARCHAR}, 
+      #{picClassify,jdbcType=VARCHAR}, #{picClassifyId,jdbcType=VARCHAR}, #{picTypeAnother,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.ArtGallery">
@@ -158,6 +164,15 @@
       <if test="artTime != null">
         art_time,
       </if>
+      <if test="picClassify != null">
+        pic_classify,
+      </if>
+      <if test="picClassifyId != null">
+        pic_classify_id,
+      </if>
+      <if test="picTypeAnother != null">
+        pic_type_another,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -195,6 +210,15 @@
       </if>
       <if test="artTime != null">
         #{artTime,jdbcType=VARCHAR},
+      </if>
+      <if test="picClassify != null">
+        #{picClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="picClassifyId != null">
+        #{picClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="picTypeAnother != null">
+        #{picTypeAnother,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -243,6 +267,15 @@
       <if test="record.artTime != null">
         art_time = #{record.artTime,jdbcType=VARCHAR},
       </if>
+      <if test="record.picClassify != null">
+        pic_classify = #{record.picClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picClassifyId != null">
+        pic_classify_id = #{record.picClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picTypeAnother != null">
+        pic_type_another = #{record.picTypeAnother,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -261,7 +294,10 @@
       art_sell = #{record.artSell,jdbcType=VARCHAR},
       art_info = #{record.artInfo,jdbcType=VARCHAR},
       art_date = #{record.artDate,jdbcType=VARCHAR},
-      art_time = #{record.artTime,jdbcType=VARCHAR}
+      art_time = #{record.artTime,jdbcType=VARCHAR},
+      pic_classify = #{record.picClassify,jdbcType=VARCHAR},
+      pic_classify_id = #{record.picClassifyId,jdbcType=VARCHAR},
+      pic_type_another = #{record.picTypeAnother,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -302,6 +338,15 @@
       <if test="artTime != null">
         art_time = #{artTime,jdbcType=VARCHAR},
       </if>
+      <if test="picClassify != null">
+        pic_classify = #{picClassify,jdbcType=VARCHAR},
+      </if>
+      <if test="picClassifyId != null">
+        pic_classify_id = #{picClassifyId,jdbcType=VARCHAR},
+      </if>
+      <if test="picTypeAnother != null">
+        pic_type_another = #{picTypeAnother,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -317,7 +362,10 @@
       art_sell = #{artSell,jdbcType=VARCHAR},
       art_info = #{artInfo,jdbcType=VARCHAR},
       art_date = #{artDate,jdbcType=VARCHAR},
-      art_time = #{artTime,jdbcType=VARCHAR}
+      art_time = #{artTime,jdbcType=VARCHAR},
+      pic_classify = #{picClassify,jdbcType=VARCHAR},
+      pic_classify_id = #{picClassifyId,jdbcType=VARCHAR},
+      pic_type_another = #{picTypeAnother,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

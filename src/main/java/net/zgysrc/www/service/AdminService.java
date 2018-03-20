@@ -27,6 +27,7 @@ import net.zgysrc.www.bean.CompanyVip;
 import net.zgysrc.www.bean.CompanyVipExample;
 import net.zgysrc.www.bean.CompanyUserExample.Criteria;
 import net.zgysrc.www.bean.ImageInfo;
+import net.zgysrc.www.bean.PicPayInfo;
 import net.zgysrc.www.bean.PostRelease;
 import net.zgysrc.www.bean.PostReleaseExample;
 import net.zgysrc.www.bean.Resume;
@@ -45,6 +46,7 @@ import net.zgysrc.www.dao.CompanyInfoMapper;
 import net.zgysrc.www.dao.CompanyUserMapper;
 import net.zgysrc.www.dao.CompanyVipMapper;
 import net.zgysrc.www.dao.ImageInfoMapper;
+import net.zgysrc.www.dao.PicPayInfoMapper;
 import net.zgysrc.www.dao.PostReleaseDynamicSQL;
 import net.zgysrc.www.dao.PostReleaseMapper;
 import net.zgysrc.www.dao.ResumeDynamicSQLMapper;
@@ -91,6 +93,8 @@ public class AdminService {
 	private SimplePriceMapper simplePriceMapper;
 	@Autowired
 	private CompanyVipMapper companyVipMapper;
+	@Autowired
+	private PicPayInfoMapper picPayInfoMapper;
 
 	public List<CompanyInfo> companyFindAll() {
 		CompanyInfoExample example = new CompanyInfoExample();
@@ -882,6 +886,20 @@ public class AdminService {
 			return false;
 		}else{
 			return true;
+		}
+	}
+
+	public void updatePicPayInfo(PicPayInfo picPayInfo) {
+		picPayInfoMapper.insert(picPayInfo);
+		
+	}
+
+	public List<PicPayInfo> getPicPayList() {
+		List<PicPayInfo> list = picPayInfoMapper.selectByExample(null);
+		if(0 == list.size()){
+			return null;
+		}else{
+			return list;
 		}
 	}
 
