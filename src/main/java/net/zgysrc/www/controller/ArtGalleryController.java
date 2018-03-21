@@ -173,8 +173,8 @@ public class ArtGalleryController {
 		String date = adf.format(new Date());
 		prtPicInfo.setPicUploadTime(date);
 		prtPicInfo.setPicLikeNum(0);
-		if (prtPicInfo.getPicPrize().equals("0")) {
-			prtPicInfo.setPicType("非卖品");
+		if (prtPicInfo.getPicType().equals("非卖品")) {
+			prtPicInfo.setPicPrize("0");
 			ArtPicInfo aii = artGalleryService.addArtImgInfo(prtPicInfo);
 			if (aii == null) {
 				String msg = "无信息！";
