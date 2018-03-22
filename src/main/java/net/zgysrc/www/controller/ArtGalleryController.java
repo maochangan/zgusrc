@@ -40,7 +40,7 @@ public class ArtGalleryController {
 	private ArtGalleryService artGalleryService;
 
 	/**
-	 * 页数 美术馆大类 
+	 * 页数 美术馆大类
 	 * 
 	 * @param pn
 	 * @return
@@ -60,7 +60,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 美术馆全部 
+	 * 美术馆全部
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getAllArtGalleryListAdmin", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 3个信息 
+	 * 3个信息
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTopArtGallery", method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 4个信息 
+	 * 4个信息
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTopTwoArtGallery", method = RequestMethod.GET)
@@ -108,7 +108,7 @@ public class ArtGalleryController {
 
 	/**
 	 * 
-	 * 添加美术馆大类 
+	 * 添加美术馆大类
 	 * 
 	 * @throws Exception
 	 * 
@@ -145,7 +145,7 @@ public class ArtGalleryController {
 
 	/**
 	 * 
-	 * 创建美术馆小类 
+	 * 创建美术馆小类
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -195,7 +195,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆大类id 获得对应美术馆小类 
+	 * id 美术馆大类id 获得对应美术馆小类
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -221,7 +221,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆大类id 获得对应美术馆小类 
+	 * id 美术馆大类id 获得对应美术馆小类
 	 * 
 	 * @throws Exception
 	 *             admin
@@ -244,7 +244,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆小类id 获得对应美术馆小类 
+	 * id 美术馆小类id 获得对应美术馆小类
 	 * 
 	 * @throws Exception
 	 *             admin
@@ -262,7 +262,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * id 美术馆小类id 获得对应美术馆小类 
+	 * id 美术馆小类id 获得对应美术馆小类
 	 * 
 	 * @throws Exception
 	 * @throws Throwable
@@ -291,7 +291,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 修改小类信息 
+	 * 修改小类信息
 	 * 
 	 * @param id
 	 *            小类id
@@ -339,7 +339,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 删除美术馆大类 
+	 * 删除美术馆大类
 	 * 
 	 * @param artComment
 	 * @param id
@@ -360,7 +360,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 删除美术馆小类 
+	 * 删除美术馆小类
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteArtImgInfo", method = RequestMethod.GET)
@@ -376,7 +376,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 创建评论 
+	 * 创建评论
 	 * 
 	 * @param artComment
 	 * @param id
@@ -409,7 +409,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 获取品论 
+	 * 获取品论
 	 * 
 	 * @param id
 	 *            小类id
@@ -430,7 +430,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 评论数量 
+	 * 评论数量
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getCommentSize", method = RequestMethod.GET)
@@ -446,7 +446,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 美术馆排行 
+	 * 美术馆排行
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/artRankingList", method = RequestMethod.GET)
@@ -461,7 +461,7 @@ public class ArtGalleryController {
 	}
 
 	/**
-	 * 十条小信息 
+	 * 十条小信息
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getTenList", method = RequestMethod.GET)
@@ -474,62 +474,62 @@ public class ArtGalleryController {
 			return Msg.success().add("list", list);
 		}
 	}
-	
+
 	/**
 	 * 获取分类
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtPicClassify" , method = RequestMethod.GET)
-	public Msg getArtPicClassify(){
+	@RequestMapping(value = "/getArtPicClassify", method = RequestMethod.GET)
+	public Msg getArtPicClassify() {
 		List<ArtPicClassify> list = artGalleryService.getArtPicClassify();
-		if(list == null){
+		if (list == null) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			return Msg.success().add("list", list);
 		}
 	}
 
 	/**
 	 * 获取其他分类
+	 * 
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtPicType" , method = RequestMethod.GET)
-	public Msg getArtPicType(){
+	@RequestMapping(value = "/getArtPicType", method = RequestMethod.GET)
+	public Msg getArtPicType() {
 		List<PicType> list = artGalleryService.getArtPicType();
-		if(list == null){
+		if (list == null) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			return Msg.success().add("list", list);
 		}
 	}
-	
-	
+
 	/**
-	 * 轮播图
-	 * 2种 
+	 * 轮播图 2种
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtCarouselImg" , method = RequestMethod.GET)
-	public Msg getArtCarouselImg(Integer type){
+	@RequestMapping(value = "/getArtCarouselImg", method = RequestMethod.GET)
+	public Msg getArtCarouselImg(Integer type) {
 		List<ArtCarousel> list = artGalleryService.getArtCarouselImg(type);
-		if(null == list){
+		if (null == list) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			return Msg.success().add("list", list);
 		}
 	}
-	
+
 	/**
-	 * 轮播图
-	 * 2种 
-	 * @throws Exception 
-	 * @throws IllegalStateException 
+	 * 轮播图 2种
+	 * 
+	 * @throws Exception
+	 * @throws IllegalStateException
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/addArtCarouselImg" , method = RequestMethod.POST)
-	public Msg addArtCarouselImg(ArtCarousel artCarousel , MultipartFile files , HttpServletRequest request) throws IllegalStateException, Exception{
+	@RequestMapping(value = "/updateArtCarouselImg", method = RequestMethod.POST)
+	public Msg updateArtCarouselImg(ArtCarousel artCarousel, MultipartFile files, HttpServletRequest request)
+			throws IllegalStateException, Exception {
 		String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/ArtCarousel/"
 				+ files.getOriginalFilename();
 		File dir = new File(path);
@@ -538,35 +538,35 @@ public class ArtGalleryController {
 		}
 		files.transferTo(dir);
 		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
-				+ request.getServletContext().getContextPath() + "files/pic/ArtCarousel/"
-				+ "/" + files.getOriginalFilename();
+				+ request.getServletContext().getContextPath() + "files/pic/ArtCarousel/" + "/"
+				+ files.getOriginalFilename();
 		artCarousel.setArtCarouselImgPath(dataPath);
 		boolean state = artGalleryService.addArtCarouselImg(artCarousel);
-		if(state){
-			return Msg.success().add("msg", "添加成功！");
-		}else{
-			return Msg.fail().add("msg", "添加失败！");
+		if (state) {
+			return Msg.success().add("msg", "修改成功！");
+		} else {
+			return Msg.fail().add("msg", "修改失败！");
 		}
 	}
-	
+
 	/**
-	 * 美术馆8个 需求更改 
-	 * 根据分类
+	 * 美术馆8个 需求更改 根据分类
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtGalleryListByClassify" , method = RequestMethod.GET)
-	public Msg getArtGalleryListByClassify(String picClassify){
+	@RequestMapping(value = "/getArtGalleryListByClassify", method = RequestMethod.GET)
+	public Msg getArtGalleryListByClassify(String picClassify) {
 		List<ArtGallery> list = artGalleryService.getArtGalleryListByClassify(picClassify);
-		if(null == list){
+		if (null == list) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			return Msg.success().add("list", list);
 		}
 	}
-	
+
 	/**
 	 * 获取分类全部
+	 * 
 	 * @param pn
 	 * @param pSize
 	 * @param artSell
@@ -575,34 +575,35 @@ public class ArtGalleryController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtGalleryListByCondition" , method = RequestMethod.GET)
-	public Msg getArtGalleryListByCondition(Integer pn , Integer pSize , String artSell , String picClassify , String picTypeAnother){
-		PageHelper.startPage(pn, pSize);
-		List<ArtGallery> list = artGalleryService.getArtGalleryListByCondition(artSell,picClassify,picTypeAnother);
-		if(null == list){
+	@RequestMapping(value = "/getArtGalleryListByCondition", method = RequestMethod.GET)
+	public Msg getArtGalleryListByCondition(Integer pn, String artSell, String picClassify, String picTypeAnother,
+			String artGalleryName) {
+		PageHelper.startPage(pn, 16);
+		List<ArtGallery> list = artGalleryService.getArtGalleryListByCondition(artSell, picClassify, picTypeAnother,
+				artGalleryName);
+		if (null == list) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			PageInfo<ArtGallery> pageInfo = new PageInfo<ArtGallery>(list);
 			return Msg.success().add("pageInfo", pageInfo);
 		}
 	}
-	
+
 	/**
-	 * 美术馆推荐  5个
+	 * 美术馆推荐 5个
 	 * 
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/getArtGalleryListByRecommend" , method = RequestMethod.GET)
-	public Msg getArtGalleryListByRecommend(){
+	@RequestMapping(value = "/getArtGalleryListByRecommend", method = RequestMethod.GET)
+	public Msg getArtGalleryListByRecommend() {
 		List<ArtGallery> list = artGalleryService.getArtGalleryListByRecommend();
-		if(null == list){
+		if (null == list) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			return Msg.success().add("list", list);
 		}
 	}
-	
-	
+
 	// TODO 不使用
 	// /////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -315,7 +315,6 @@ public class AdminController {
 				+ request.getServletContext().getContextPath() + "/files/CarouselPic/pic2/"
 				+ files.getOriginalFilename();
 		imageInfo.setImgPath(dataPath);
-		System.out.println(dataPath);
 		boolean state = adminService.updateImageInfo(imageInfo);
 		if (state) {
 			return Msg.success().add("msg", "修改成功！");
@@ -361,19 +360,20 @@ public class AdminController {
 			return Msg.fail().add("msg", "修改失败！");
 		}
 	}
-	
+
 	/**
 	 * 添加vip分类
+	 * 
 	 * @param companyVip
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/setCompanyVipType" , method = RequestMethod.GET)
-	public Msg setCompanyVipType(CompanyVip companyVip){
+	@RequestMapping(value = "/setCompanyVipType", method = RequestMethod.GET)
+	public Msg setCompanyVipType(CompanyVip companyVip) {
 		boolean state = adminService.setCompanyVipType(companyVip);
-		if(state){
+		if (state) {
 			return Msg.success().add("msg", "添加成功！");
-		}else{
+		} else {
 			return Msg.success().add("msg", "添加失败！");
 		}
 	}
@@ -406,40 +406,37 @@ public class AdminController {
 			return Msg.success().add("list", list);
 		}
 	}
-	
+
 	/**
 	 * 企业vip类别删除
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteCompanyVipType", method = RequestMethod.GET)
-	public Msg deleteCompanyVipType(Integer id){
+	public Msg deleteCompanyVipType(Integer id) {
 		boolean state = adminService.deleteCompanyVipType(id);
-		if(state){
+		if (state) {
 			return Msg.success().add("msg", "删除成功！");
-		}else{
+		} else {
 			return Msg.success().add("msg", "删除失败！");
 		}
 	}
-	
-	
+
 	/**
 	 * 订单列表
 	 * 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getPicPayList", method = RequestMethod.GET)
-	public Msg getPicPayList(Integer pn , Integer pSize){
-		PageHelper.startPage(pn,pSize);
+	public Msg getPicPayList(Integer pn, Integer pSize) {
+		PageHelper.startPage(pn, pSize);
 		List<PicPayInfo> list = adminService.getPicPayList();
-		if(null == list){
+		if (null == list) {
 			return Msg.fail().add("msg", "无信息！");
-		}else{
+		} else {
 			PageInfo<PicPayInfo> pageInfo = new PageInfo<PicPayInfo>(list);
 			return Msg.success().add("pageInfo", pageInfo);
 		}
 	}
-	
-	
 
 	// TODO
 	// 不使用/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -71,9 +71,8 @@ public class SimpleUserController {
 	 * @param mobile
 	 * @return
 	 */
-
-	@RequestMapping(value = "/checkMobile", method = RequestMethod.GET)
 	@ResponseBody
+	@RequestMapping(value = "/checkMobile", method = RequestMethod.GET)
 	public Msg checkMobile(String mobile) {
 		if (null == mobile) {
 			String msg = "未获取手机号";
@@ -87,9 +86,7 @@ public class SimpleUserController {
 				String msg = "手机号已存在！";
 				return Msg.fail().add("msg", msg);
 			}
-
 		}
-
 	}
 
 	/**
@@ -517,7 +514,6 @@ public class SimpleUserController {
 	@RequestMapping(value = "/findByCondition", method = RequestMethod.GET)
 	@ResponseBody
 	public Msg findByCondition(PostRelease postRelease, Integer pn) {
-		System.out.println(postRelease.getFindName() + postRelease.getpName() + postRelease.getpTyoeTwo());
 		PageHelper.startPage(pn, 20);
 		if ((postRelease.getpCity() != "" && postRelease.getpCity() != null)
 				|| (postRelease.getpName() != "" && postRelease.getpName() != null)

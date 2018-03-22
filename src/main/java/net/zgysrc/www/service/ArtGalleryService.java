@@ -351,7 +351,7 @@ public class ArtGalleryService {
 	}
 
 	public boolean addArtCarouselImg(ArtCarousel artCarousel) {
-		int state = artCarouselMapper.insert(artCarousel);
+		int state = artCarouselMapper.updateByPrimaryKeySelective(artCarousel);
 		if (0 == state) {
 			return false;
 		} else {
@@ -389,14 +389,38 @@ public class ArtGalleryService {
 		}
 	}
 
-	public List<ArtGallery> getArtGalleryListByCondition(String artSell, String picClassify, String picTypeAnother) {
+	public List<ArtGallery> getArtGalleryListByCondition(String artSell, String picClassify, String picTypeAnother,
+			String artGalleryName) {
 		ArtGalleryExample example = new ArtGalleryExample();
 		example.setOrderByClause("id desc");
 		Criteria criteria = example.createCriteria();
-		criteria.andPicClassifyLike(UtilStringBufferToString.stringBufferToString(picClassify));
-		criteria.andArtSellLike(UtilStringBufferToString.stringBufferToString(artSell));
-		criteria.andPicTypeAnotherLike(UtilStringBufferToString.stringBufferToString(picTypeAnother));
+		if (artSell.equals("")) {
+		} else {
+			criteria.andArtSellEqualTo(artSell);
+		}
+		if (picClassify.equals("")) {
+		} else {
+			criteria.andPicClassifyEqualTo(picClassify);
+		}
+		if (picTypeAnother.equals("")) {
+		} else {
+			criteria.andPicTypeAnotherEqualTo(picTypeAnother);
+		}
+		criteria.andArtGalleryNameLike(UtilStringBufferToString.stringBufferToString(artGalleryName));
 		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
+//		for (int j = 0 ; j < list.size() ; j ++) {
+//			ArtPicInfoExample example2 = new ArtPicInfoExample();
+//			net.zgysrc.www.bean.ArtPicInfoExample.Criteria criteria2 = example2.createCriteria();
+//			criteria2.andFatherIdEqualTo(list.get(j).getId());
+//			List<ArtPicInfo> lists = artPicInfoMapper.selectByExample(example2);
+//			if(lists.size()<5){
+//				list.get(j)
+//			}else{
+//				for(int i = 0 ; i < 5 ; i ++){
+//					
+//				}
+//			}
+//		}
 		if (0 == list.size()) {
 			return null;
 		} else {

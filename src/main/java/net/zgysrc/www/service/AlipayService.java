@@ -38,7 +38,6 @@ public class AlipayService {
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
         // 请求
         String result = alipayClient.pageExecute(alipayRequest).getBody();
-        System.out.println(result);
         AlipayConfig.logResult(result);// 记录支付日志
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
