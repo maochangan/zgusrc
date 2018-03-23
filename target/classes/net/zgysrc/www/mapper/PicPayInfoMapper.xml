@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.zgysrc.www.dao.PicPayInfoMapper">
+  <resultMap id="BaseResultMap" type="net.zgysrc.www.bean.PicPayInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="price" jdbcType="VARCHAR" property="price" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="trade_no" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo" />
+    <result column="trade_status" jdbcType="VARCHAR" property="tradeStatus" />
+    <result column="cus" jdbcType="VARCHAR" property="cus" />
+    <result column="mail_status" jdbcType="VARCHAR" property="mailStatus" />
+    <result column="is_get_goods" jdbcType="VARCHAR" property="isGetGoods" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, user_type, goods_id, price, create_date, trade_no, out_trade_no, trade_status, 
+    cus, mail_status, is_get_goods
+  </sql>
+  <select id="selectByExample" parameterType="net.zgysrc.www.bean.PicPayInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pic_pay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pic_pay_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pic_pay_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.zgysrc.www.bean.PicPayInfoExample">
+    delete from pic_pay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.zgysrc.www.bean.PicPayInfo">
+    insert into pic_pay_info (id, user_id, user_type, 
+      goods_id, price, create_date, 
+      trade_no, out_trade_no, trade_status, 
+      cus, mail_status, is_get_goods
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userType,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{price,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{tradeStatus,jdbcType=VARCHAR}, 
+      #{cus,jdbcType=VARCHAR}, #{mailStatus,jdbcType=VARCHAR}, #{isGetGoods,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.zgysrc.www.bean.PicPayInfo">
+    insert into pic_pay_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="tradeNo != null">
+        trade_no,
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no,
+      </if>
+      <if test="tradeStatus != null">
+        trade_status,
+      </if>
+      <if test="cus != null">
+        cus,
+      </if>
+      <if test="mailStatus != null">
+        mail_status,
+      </if>
+      <if test="isGetGoods != null">
+        is_get_goods,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null">
+        #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cus != null">
+        #{cus,jdbcType=VARCHAR},
+      </if>
+      <if test="mailStatus != null">
+        #{mailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isGetGoods != null">
+        #{isGetGoods,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.zgysrc.www.bean.PicPayInfoExample" resultType="java.lang.Long">
+    select count(*) from pic_pay_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pic_pay_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeNo != null">
+        trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTradeNo != null">
+        out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeStatus != null">
+        trade_status = #{record.tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cus != null">
+        cus = #{record.cus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailStatus != null">
+        mail_status = #{record.mailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isGetGoods != null">
+        is_get_goods = #{record.isGetGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pic_pay_info
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=VARCHAR},
+      trade_no = #{record.tradeNo,jdbcType=VARCHAR},
+      out_trade_no = #{record.outTradeNo,jdbcType=VARCHAR},
+      trade_status = #{record.tradeStatus,jdbcType=VARCHAR},
+      cus = #{record.cus,jdbcType=VARCHAR},
+      mail_status = #{record.mailStatus,jdbcType=VARCHAR},
+      is_get_goods = #{record.isGetGoods,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.zgysrc.www.bean.PicPayInfo">
+    update pic_pay_info
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNo != null">
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null">
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeStatus != null">
+        trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cus != null">
+        cus = #{cus,jdbcType=VARCHAR},
+      </if>
+      <if test="mailStatus != null">
+        mail_status = #{mailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isGetGoods != null">
+        is_get_goods = #{isGetGoods,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.zgysrc.www.bean.PicPayInfo">
+    update pic_pay_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_type = #{userType,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      price = #{price,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      trade_status = #{tradeStatus,jdbcType=VARCHAR},
+      cus = #{cus,jdbcType=VARCHAR},
+      mail_status = #{mailStatus,jdbcType=VARCHAR},
+      is_get_goods = #{isGetGoods,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
