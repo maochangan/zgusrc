@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.zgysrc.www.bean.ArtGallery;
+import net.zgysrc.www.bean.ArtGalleryExample;
+import net.zgysrc.www.bean.ArtPicInfo;
+import net.zgysrc.www.bean.ArtPicInfoExample;
 import net.zgysrc.www.bean.Article;
 import net.zgysrc.www.bean.ArticleList;
 import net.zgysrc.www.bean.ArticleListExample;
@@ -38,6 +42,8 @@ import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.bean.SimpleUserExample;
 import net.zgysrc.www.bean.SimpleUserExample.Criteria;
 import net.zgysrc.www.bean.UserReceivingAddress;
+import net.zgysrc.www.dao.ArtGalleryMapper;
+import net.zgysrc.www.dao.ArtPicInfoMapper;
 import net.zgysrc.www.dao.ArticleDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListDynamicSQLMapper;
 import net.zgysrc.www.dao.ArticleListMapper;
@@ -90,6 +96,8 @@ public class SimpleUserService {
 	@Autowired
 	private ArticleMapper articleMapper;
 	@Autowired
+	private ArtPicInfoMapper artPicInfoMapper;
+	@Autowired
 	private CompanyUserMapper companyUserMapper;
 	@Autowired
 	private MobileCodeMapper mobileCodeMapper;
@@ -99,6 +107,8 @@ public class SimpleUserService {
 	private PicPayInfoMapper picPayInfoMapper;
 	@Autowired
 	private UserReceivingAddressMapper userReceivingAddressMapper;
+	@Autowired
+	private ArtGalleryMapper artGalleryMapper;
 
 	public boolean checkMobile(String mobile) {
 		SimpleUserExample example = new SimpleUserExample();
@@ -1023,7 +1033,7 @@ public class SimpleUserService {
 		return listFinall;
 	}
 
-	public List<PicPayInfo> getPicPayList(Integer integer) {
+	public List<Map<String , Object>> getPicPayList(Integer integer) {
 		PicPayInfoExample example = new PicPayInfoExample();
 		example.setOrderByClause("id desc");
 		net.zgysrc.www.bean.PicPayInfoExample.Criteria criteria = example.createCriteria();
@@ -1032,12 +1042,63 @@ public class SimpleUserService {
 		if (0 == list.size()) {
 			return null;
 		} else {
-			return list;
+			List<Map<String , Object>> list2 = new ArrayList<Map<String,Object>>();
+			for(int i = 0 ; i < list.size() ; i ++){
+				Map<String , Object> map = new HashMap<String, Object>();
+				ArtPicInfo artPicInfo = artPicInfoMapper.selectByPrimaryKey(list.get(i).getGoodsId());
+				map.put("artPicInfo", artPicInfo.getPicName());
+				map.put("picPayInfo", list.get(i));
+				list2.add(map);
+			}
+			return list2;
 		}
 	}
 
 	public void addUserReceivingAddress(UserReceivingAddress userReceivingAddress) {
 		userReceivingAddressMapper.insert(userReceivingAddress);
+	}
+
+	public boolean changePicPayList(PicPayInfo picPayInfo) {
+		int state = picPayInfoMapper.updateByPrimaryKeySelective(picPayInfo);
+		if(0 == state){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public List<ArtGallery> getArtGalleryByUser(Integer id) {
+		ArtGalleryExample example = new ArtGalleryExample();
+		net.zgysrc.www.bean.ArtGalleryExample.Criteria criteria = example.createCriteria();
+		criteria.andUserIdEqualTo(id);
+		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
+		if(0 == list.size()){
+			return null;
+		}else{
+			return list;
+		}
+	}
+
+	public ArtGallery getArtGalleryByUserById(Integer id) {
+		ArtGallery artGallery = artGalleryMapper.selectByPrimaryKey(id);
+		return artGallery;
+	}
+
+	public boolean deleteArtGalleryByUser(Integer id) {
+		int state = artGalleryMapper.deleteByPrimaryKey(id);
+		ArtPicInfoExample example = new ArtPicInfoExample();
+		net.zgysrc.www.bean.ArtPicInfoExample.Criteria criteria = example.createCriteria();
+		criteria.andFatherIdEqualTo(id);
+		artPicInfoMapper.deleteByExample(example);
+		if(state == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	public boolean deleteArtImgInfoByUser(Integer id) {
+		return artPicInfoMapper.deleteByPrimaryKey(id) != 0;
 	}
 
 }

@@ -174,7 +174,7 @@ public class ArtGalleryController {
 		prtPicInfo.setPicUploadTime(date);
 		prtPicInfo.setPicLikeNum(0);
 		if (prtPicInfo.getPicType().equals("非卖品")) {
-			prtPicInfo.setPicPrize("0");
+			prtPicInfo.setPicPrice("0");
 			ArtPicInfo aii = artGalleryService.addArtImgInfo(prtPicInfo);
 			if (aii == null) {
 				String msg = "无信息！";
@@ -519,6 +519,20 @@ public class ArtGalleryController {
 			return Msg.success().add("list", list);
 		}
 	}
+	
+	/**
+	 * 轮播图 
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtCarouselImgAdmin", method = RequestMethod.GET)
+	public Msg getArtCarouselImgAdmin() {
+		List<ArtCarousel> list = artGalleryService.getArtCarouselImgAdmin();
+		if (null == list) {
+			return Msg.fail().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
 
 	/**
 	 * 轮播图 2种
@@ -538,7 +552,7 @@ public class ArtGalleryController {
 		}
 		files.transferTo(dir);
 		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
-				+ request.getServletContext().getContextPath() + "files/pic/ArtCarousel/" + "/"
+				+ request.getServletContext().getContextPath() + "/files/pic/ArtCarousel/"
 				+ files.getOriginalFilename();
 		artCarousel.setArtCarouselImgPath(dataPath);
 		boolean state = artGalleryService.addArtCarouselImg(artCarousel);

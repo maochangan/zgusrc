@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import net.zgysrc.www.bean.ArtGallery;
+import net.zgysrc.www.bean.ArtPicInfo;
 import net.zgysrc.www.bean.Article;
 import net.zgysrc.www.bean.ArticleList;
 import net.zgysrc.www.bean.AualificationCertification;
@@ -38,6 +40,7 @@ import net.zgysrc.www.bean.Resume;
 import net.zgysrc.www.bean.SimpleUser;
 import net.zgysrc.www.bean.bean.CPost;
 import net.zgysrc.www.service.AdminService;
+import net.zgysrc.www.service.ArtGalleryService;
 import net.zgysrc.www.service.MobileCodeService;
 import net.zgysrc.www.service.PostReleaseService;
 import net.zgysrc.www.service.simservice.SimpleUserService;
@@ -64,6 +67,9 @@ public class SimpleUserController {
 
 	@Autowired
 	private AdminService adminService;
+
+	@Autowired
+	private ArtGalleryService artGalleryService;
 
 	/**
 	 * 验证手机号是否存在 TODO
@@ -1300,11 +1306,222 @@ public class SimpleUserController {
 		if (null == simpleUser) {
 			return Msg.fail().add("msg", "请登入！");
 		}
-		List<PicPayInfo> list = simpleUserService.getPicPayList(simpleUser.getId());
+		List<Map<String, Object>> list = simpleUserService.getPicPayList(simpleUser.getId());
 		if (null == list) {
-			return Msg.fail().add("msg", "无信息！");
+			return Msg.success().add("msg", "无信息！");
 		} else {
 			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 用户确认收货
+	 * 
+	 * @param session
+	 * @param picPayInfo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/changePicPayList", method = RequestMethod.POST)
+	public Msg changePicPayList(HttpSession session, PicPayInfo picPayInfo) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		picPayInfo.setIsGetGoods("是");
+		picPayInfo.setMailStatus("交易完成");
+		boolean state = simpleUserService.changePicPayList(picPayInfo);
+		if (state) {
+			return Msg.success().add("msg", "确认收货成功！");
+		} else {
+			return Msg.fail().add("msg", "系统异常！");
+		}
+	}
+
+	/**
+	 * 
+	 * 添加美术馆大类
+	 * 
+	 * @throws Exception
+	 * 
+	 * @throws IllegalStateException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addArtGalleryByUser", method = RequestMethod.POST)
+	public Msg addArtGalleryByUser(ArtGallery artGallery, MultipartFile files, HttpServletRequest request,
+			HttpSession session) throws IllegalStateException, Exception {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		artGallery.setUserId(simpleUser.getId());
+		artGallery.setClick(0);
+		artGallery.setUserAc("正在审核");
+		String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/art/"
+				+ artGallery.getArtGalleryName() + "/" + files.getOriginalFilename();
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		files.transferTo(dir);
+		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
+				+ request.getServletContext().getContextPath() + "/files/pic/art/" + artGallery.getArtGalleryName()
+				+ "/" + files.getOriginalFilename();
+		artGallery.setArtGalleryImgPath(dataPath);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		String dat = sdf.format(date);
+		artGallery.setArtDate(dat);
+		ArtGallery ag = artGalleryService.addArtGallery(artGallery);
+		if (ag == null) {
+			String msg = "此工作室已存在！";
+			return Msg.fail().add("msg", msg);
+		} else {
+			return Msg.success().add("artGallery", ag);
+		}
+	}
+
+	/**
+	 * 
+	 * 创建美术馆小类
+	 * 
+	 * @throws Exception
+	 * @throws Throwable
+	 * @throws IllegalStateException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addArtImgInfoByUser", method = RequestMethod.POST)
+	public Msg addArtImgInfoByUser(Integer ids, ArtPicInfo prtPicInfo, MultipartFile files, HttpServletRequest request,
+			HttpSession session) throws IllegalStateException, Exception {
+		prtPicInfo.setPicAc("正在审核");
+		ArtGallery artGallery = artGalleryService.getArtGalleryById(ids);
+		String path = request.getSession().getServletContext().getRealPath("/") + "files/pic/art/"
+				+ artGallery.getArtGalleryName() + "/" + prtPicInfo.getPicName() + "/" + files.getOriginalFilename();
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		files.transferTo(dir);
+		String dataPath = "http://" + Configuration.IP + ":" + request.getLocalPort()
+				+ request.getServletContext().getContextPath() + "/files/pic/art/" + artGallery.getArtGalleryName()
+				+ "/" + prtPicInfo.getPicName() + "/" + files.getOriginalFilename();
+		prtPicInfo.setPicClickNum(0);
+		prtPicInfo.setFatherId(ids);
+		prtPicInfo.setPicPath(dataPath);
+		SimpleDateFormat adf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		String date = adf.format(new Date());
+		prtPicInfo.setPicUploadTime(date);
+		prtPicInfo.setPicLikeNum(0);
+		if (artGallery.getStudioName().equals("学生")) {
+			prtPicInfo.setPicPrice("0");
+			prtPicInfo.setPicType("非卖品");
+			ArtPicInfo aii = artGalleryService.addArtImgInfo(prtPicInfo);
+			if (aii == null) {
+				String msg = "无信息！";
+				return Msg.fail().add("msg", msg);
+			} else {
+				return Msg.success().add("artImgInfo", aii);
+			}
+		} else {
+			if(prtPicInfo.getPicPrice().equals(null)){
+				prtPicInfo.setPicPrice("0");
+				prtPicInfo.setPicType("非卖品");
+			}else{
+				prtPicInfo.setPicType("在售");
+			}
+			ArtPicInfo aii = artGalleryService.addArtImgInfo(prtPicInfo);
+			if (aii == null) {
+				String msg = "无信息！";
+				return Msg.fail().add("msg", msg);
+			} else {
+				return Msg.success().add("artImgInfo", aii);
+			}
+		}
+	}
+
+	/**
+	 * 用户美术馆列表！
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtGalleryByUser", method = RequestMethod.GET)
+	public Msg getArtGalleryByUser(HttpSession session) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		List<ArtGallery> list = simpleUserService.getArtGalleryByUser(simpleUser.getId());
+		if (null == list) {
+			return Msg.success().add("msg", "无信息！");
+		} else {
+			return Msg.success().add("list", list);
+		}
+	}
+
+	/**
+	 * 删除用户美术馆！
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteArtGalleryByUser", method = RequestMethod.GET)
+	public Msg deleteArtGalleryByUser(HttpSession session, Integer id) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		boolean state = simpleUserService.deleteArtGalleryByUser(id);
+		if (state) {
+			return Msg.success().add("msg", "删除成功！");
+		} else {
+			return Msg.fail().add("msg", "删除失败！");
+		}
+	}
+
+	/**
+	 * 获取小列表
+	 * 
+	 * @param session
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/getArtImgInfoByUser", method = RequestMethod.GET)
+	public Msg getArtImgInfoByUser(HttpSession session, Integer id) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		ArtGallery artGallery = simpleUserService.getArtGalleryByUserById(id);
+		List<ArtPicInfo> list = artGalleryService.getAllArtImgInfoByFatherIdByUser(id);
+		if (null == list) {
+			return Msg.success().add("msg", "无信息！").add("artGallery", artGallery);
+		} else {
+			return Msg.success().add("list", list).add("artGallery", artGallery);
+		}
+	}
+
+	/**
+	 * 删除用户美术馆！
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteArtImgInfoByUser", method = RequestMethod.GET)
+	public Msg deleteArtImgInfoByUser(HttpSession session, Integer id) {
+		SimpleUser simpleUser = (SimpleUser) session.getAttribute("simpleUser");
+		if (null == simpleUser) {
+			return Msg.fail().add("msg", "请登录！");
+		}
+		boolean state = simpleUserService.deleteArtImgInfoByUser(id);
+		if (state) {
+			return Msg.success().add("msg", "删除成功！");
+		} else {
+			return Msg.fail().add("msg", "删除失败！");
 		}
 	}
 

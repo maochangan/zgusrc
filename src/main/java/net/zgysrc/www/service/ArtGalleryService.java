@@ -111,6 +111,7 @@ public class ArtGalleryService {
 		ArtPicInfoExample example = new ArtPicInfoExample();
 		net.zgysrc.www.bean.ArtPicInfoExample.Criteria criteria = example.createCriteria();
 		criteria.andFatherIdEqualTo(id);
+		criteria.andPicAcIsNull();
 		List<ArtPicInfo> list = artPicInfoMapper.selectByExample(example);
 		if (list.size() == 0) {
 			return null;
@@ -406,21 +407,9 @@ public class ArtGalleryService {
 		} else {
 			criteria.andPicTypeAnotherEqualTo(picTypeAnother);
 		}
+		criteria.andUserAcIsNull();
 		criteria.andArtGalleryNameLike(UtilStringBufferToString.stringBufferToString(artGalleryName));
 		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
-//		for (int j = 0 ; j < list.size() ; j ++) {
-//			ArtPicInfoExample example2 = new ArtPicInfoExample();
-//			net.zgysrc.www.bean.ArtPicInfoExample.Criteria criteria2 = example2.createCriteria();
-//			criteria2.andFatherIdEqualTo(list.get(j).getId());
-//			List<ArtPicInfo> lists = artPicInfoMapper.selectByExample(example2);
-//			if(lists.size()<5){
-//				list.get(j)
-//			}else{
-//				for(int i = 0 ; i < 5 ; i ++){
-//					
-//				}
-//			}
-//		}
 		if (0 == list.size()) {
 			return null;
 		} else {
@@ -436,6 +425,27 @@ public class ArtGalleryService {
 		List<ArtGallery> list = artGalleryMapper.selectByExample(example);
 		return list;
 
+	}
+
+	public List<ArtCarousel> getArtCarouselImgAdmin() {
+		List<ArtCarousel> list = artCarouselMapper.selectByExample(null);
+		if (0 == list.size()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	public List<ArtPicInfo> getAllArtImgInfoByFatherIdByUser(Integer id) {
+		ArtPicInfoExample example = new ArtPicInfoExample();
+		net.zgysrc.www.bean.ArtPicInfoExample.Criteria criteria = example.createCriteria();
+		criteria.andFatherIdEqualTo(id);
+		List<ArtPicInfo> list = artPicInfoMapper.selectByExample(example);
+		if (list.size() == 0) {
+			return null;
+		} else {
+			return list;
+		}
 	}
 
 }

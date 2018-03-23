@@ -17,7 +17,7 @@ public class ArtPicInfo {
 
     private Integer picClickNum;
 
-    private String picPrize;
+    private String picPrice;
 
     private String picUserName;
 
@@ -30,6 +30,8 @@ public class ArtPicInfo {
     private String buyUserName;
 
     private String picSpec;
+
+    private String picAc;
 
     public Integer getId() {
         return id;
@@ -95,12 +97,12 @@ public class ArtPicInfo {
         this.picClickNum = picClickNum;
     }
 
-    public String getPicPrize() {
-        return picPrize;
+    public String getPicPrice() {
+        return picPrice;
     }
 
-    public void setPicPrize(String picPrize) {
-        this.picPrize = picPrize == null ? null : picPrize.trim();
+    public void setPicPrice(String picPrice) {
+        this.picPrice = picPrice == null ? null : picPrice.trim();
     }
 
     public String getPicUserName() {
@@ -149,5 +151,13 @@ public class ArtPicInfo {
 
     public void setPicSpec(String picSpec) {
         this.picSpec = picSpec == null ? null : picSpec.trim();
+    }
+
+    public String getPicAc() {
+        return picAc;
+    }
+
+    public void setPicAc(String picAc) {
+        this.picAc = picAc == null ? null : picAc.trim();
     }
 }

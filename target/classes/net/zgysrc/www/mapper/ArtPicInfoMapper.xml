@@ -10,13 +10,14 @@
     <result column="pic_like_num" jdbcType="INTEGER" property="picLikeNum" />
     <result column="pic_upload_time" jdbcType="VARCHAR" property="picUploadTime" />
     <result column="pic_click_num" jdbcType="INTEGER" property="picClickNum" />
-    <result column="pic_prize" jdbcType="VARCHAR" property="picPrize" />
+    <result column="pic_price" jdbcType="VARCHAR" property="picPrice" />
     <result column="pic_user_name" jdbcType="VARCHAR" property="picUserName" />
     <result column="pic_describe" jdbcType="VARCHAR" property="picDescribe" />
     <result column="sell_or_not" jdbcType="VARCHAR" property="sellOrNot" />
     <result column="buy_user_id" jdbcType="INTEGER" property="buyUserId" />
     <result column="buy_user_name" jdbcType="VARCHAR" property="buyUserName" />
     <result column="pic_spec" jdbcType="VARCHAR" property="picSpec" />
+    <result column="pic_ac" jdbcType="VARCHAR" property="picAc" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -78,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, father_id, pic_name, pic_path, pic_type, pic_like_num, pic_upload_time, pic_click_num, 
-    pic_prize, pic_user_name, pic_describe, sell_or_not, buy_user_id, buy_user_name, 
-    pic_spec
+    pic_price, pic_user_name, pic_describe, sell_or_not, buy_user_id, buy_user_name, 
+    pic_spec, pic_ac
   </sql>
   <select id="selectByExample" parameterType="net.zgysrc.www.bean.ArtPicInfoExample" resultMap="BaseResultMap">
     select
@@ -114,16 +115,16 @@
   <insert id="insert" parameterType="net.zgysrc.www.bean.ArtPicInfo">
     insert into art_pic_info (id, father_id, pic_name, 
       pic_path, pic_type, pic_like_num, 
-      pic_upload_time, pic_click_num, pic_prize, 
+      pic_upload_time, pic_click_num, pic_price, 
       pic_user_name, pic_describe, sell_or_not, 
-      buy_user_id, buy_user_name, pic_spec
-      )
+      buy_user_id, buy_user_name, pic_spec, 
+      pic_ac)
     values (#{id,jdbcType=INTEGER}, #{fatherId,jdbcType=INTEGER}, #{picName,jdbcType=VARCHAR}, 
       #{picPath,jdbcType=VARCHAR}, #{picType,jdbcType=VARCHAR}, #{picLikeNum,jdbcType=INTEGER}, 
-      #{picUploadTime,jdbcType=VARCHAR}, #{picClickNum,jdbcType=INTEGER}, #{picPrize,jdbcType=VARCHAR}, 
+      #{picUploadTime,jdbcType=VARCHAR}, #{picClickNum,jdbcType=INTEGER}, #{picPrice,jdbcType=VARCHAR}, 
       #{picUserName,jdbcType=VARCHAR}, #{picDescribe,jdbcType=VARCHAR}, #{sellOrNot,jdbcType=VARCHAR}, 
-      #{buyUserId,jdbcType=INTEGER}, #{buyUserName,jdbcType=VARCHAR}, #{picSpec,jdbcType=VARCHAR}
-      )
+      #{buyUserId,jdbcType=INTEGER}, #{buyUserName,jdbcType=VARCHAR}, #{picSpec,jdbcType=VARCHAR}, 
+      #{picAc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.ArtPicInfo">
     insert into art_pic_info
@@ -152,8 +153,8 @@
       <if test="picClickNum != null">
         pic_click_num,
       </if>
-      <if test="picPrize != null">
-        pic_prize,
+      <if test="picPrice != null">
+        pic_price,
       </if>
       <if test="picUserName != null">
         pic_user_name,
@@ -172,6 +173,9 @@
       </if>
       <if test="picSpec != null">
         pic_spec,
+      </if>
+      <if test="picAc != null">
+        pic_ac,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -199,8 +203,8 @@
       <if test="picClickNum != null">
         #{picClickNum,jdbcType=INTEGER},
       </if>
-      <if test="picPrize != null">
-        #{picPrize,jdbcType=VARCHAR},
+      <if test="picPrice != null">
+        #{picPrice,jdbcType=VARCHAR},
       </if>
       <if test="picUserName != null">
         #{picUserName,jdbcType=VARCHAR},
@@ -219,6 +223,9 @@
       </if>
       <if test="picSpec != null">
         #{picSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="picAc != null">
+        #{picAc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -255,8 +262,8 @@
       <if test="record.picClickNum != null">
         pic_click_num = #{record.picClickNum,jdbcType=INTEGER},
       </if>
-      <if test="record.picPrize != null">
-        pic_prize = #{record.picPrize,jdbcType=VARCHAR},
+      <if test="record.picPrice != null">
+        pic_price = #{record.picPrice,jdbcType=VARCHAR},
       </if>
       <if test="record.picUserName != null">
         pic_user_name = #{record.picUserName,jdbcType=VARCHAR},
@@ -276,6 +283,9 @@
       <if test="record.picSpec != null">
         pic_spec = #{record.picSpec,jdbcType=VARCHAR},
       </if>
+      <if test="record.picAc != null">
+        pic_ac = #{record.picAc,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -291,13 +301,14 @@
       pic_like_num = #{record.picLikeNum,jdbcType=INTEGER},
       pic_upload_time = #{record.picUploadTime,jdbcType=VARCHAR},
       pic_click_num = #{record.picClickNum,jdbcType=INTEGER},
-      pic_prize = #{record.picPrize,jdbcType=VARCHAR},
+      pic_price = #{record.picPrice,jdbcType=VARCHAR},
       pic_user_name = #{record.picUserName,jdbcType=VARCHAR},
       pic_describe = #{record.picDescribe,jdbcType=VARCHAR},
       sell_or_not = #{record.sellOrNot,jdbcType=VARCHAR},
       buy_user_id = #{record.buyUserId,jdbcType=INTEGER},
       buy_user_name = #{record.buyUserName,jdbcType=VARCHAR},
-      pic_spec = #{record.picSpec,jdbcType=VARCHAR}
+      pic_spec = #{record.picSpec,jdbcType=VARCHAR},
+      pic_ac = #{record.picAc,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -326,8 +337,8 @@
       <if test="picClickNum != null">
         pic_click_num = #{picClickNum,jdbcType=INTEGER},
       </if>
-      <if test="picPrize != null">
-        pic_prize = #{picPrize,jdbcType=VARCHAR},
+      <if test="picPrice != null">
+        pic_price = #{picPrice,jdbcType=VARCHAR},
       </if>
       <if test="picUserName != null">
         pic_user_name = #{picUserName,jdbcType=VARCHAR},
@@ -347,6 +358,9 @@
       <if test="picSpec != null">
         pic_spec = #{picSpec,jdbcType=VARCHAR},
       </if>
+      <if test="picAc != null">
+        pic_ac = #{picAc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -359,13 +373,14 @@
       pic_like_num = #{picLikeNum,jdbcType=INTEGER},
       pic_upload_time = #{picUploadTime,jdbcType=VARCHAR},
       pic_click_num = #{picClickNum,jdbcType=INTEGER},
-      pic_prize = #{picPrize,jdbcType=VARCHAR},
+      pic_price = #{picPrice,jdbcType=VARCHAR},
       pic_user_name = #{picUserName,jdbcType=VARCHAR},
       pic_describe = #{picDescribe,jdbcType=VARCHAR},
       sell_or_not = #{sellOrNot,jdbcType=VARCHAR},
       buy_user_id = #{buyUserId,jdbcType=INTEGER},
       buy_user_name = #{buyUserName,jdbcType=VARCHAR},
-      pic_spec = #{picSpec,jdbcType=VARCHAR}
+      pic_spec = #{picSpec,jdbcType=VARCHAR},
+      pic_ac = #{picAc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

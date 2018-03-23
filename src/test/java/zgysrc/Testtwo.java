@@ -1,5 +1,6 @@
 package zgysrc;
 
+import org.junit.Test;
 
 public class Testtwo {
 
@@ -11,6 +12,13 @@ public class Testtwo {
 			sbf.append("，");
 		}
 		sbf.delete(sbf.length()-1, sbf.length());
+	}
+	
+	@Test
+	public void test(){
+		
+		System.out.println(111);
+		
 	}
 
 }

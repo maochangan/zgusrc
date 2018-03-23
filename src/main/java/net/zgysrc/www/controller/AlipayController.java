@@ -78,7 +78,7 @@ public class AlipayController {
 			String msg = "无产品信息！";
 			return Msg.fail().add("msg", msg);
 		} else {
-			String price = artPicInfo.getPicPrize();
+			String price = artPicInfo.getPicPrice();
 			String tName = artPicInfo.getPicName();
 			String picInfo = artPicInfo.getPicDescribe();
 			if (artPicInfo.getPicType().equals("非卖品")) {
@@ -155,14 +155,15 @@ public class AlipayController {
 		picPayInfo.setPrice(total_amount);
 		picPayInfo.setOutTradeNo(out_trade_no);
 		picPayInfo.setTradeNo(trade_no);
-
+		picPayInfo.setIsGetGoods("否");
+		picPayInfo.setMailStatus("准备发货");
 		if (trade_status.equals("TRADE_SUCCESS")) {// 支付成功商家操作
 			picPayInfo.setTradeStatus(trade_status);
 			adminService.updatePicPayInfo(picPayInfo);
 			artPicInfo.setBuyUserName(trade_no);
 			artPicInfo.setSellOrNot("sell");
 			artPicInfo.setBuyUserId(userId);
-			artPicInfo.setPicPrize(total_amount);
+			artPicInfo.setPicPrice(total_amount);
 			artGalleryService.updateArtImgInfo(artPicInfo);
 			return Msg.success().add("msg", cus);
 		} else {

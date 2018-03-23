@@ -1123,6 +1123,136 @@ public class ArtGalleryExample {
             addCriterion("pic_type_another not between", value1, value2, "picTypeAnother");
             return (Criteria) this;
         }
+
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdEqualTo(Integer value) {
+            addCriterion("user_id =", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotEqualTo(Integer value) {
+            addCriterion("user_id <>", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThan(Integer value) {
+            addCriterion("user_id >", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("user_id >=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThan(Integer value) {
+            addCriterion("user_id <", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+            addCriterion("user_id <=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<Integer> values) {
+            addCriterion("user_id in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotIn(List<Integer> values) {
+            addCriterion("user_id not in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+            addCriterion("user_id between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcIsNull() {
+            addCriterion("user_ac is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcIsNotNull() {
+            addCriterion("user_ac is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcEqualTo(String value) {
+            addCriterion("user_ac =", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcNotEqualTo(String value) {
+            addCriterion("user_ac <>", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcGreaterThan(String value) {
+            addCriterion("user_ac >", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcGreaterThanOrEqualTo(String value) {
+            addCriterion("user_ac >=", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcLessThan(String value) {
+            addCriterion("user_ac <", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcLessThanOrEqualTo(String value) {
+            addCriterion("user_ac <=", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcLike(String value) {
+            addCriterion("user_ac like", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcNotLike(String value) {
+            addCriterion("user_ac not like", value, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcIn(List<String> values) {
+            addCriterion("user_ac in", values, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcNotIn(List<String> values) {
+            addCriterion("user_ac not in", values, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcBetween(String value1, String value2) {
+            addCriterion("user_ac between", value1, value2, "userAc");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserAcNotBetween(String value1, String value2) {
+            addCriterion("user_ac not between", value1, value2, "userAc");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

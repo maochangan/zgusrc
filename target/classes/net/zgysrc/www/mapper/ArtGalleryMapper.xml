@@ -17,6 +17,8 @@
     <result column="pic_classify" jdbcType="VARCHAR" property="picClassify" />
     <result column="pic_classify_id" jdbcType="VARCHAR" property="picClassifyId" />
     <result column="pic_type_another" jdbcType="VARCHAR" property="picTypeAnother" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_ac" jdbcType="VARCHAR" property="userAc" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -79,7 +81,7 @@
   <sql id="Base_Column_List">
     id, art_gallery_name, art_gallery_img_path, click, studio_name, like_num, index_info, 
     art_address, art_sell, art_info, art_date, art_time, pic_classify, pic_classify_id, 
-    pic_type_another
+    pic_type_another, user_id, user_ac
   </sql>
   <select id="selectByExample" parameterType="net.zgysrc.www.bean.ArtGalleryExample" resultMap="BaseResultMap">
     select
@@ -116,14 +118,14 @@
       click, studio_name, like_num, 
       index_info, art_address, art_sell, 
       art_info, art_date, art_time, 
-      pic_classify, pic_classify_id, pic_type_another
-      )
+      pic_classify, pic_classify_id, pic_type_another, 
+      user_id, user_ac)
     values (#{id,jdbcType=INTEGER}, #{artGalleryName,jdbcType=VARCHAR}, #{artGalleryImgPath,jdbcType=VARCHAR}, 
       #{click,jdbcType=INTEGER}, #{studioName,jdbcType=VARCHAR}, #{likeNum,jdbcType=INTEGER}, 
       #{indexInfo,jdbcType=VARCHAR}, #{artAddress,jdbcType=VARCHAR}, #{artSell,jdbcType=VARCHAR}, 
       #{artInfo,jdbcType=VARCHAR}, #{artDate,jdbcType=VARCHAR}, #{artTime,jdbcType=VARCHAR}, 
-      #{picClassify,jdbcType=VARCHAR}, #{picClassifyId,jdbcType=VARCHAR}, #{picTypeAnother,jdbcType=VARCHAR}
-      )
+      #{picClassify,jdbcType=VARCHAR}, #{picClassifyId,jdbcType=VARCHAR}, #{picTypeAnother,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{userAc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="net.zgysrc.www.bean.ArtGallery">
     insert into art_gallery
@@ -173,6 +175,12 @@
       <if test="picTypeAnother != null">
         pic_type_another,
       </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userAc != null">
+        user_ac,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -219,6 +227,12 @@
       </if>
       <if test="picTypeAnother != null">
         #{picTypeAnother,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userAc != null">
+        #{userAc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -276,6 +290,12 @@
       <if test="record.picTypeAnother != null">
         pic_type_another = #{record.picTypeAnother,jdbcType=VARCHAR},
       </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userAc != null">
+        user_ac = #{record.userAc,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -297,7 +317,9 @@
       art_time = #{record.artTime,jdbcType=VARCHAR},
       pic_classify = #{record.picClassify,jdbcType=VARCHAR},
       pic_classify_id = #{record.picClassifyId,jdbcType=VARCHAR},
-      pic_type_another = #{record.picTypeAnother,jdbcType=VARCHAR}
+      pic_type_another = #{record.picTypeAnother,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      user_ac = #{record.userAc,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -347,6 +369,12 @@
       <if test="picTypeAnother != null">
         pic_type_another = #{picTypeAnother,jdbcType=VARCHAR},
       </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userAc != null">
+        user_ac = #{userAc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -365,7 +393,9 @@
       art_time = #{artTime,jdbcType=VARCHAR},
       pic_classify = #{picClassify,jdbcType=VARCHAR},
       pic_classify_id = #{picClassifyId,jdbcType=VARCHAR},
-      pic_type_another = #{picTypeAnother,jdbcType=VARCHAR}
+      pic_type_another = #{picTypeAnother,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_ac = #{userAc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
