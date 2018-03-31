@@ -114,6 +114,7 @@ public class SimpleUserController {
 	@RequestMapping(value = "/reviseByMobile", method = RequestMethod.GET)
 	public Msg revise(String mobile, String code, String simplePassword, SimpleUser simpleUser, HttpSession session)
 			throws Exception {
+		
 		if (mobile == null && code == null) {
 			String msg = "手机与验证码不能为空！";
 			return Msg.fail().add("msg", msg);
@@ -181,8 +182,8 @@ public class SimpleUserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/loginByMobile", method = RequestMethod.POST)
 	@ResponseBody
+	@RequestMapping(value = "/loginByMobile", method = RequestMethod.POST)
 	public Msg loginByMobile(String mobile, String sPassword, HttpSession session) throws Exception {
 		if (mobile == null && sPassword == null) {
 			String msg = "用户名密码不能为空！";

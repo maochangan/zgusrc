@@ -48,8 +48,6 @@
 			<if test="articleImagePath != null">
 				article_image_path = #{articleImagePath,jdbcType=VARCHAR}
 			</if>
-
 		</where>
 	</select>
-
 </mapper>
